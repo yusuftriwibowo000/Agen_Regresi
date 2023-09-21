@@ -1,0 +1,876 @@
+﻿''Sub Goto_Layanan_Keuangan(dt_TCID)
+''	clik menu
+''	Call CaptureImageUFTV2(Device("Device").App("BNI Agen46") , " ", " ", compatibilityMode.Mobile, ReportStatus.Done)
+''	If tcid Then
+''		tap tc
+''		capt	
+''		wait 3
+''	ElseIf True Then
+''	End If
+''End Sub
+'
+Sub Pilih_Menu_Utama(dtMenuUtama, dtSubMenu_1, dtSubMenu_2, dtSubMenu_3, dtNoKontrak, dtNominal, dtSubMenu_4)
+	wait 1 
+'	dtSubMenu_1 = DataTable.Value("SUB_MENU_1", dtLocalSheet)
+	If dtMenuUtama =  "Transfer" Then
+		Call CaptureImageUFTV2(Device("Device").App("BNI Agen46") , "Halaman Menu Utama ", " ", compatibilityMode.Mobile, ReportStatus.Done)
+		wait 2
+		Device("Device").App("BNI Agen46").MobileObject("Transfer").Tap
+		wait 3
+		Call CaptureImageUFTV2(Device("Device").App("BNI Agen46") , "Halaman Menu Transfer ", " ", compatibilityMode.Mobile, ReportStatus.Done)
+		wait 2
+		Call Pilih_Menu_Transfer(dtSubMenu_1, dtSubMenu_2)
+	ElseIf dtMenuUtama =  "Layanan_Keuangan" Then
+		Call CaptureImageUFTV2(Device("Device").App("BNI Agen46") , "Halaman Menu Utama ", " ", compatibilityMode.Mobile, ReportStatus.Done)
+		wait 2
+		Device("Device").App("BNI Agen46").MobileObject("Layanan Keuangan").Tap
+		wait 3
+		Call CaptureImageUFTV2(Device("Device").App("BNI Agen46") , "Halaman Menu Layanan Keuangan", " ", compatibilityMode.Mobile, ReportStatus.Done)
+		wait 2
+		Call Pilih_Menu_Layanan_Keuangan(dtSubMenu_1, dtSubMenu_2)
+	ElseIf dtMenuUtama =  "Bayar_dan_Beli" Then
+		Call CaptureImageUFTV2(Device("Device").App("BNI Agen46") , "Halaman Menu Utama", " ", compatibilityMode.Mobile, ReportStatus.Done)
+		wait 2
+		Device("Device").App("BNI Agen46").MobileObject("Bayar dan Beli").Tap
+		wait 3
+		Call CaptureImageUFTV2(Device("Device").App("BNI Agen46") , "Halaman Menu Bayar dan Beli ", " ", compatibilityMode.Mobile, ReportStatus.Done)
+		wait 2
+		Call Pilih_Bayar_dan_Beli(dtSubMenu_1, dtSubMenu_2, dtSubMenu_3, dtNoKontrak, dtNominal, dtSubMenu_4)
+	ElseIf dtMenuUtama =  "Topup_Uang_Elektronik" Then
+		Call CaptureImageUFTV2(Device("Device").App("BNI Agen46") , "Halaman Menu Utama ", " ", compatibilityMode.Mobile, ReportStatus.Done)
+		wait 2
+		Device("Device").App("BNI Agen46").MobileObject("Topup Uang Elektronik").Tap
+		wait 3
+		Call CaptureImageUFTV2(Device("Device").App("BNI Agen46") , "Halaman Menu Topup Uang Elektronik ", " ", compatibilityMode.Mobile, ReportStatus.Done)
+		wait 2
+		Call Pilih_Menu_Topup_Uang_Elektronik(dtSubMenu_1, dtSubMenu_2)
+	ElseIf dtMenuUtama =  "Pemesanan_Barang_Mitra" Then
+		Call CaptureImageUFTV2(Device("Device").App("BNI Agen46") , "Halaman Menu Utama", " ", compatibilityMode.Mobile, ReportStatus.Done)
+		wait 2
+		Device("Device").App("BNI Agen46").MobileObject("Pemesanan Barang Mitra").Tap
+		wait 3
+		Call CaptureImageUFTV2(Device("Device").App("BNI Agen46") , "Halaman Menu Pemesanan Barang Mitra", " ", compatibilityMode.Mobile, ReportStatus.Done)
+		wait 2
+		Call Pilih_Pemesanan_Barang_Mitra(dtSubMenu_1, dtSubMenu_2)
+	End If
+End Sub
+
+Sub Pilih_Menu_Transfer(dtSubMenu_1, dtSubMenu_2)
+	wait 1
+	If dtSubMenu_1 = "Transfer_BNI" Then
+'	Call CaptureImageUFTV2(Device("Device").App("BNI Agen46") , "User Memilih Menu Transfer BNI", " ", compatibilityMode.Mobile, ReportStatus.Done)
+	wait 2
+		Device("Device").App("BNI Agen46").MobileObject("Transfer BNI").Tap
+		wait 3
+		If dtSubMenu_2 = "no" Then
+			Call CaptureImageUFTV2(Device("Device").App("BNI Agen46") , "Menu Transfer BNI Blocked", " ", compatibilityMode.Mobile, ReportStatus.Passed)
+		End If
+	
+	ElseIf dtSubMenu_1 = "Transfer_Antar_Bank" Then
+		Device("Device").App("BNI Agen46").MobileObject("Transfer Antar Bank dan pulsa").Tap
+		wait 3
+'		Call CaptureImageUFTV2(Device("Device").App("BNI Agen46") , "User Memilih Menu Transfer antar Bank dan Pulsa ", " ", compatibilityMode.Mobile, ReportStatus.Done)
+		wait 2
+		If dtSubMenu_2 = "no" Then
+			Call CaptureImageUFTV2(Device("Device").App("BNI Agen46") , "Menu Transfer Antar Bank Blocked", " ", compatibilityMode.Mobile, ReportStatus.Passed)
+		End If
+	Else
+		Device("Device").App("BNI Agen46").MobileObject("Tarik Tunai").Tap
+		wait 3
+'		Call CaptureImageUFTV2(Device("Device").App("BNI Agen46") , "User Memilih Menu Tarik Tunai ", " ", compatibilityMode.Mobile, ReportStatus.Done)
+		If dtSubMenu_2 = "no" Then
+			Call CaptureImageUFTV2(Device("Device").App("BNI Agen46") , "Menu Tarik Tunai Blocked", " ", compatibilityMode.Mobile, ReportStatus.Passed)
+		End If
+	End If
+	
+End Sub
+
+Sub Pilih_Menu_Layanan_Keuangan(dtSubMenu_1, dtSubMenu_2)
+	If dtSubMenu_1 = "Buka_Rekening" Then
+		Device("Device").App("BNI Agen46").MobileObject("Buka Rekening").Tap
+		wait 3
+'		Call CaptureImageUFTV2(Device("Device").App("BNI Agen46") , "User Memilih Menu Buka Rekening ", " ", compatibilityMode.Mobile, ReportStatus.Done)
+		wait 2
+		If dtSubMenu_2 = "no" Then
+			Call CaptureImageUFTV2(Device("Device").App("BNI Agen46") , "Menu Buka Rekening Blocked", " ", compatibilityMode.Mobile, ReportStatus.Passed)
+		End If
+	ElseIf dtSubMenu_1 = "Setor_Tunai" Then
+		Device("Device").App("BNI Agen46").MobileObject("Setor Tunai").Tap
+		wait 3
+'		Call CaptureImageUFTV2(Device("Device").App("BNI Agen46") , "User Memilih Menu Setor Tunai ", " ", compatibilityMode.Mobile, ReportStatus.Done)
+		wait 2
+		If dtSubMenu_2 = "no" Then
+			Call CaptureImageUFTV2(Device("Device").App("BNI Agen46") , "Menu Setor Tunai Blocked", " ", compatibilityMode.Mobile, ReportStatus.Passed)
+		End If
+	Else
+		Device("Device").App("BNI Agen46").MobileObject("Tarik Tunai").Tap
+		wait 3
+'		Call CaptureImageUFTV2(Device("Device").App("BNI Agen46") , "User Memilih Menu Tarik Tunai ", " ", compatibilityMode.Mobile, ReportStatus.Done)
+		wait 2
+		If dtSubMenu_2 = "no" Then
+			Call CaptureImageUFTV2(Device("Device").App("BNI Agen46") , "Menu Tarik Tunai Blocked", " ", compatibilityMode.Mobile, ReportStatus.Passed)
+		else
+		Call Pilih_Sub_Menu_Tarik_Tunai(dtSubMenu_2, dtSubMenu_3)
+		End If
+	End If
+End Sub
+
+Sub Pilih_Menu_Topup_Uang_Elektronik(dtSubMenu_1, dtSubMenu_2)
+' 	print(dtSubMenu_1)
+	If dtSubMenu_1 = "Link_Aja" Then
+'		Device("Device").App("BNI Agen46").MobileObject("Buka Rekening").Tap
+		Device("Device").App("BNI Agen46").MobileObject("Link Aja").Tap
+		Wait 3
+'		Call CaptureImageUFTV2(Device("Device").App("BNI Agen46") , "User Memilih Menu Buka Rekening ", " ", compatibilityMode.Mobile, ReportStatus.Done)
+		Wait 2
+		If dtSubMenu_2 = "no" Then
+			Call CaptureImageUFTV2(Device("Device").App("BNI Agen46") , "Menu Link Aja Blocked", " ", compatibilityMode.Mobile, ReportStatus.Passed)
+		End If
+	ElseIf dtSubMenu_1 = "TapCash" Then
+		Device("Device").App("BNI Agen46").MobileObject("Tap Cash").Tap
+		Wait 3
+'		Call CaptureImageUFTV2(Device("Device").App("BNI Agen46") , "User Memilih Menu Tap Cash ", " ", compatibilityMode.Mobile, ReportStatus.Done)
+		Wait 2
+		If dtSubMenu_2 = "no" Then
+			Call CaptureImageUFTV2(Device("Device").App("BNI Agen46") , "Menu Tap Cash Blocked", " ", compatibilityMode.Mobile, ReportStatus.Passed)
+		End If
+	ElseIf dtSubMenu_1 = "OVO" Then
+		Device("Device").App("BNI Agen46").MobileObject("OVO").Tap
+		Wait 3
+'		Call CaptureImageUFTV2(Device("Device").App("BNI Agen46") , "User Memilih Menu OVO", " ", compatibilityMode.Mobile, ReportStatus.Done)
+		Wait 2
+		If dtSubMenu_2 = "no" Then
+			Call CaptureImageUFTV2(Device("Device").App("BNI Agen46") , "Menu OVO Blocked", " ", compatibilityMode.Mobile, ReportStatus.Passed)
+		End If
+	ElseIf dtSubMenu_1 = "Gopay" Then
+		Device("Device").App("BNI Agen46").MobileObject("Gopay dan tagihan telepon").Tap
+		Wait 3
+'		Call CaptureImageUFTV2(Device("Device").App("BNI Agen46") , "User Memilih Menu Gopay dan Tagihan Telepon", " ", compatibilityMode.Mobile, ReportStatus.Done)
+		Wait 2
+		If dtSubMenu_2 = "no" Then
+			Call CaptureImageUFTV2(Device("Device").App("BNI Agen46") , "Menu Gopay Blocked", " ", compatibilityMode.Mobile, ReportStatus.Passed)
+		End If
+	ElseIf dtSubMenu_1 = "Dana" Then
+		Device("Device").App("BNI Agen46").MobileObject("Dana").Tap
+		Wait 3
+'		Call CaptureImageUFTV2(Device("Device").App("BNI Agen46") , "User Memilih Menu Dana", " ", compatibilityMode.Mobile, ReportStatus.Done)
+		Wait 2
+		If dtSubMenu_2 = "no" Then
+			Call CaptureImageUFTV2(Device("Device").App("BNI Agen46") , "Menu Dana Blocked", " ", compatibilityMode.Mobile, ReportStatus.Passed)
+		End If
+	ElseIf dtSubMenu_1 = "Shopee_Pay" Then
+		Device("Device").App("BNI Agen46").MobileObject("Shoope Pay dan PDAM").Tap
+		Wait 3
+'		Call CaptureImageUFTV2(Device("Device").App("BNI Agen46") , "User Memilih Menu Shoope Pay dan PDAM", " ", compatibilityMode.Mobile, ReportStatus.Done)
+		Wait 2
+		If dtSubMenu_2 = "no" Then
+			Call CaptureImageUFTV2(Device("Device").App("BNI Agen46") , "Menu Shoope Pay Blocked", " ", compatibilityMode.Mobile, ReportStatus.Passed)
+		End If
+	Else
+		Device("Device").App("BNI Agen46").MobileObject("Isaku dan multifinance").Tap
+		Wait 3
+'		Call CaptureImageUFTV2(Device("Device").App("BNI Agen46") , "User Memilih Menu Isaku dan Multifinance", " ", compatibilityMode.Mobile, ReportStatus.Done)
+		Wait 2
+		If dtSubMenu_2 = "no" Then
+			Call CaptureImageUFTV2(Device("Device").App("BNI Agen46") , "Menu Isaku Blocked", " ", compatibilityMode.Mobile, ReportStatus.Passed)
+		End If
+	End If
+End Sub
+
+Sub Pilih_Pemesanan_Barang_Mitra(dtSubMenu_1, dtSubMenu_2)
+	Device("Device").App("BNI Agen46").MobileObject("LPG 3 kg").Tap
+	Wait 3
+'		Call CaptureImageUFTV2(Device("Device").App("BNI Agen46") , "User Memilih Menu LPG 3kg", " ", compatibilityMode.Mobile, ReportStatus.Done)
+		Wait 2
+		If dtSubMenu_2 = "no" Then
+			Call CaptureImageUFTV2(Device("Device").App("BNI Agen46") , "Menu LPG 3 kg Blocked", " ", compatibilityMode.Mobile, ReportStatus.Passed)
+		End If
+End Sub
+
+Sub Pilih_Bayar_dan_Beli(dtSubMenu_1, dtSubMenu_2, dtSubMenu_3, dtNoKontrak, dtNominal, dtSubMenu_4)
+	If dtSubMenu_1 = "Listrik" Then
+		Device("Device").App("BNI Agen46").MobileObject("Listrik").Tap
+		Wait 3
+'		Call CaptureImageUFTV2(Device("Device").App("BNI Agen46") , "User Memilih Menu Listrik", " ", compatibilityMode.Mobile, ReportStatus.Done)
+		Wait 2
+		If dtSubMenu_2 = "no" Then
+			Call CaptureImageUFTV2(Device("Device").App("BNI Agen46") , "Menu Listrik Blocked", " ", compatibilityMode.Mobile, ReportStatus.Passed)
+			else
+			Call Pilih_Sub_Menu_Listrik(dtSubMenu_2, dtSubMenu_3)
+		End If
+	ElseIf dtSubMenu_1 = "Pulsa_&_Paket_Data" Then
+		Device("Device").App("BNI Agen46").MobileObject("Transfer Antar Bank dan pulsa").Tap
+		Wait 3
+'		Call CaptureImageUFTV2(Device("Device").App("BNI Agen46") , "User Memilih Menu Transfer Antar Bank dan Pulsa", " ", compatibilityMode.Mobile, ReportStatus.Done)
+		Wait 2
+		If dtSubMenu_2 = "no" Then
+			Call CaptureImageUFTV2(Device("Device").App("BNI Agen46") , "Menu Transfer Antar Bank dan pulsa Blocked", " ", compatibilityMode.Mobile, ReportStatus.Passed)
+		End If
+	ElseIf dtSubMenu_1 = "BPJS" Then
+		Device("Device").App("BNI Agen46").MobileObject("BPJS").Tap
+		Wait 3
+'		Call CaptureImageUFTV2(Device("Device").App("BNI Agen46") , "User Memilih Menu BPJS", " ", compatibilityMode.Mobile, ReportStatus.Done)
+		Wait 2
+		If dtSubMenu_2 = "no" Then
+			Call CaptureImageUFTV2(Device("Device").App("BNI Agen46") , "Menu User Memilih Menu BPJS Blocked", " ", compatibilityMode.Mobile, ReportStatus.Passed)
+		Else 
+		Call Pilih_Sub_Menu_BPJS(dtSubMenu_2, dtSubMenu_3)
+		End If
+	ElseIf dtSubMenu_1 = "Tagihan Telepon" Then
+		Device("Device").App("BNI Agen46").MobileObject("Gopay dan tagihan telepon").Tap
+		Wait 3
+'		Call CaptureImageUFTV2(Device("Device").App("BNI Agen46") , "User Memilih Menu Gopay dan Tagihan Telepon", " ", compatibilityMode.Mobile, ReportStatus.Done)
+		Wait 2
+		If dtSubMenu_2 = "no" Then
+			Call CaptureImageUFTV2(Device("Device").App("BNI Agen46") , "Menu Gopay dan tagihan telepon Blocked", " ", compatibilityMode.Mobile, ReportStatus.Passed)
+		End If
+	ElseIf dtSubMenu_1 = "Kartu_Kredit" Then
+		Device("Device").App("BNI Agen46").MobileObject("Kartu Kredit").Tap
+		Wait 3
+'		Call CaptureImageUFTV2(Device("Device").App("BNI Agen46") , "User Memilih Menu Kartu Kredit", " ", compatibilityMode.Mobile, ReportStatus.Done)
+		Wait 2
+		If dtSubMenu_2 = "no" Then
+			Call CaptureImageUFTV2(Device("Device").App("BNI Agen46") , "Menu Kartu Kredit Blocked", " ", compatibilityMode.Mobile, ReportStatus.Passed)
+		else
+		Call Pilih_Sub_Menu_Kartu_Kredit(dtSubMenu_2, dtSubMenu_3)
+		End If
+	ElseIf dtSubMenu_1 = "PDAM&IPL" Then
+		Device("Device").App("BNI Agen46").MobileObject("Shoope Pay dan PDAM").Tap
+		Wait 3
+'		Call CaptureImageUFTV2(Device("Device").App("BNI Agen46") , "User Memilih Menu Shoope Pay dan PDAM", " ", compatibilityMode.Mobile, ReportStatus.Done)
+		Wait 2
+		If dtSubMenu_2 = "no" Then
+			Call CaptureImageUFTV2(Device("Device").App("BNI Agen46") , "Menu PDAM Blocked", " ", compatibilityMode.Mobile, ReportStatus.Passed)
+		End If
+	ElseIf dtSubMenu_1 = "Multifinance" Then
+		Device("Device").App("BNI Agen46").MobileObject("Isaku dan multifinance").Tap
+		Wait 3
+'		Call CaptureImageUFTV2(Device("Device").App("BNI Agen46") , "User Memilih Menu Isaku dan Multifinance", " ", compatibilityMode.Mobile, ReportStatus.Done)
+		Wait 2
+		If dtSubMenu_2 = "no" Then
+			Call CaptureImageUFTV2(Device("Device").App("BNI Agen46") , "Menu Multifinance Blocked", " ", compatibilityMode.Mobile, ReportStatus.Passed)
+			else
+			Call Pilih_Sub_Menu_Multifinance(dtSubMenu_2, dtSubMenu_3, dtNoKontrak)
+		End If
+	ElseIf dtSubMenu_1 = "Asuransi" Then
+		Device("Device").App("BNI Agen46").MobileObject("Asuransi").Tap
+		Wait 3
+'		Call CaptureImageUFTV2(Device("Device").App("BNI Agen46") , "User Memilih Menu Asuransi", " ", compatibilityMode.Mobile, ReportStatus.Done)
+		Wait 2
+		If dtSubMenu_2 = "no" Then
+			Call CaptureImageUFTV2(Device("Device").App("BNI Agen46") , "Menu Asuransi Blocked", " ", compatibilityMode.Mobile, ReportStatus.Passed)
+		else
+		Call Pilih_Sub_Menu_Asuransi(dtSubMenu_2, dtSubMenu_3, dtNoKontrak, dtNominal, dtSubMenu_4)
+		End If
+	ElseIf dtSubMenu_1 = "Internet_Dan_TV_Kabel" Then
+		Device("Device").App("BNI Agen46").MobileObject("Internet & TV Kabel").Tap
+		Wait 3
+'		Call CaptureImageUFTV2(Device("Device").App("BNI Agen46") , "User Memilih Menu Internet & TV Kabel", " ", compatibilityMode.Mobile, ReportStatus.Done)
+		Wait 2
+		If dtSubMenu_2 = "no" Then
+			Call CaptureImageUFTV2(Device("Device").App("BNI Agen46") , "Menu Internet & TV Kabel Blocked", " ", compatibilityMode.Mobile, ReportStatus.Passed)
+		else
+			Call Pilih_Sub_Menu_Internet_Dan_TV_Kabel(dtSubMenu_2, dtSubMenu_3)
+		End If
+	ElseIf dtSubMenu_1 = "Pajak" Then
+		Device("Device").App("BNI Agen46").MobileObject("Pajak").Tap
+		Wait 3
+'		Call CaptureImageUFTV2(Device("Device").App("BNI Agen46") , "User Memilih Menu Pajak", " ", compatibilityMode.Mobile, ReportStatus.Done)
+		Wait 2
+		If dtSubMenu_2 = "no" Then
+			Call CaptureImageUFTV2(Device("Device").App("BNI Agen46") , "Menu Pajak Blocked", " ", compatibilityMode.Mobile, ReportStatus.Passed)
+		else
+		Call Pilih_Sub_Menu_Pajak(dtSubMenu_2, dtSubMenu_3)
+		End If
+	ElseIf dtSubMenu_1 = "Pinjaman_Pribadi" Then
+		Device("Device").App("BNI Agen46").MobileObject("Pinjaman Pribadi").Tap
+		Wait 3
+'		Call CaptureImageUFTV2(Device("Device").App("BNI Agen46") , "User Memilih Menu Pinjaman Pribadi", " ", compatibilityMode.Mobile, ReportStatus.Done)
+		Wait 2
+		If dtSubMenu_2 = "no" Then
+			Call CaptureImageUFTV2(Device("Device").App("BNI Agen46") , "Menu Pinjaman Pribadi Blocked", " ", compatibilityMode.Mobile, ReportStatus.Passed)
+		End If
+	ElseIf dtSubMenu_1 = "Pendidikan" Then
+		Device("Device").App("BNI Agen46").MobileObject("Pendidikan").Tap
+		Wait 3
+'		Call CaptureImageUFTV2(Device("Device").App("BNI Agen46") , "User Memilih Menu Pendidikan", " ", compatibilityMode.Mobile, ReportStatus.Done)
+		Wait 2
+		If dtSubMenu_2 = "no" Then
+			Call CaptureImageUFTV2(Device("Device").App("BNI Agen46") , "Menu Pendidikan Blocked", " ", compatibilityMode.Mobile, ReportStatus.Passed)
+			else
+			Call Pilih_Sub_Menu_Pendidikan(dtSubMenu_2, dtSubMenu_3)
+		End If
+	ElseIf dtSubMenu_1 = "Tiket_Transportasi" Then
+		Device("Device").App("BNI Agen46").MobileObject("Tiket Transportasi").Tap
+		Wait 3
+'		Call CaptureImageUFTV2(Device("Device").App("BNI Agen46") , "User Memilih Menu Tiket Transportasi", " ", compatibilityMode.Mobile, ReportStatus.Done)
+		Wait 2
+		If dtSubMenu_2 = "no" Then
+			Call CaptureImageUFTV2(Device("Device").App("BNI Agen46") , "Menu Tiket Transportasi Blocked", " ", compatibilityMode.Mobile, ReportStatus.Passed)
+			else
+			Call Pilih_Sub_Menu_Tiket_Transportasi(dtSubMenu_2, dtSubMenu_3)
+		End If
+	Else
+		Device("Device").App("BNI Agen46").MobileObject("Zis & Qurban").Tap
+		Wait 3
+'		Call CaptureImageUFTV2(Device("Device").App("BNI Agen46") , "User Memilih Menu Zis & Qurban", " ", compatibilityMode.Mobile, ReportStatus.Done)
+		Wait 2
+		If dtSubMenu_2 = "no" Then
+			Call CaptureImageUFTV2(Device("Device").App("BNI Agen46") , "Menu Zis & Qurban Blocked", " ", compatibilityMode.Mobile, ReportStatus.Passed)
+		End If
+	End If
+End Sub
+
+Sub Logout_Blocked_Service()
+	AIUtil.SetContext Device("Device")
+	Device("Device").App("BNI Agen46").MobileButton("Saya mengerti").Tap
+	wait 2
+Do 
+	Device("Device").Back()
+	wait 1
+Loop until Device("Device").App("BNI Agen46").MobileObject("Akun").Exist(3)
+	wait 2
+	Device("Device").Back()
+	Call CaptureImageUFTV2(Device("Device").App("BNI Agen46") , "Konfirmasi Keluar", " ", compatibilityMode.Mobile, ReportStatus.Done)
+	Device("Device").App("BNI Agen46").MobileObject("Ya").Tap
+	wait 2
+	AIUtil("button", "OK").Click
+'	Device("Device").App("BNI Agen46").MobileButton("Saya mengerti").Tap
+'	wait 2
+'	Device("Device").Back()
+'	Call CaptureImageUFTV2(Device("Device").App("BNI Agen46") , "Kembali Ke halaman Utama", " ", compatibilityMode.Mobile, ReportStatus.Done)
+'	wait 2
+'	Device("Device").Back()
+'	wait 2
+'	Call CaptureImageUFTV2(Device("Device").App("BNI Agen46") , "Konfirmasi Keluar", " ", compatibilityMode.Mobile, ReportStatus.Done)
+'	Device("Device").App("BNI Agen46").MobileObject("Ya").Tap
+'	wait 2
+'	AIUtil("button", "OK").Click
+End Sub
+
+
+Sub Pilih_Sub_Menu_Listrik(dtSubMenu_2, dtSubMenu_3)
+	If dtSubMenu_2 = "Tagihan_Listrik" Then
+	Call CaptureImageUFTV2(Device("Device").App("BNI Agen46") , "Menu Tagihan Listrik", " ", compatibilityMode.Mobile, ReportStatus.Done)
+		wait 2
+		Device("Device").App("BNI Agen46").MobileObject("Tagihan Listrik").Tap
+	If dtSubMenu_3 = "no" Then
+			Call CaptureImageUFTV2(Device("Device").App("BNI Agen46") , "Menu Tagihan Listrik Blocked", " ", compatibilityMode.Mobile, ReportStatus.Passed)
+		End If
+	ElseIf dtSubMenu_2 = "Token_Listrik" Then
+	Call CaptureImageUFTV2(Device("Device").App("BNI Agen46") , "Menu Token Listrik", " ", compatibilityMode.Mobile, ReportStatus.Done)
+	wait 2
+		Device("Device").App("BNI Agen46").MobileObject("Token Listrik").Tap
+		If dtSubMenu_3 = "no" Then
+			Call CaptureImageUFTV2(Device("Device").App("BNI Agen46") , "Menu Token Listrik Blocked", " ", compatibilityMode.Mobile, ReportStatus.Passed)
+		End If
+	ElseIf dtSubMenu_2 = "Cek_Status_Token" Then
+	Call CaptureImageUFTV2(Device("Device").App("BNI Agen46") , "Menu Cek Status Token", " ", compatibilityMode.Mobile, ReportStatus.Done)
+	wait 2
+		Device("Device").App("BNI Agen46").MobileObject("Cek Status Token").Tap
+		If dtSubMenu_3 = "no" Then
+			Call CaptureImageUFTV2(Device("Device").App("BNI Agen46") , "Menu Cek Status Token Blocked", " ", compatibilityMode.Mobile, ReportStatus.Passed)
+		End If
+	Else
+	Call CaptureImageUFTV2(Device("Device").App("BNI Agen46") , "Menu Non Tagihan Listrik", " ", compatibilityMode.Mobile, ReportStatus.Done)
+	wait 2
+		Device("Device").App("BNI Agen46").MobileObject("Non Tagihan Listrik").Tap
+		If dtSubMenu_3 = "no" Then
+			Call CaptureImageUFTV2(Device("Device").App("BNI Agen46") , "Menu Non Tagihan Listrik Blocked", " ", compatibilityMode.Mobile, ReportStatus.Passed)
+		End If
+	End If
+	
+End Sub
+
+Sub Pilih_Sub_Menu_Tiket_Transportasi(dtSubMenu_2, dtSubMenu_3)
+If dtSubMenu_2 = "Tiket_Penerbangan" Then
+	Call CaptureImageUFTV2(Device("Device").App("BNI Agen46") , "Menu Tiket_Penerbangan", " ", compatibilityMode.Mobile, ReportStatus.Done)
+		wait 2
+		Device("Device").App("BNI Agen46").MobileObject("Tiket Penerbangan").Tap
+	If dtSubMenu_3 = "no" Then
+			Call CaptureImageUFTV2(Device("Device").App("BNI Agen46") , "Menu Tiket Penerbangan Blocked", " ", compatibilityMode.Mobile, ReportStatus.Passed)
+		End If
+	ElseIf dtSubMenu_2 = "Kereta_Api_Indonesia_(KAI)" Then
+	Call CaptureImageUFTV2(Device("Device").App("BNI Agen46") , "Menu Kereta_Api_Indonesia_(KAI)", " ", compatibilityMode.Mobile, ReportStatus.Done)
+		wait 2
+		Device("Device").App("BNI Agen46").MobileObject("Tiket KAI").Tap
+		If dtSubMenu_3 = "no" Then
+			Call CaptureImageUFTV2(Device("Device").App("BNI Agen46") , "Menu Kereta_Api_Indonesia_(KAI) Blocked", " ", compatibilityMode.Mobile, ReportStatus.Passed)
+		End If
+	ElseIf dtSubMenu_2 = "Railink" Then
+	Call CaptureImageUFTV2(Device("Device").App("BNI Agen46") , "Menu Railink", " ", compatibilityMode.Mobile, ReportStatus.Done)
+		wait 2
+		Device("Device").App("BNI Agen46").MobileObject("Railink").Tap
+		If dtSubMenu_3 = "no" Then
+			Call CaptureImageUFTV2(Device("Device").App("BNI Agen46") , "Menu Railink Blocked", " ", compatibilityMode.Mobile, ReportStatus.Passed)
+		End If	
+		Else
+	Call CaptureImageUFTV2(Device("Device").App("BNI Agen46") , "TopUp_Agen_Citilink", " ", compatibilityMode.Mobile, ReportStatus.Done)
+	wait 2
+		Device("Device").App("BNI Agen46").MobileObject("Top Up Agen Citilink").Tap
+		If dtSubMenu_3 = "no" Then
+			Call CaptureImageUFTV2(Device("Device").App("BNI Agen46") , "Menu TopUp_Agen_Citilink Blocked", " ", compatibilityMode.Mobile, ReportStatus.Passed)
+		End If
+End If
+End Sub
+
+Sub Pilih_Sub_Menu_Internet_Dan_TV_Kabel(dtSubMenu_2, dtSubMenu_3)
+	If dtSubMenu_2 = "MNC_Vision" Then
+	Call CaptureImageUFTV2(Device("Device").App("BNI Agen46") , "Menu MNC Vision", " ", compatibilityMode.Mobile, ReportStatus.Done)
+		wait 2
+		Device("Device").App("BNI Agen46").MobileObject("MNC Vision").Tap
+	If dtSubMenu_3 = "no" Then
+			Call CaptureImageUFTV2(Device("Device").App("BNI Agen46") , "Menu MNC_Vision Blocked", " ", compatibilityMode.Mobile, ReportStatus.Passed)
+		End If
+	ElseIf dtSubMenu_2 = "First_Media" Then
+	Call CaptureImageUFTV2(Device("Device").App("BNI Agen46") , "Menu First_Media", " ", compatibilityMode.Mobile, ReportStatus.Done)
+		wait 2
+		Device("Device").App("BNI Agen46").MobileObject("First Media").Tap
+		If dtSubMenu_3 = "no" Then
+			Call CaptureImageUFTV2(Device("Device").App("BNI Agen46") , "Menu First Media Blocked", " ", compatibilityMode.Mobile, ReportStatus.Passed)
+		End If	
+	ElseIf dtSubMenu_2 = "Transvision" Then
+	Call CaptureImageUFTV2(Device("Device").App("BNI Agen46") , "Menu Transvision", " ", compatibilityMode.Mobile, ReportStatus.Done)
+		wait 2
+		Device("Device").App("BNI Agen46").MobileObject("Transvision").Tap
+		If dtSubMenu_3 = "no" Then
+			Call CaptureImageUFTV2(Device("Device").App("BNI Agen46") , "Menu Transvision Blocked", " ", compatibilityMode.Mobile, ReportStatus.Passed)
+		End If		
+		else
+'		jika nanti ada tambahan
+	End  If
+		
+End Sub
+
+
+
+Sub Pilih_Sub_Menu_Multifinance(dtSubMenu_2, dtSubMenu_3, dtNoKontrak)
+		If dtSubMenu_2 = "NSC_Finance" Then
+		Device("Device").App("BNI Agen46").MobileButton("Buat Input Baru").Tap
+		wait 2
+		Device("Device").App("BNI Agen46").MobileButton("Perusahaan").Tap
+		wait 2
+		Call CaptureImageUFTV2(Device("Device").App("BNI Agen46") , "Menu NSC Finance", " ", compatibilityMode.Mobile, ReportStatus.Done)
+		wait 2
+		Device("Device").App("BNI Agen46").MobileObject("NSC Finance").Tap
+		wait 2
+		Device("Device").App("BNI Agen46").MobileEdit("no.kontrak").Tap
+		wait 2
+		Device("Device").App("BNI Agen46").MobileEdit("no.kontrak").Set dtNoKontrak
+		wait 2
+		Call CaptureImageUFTV2(Device("Device").App("BNI Agen46") , "Input Menu NSC Finance", " ", compatibilityMode.Mobile, ReportStatus.Done)
+		wait 1
+		Device("Device").App("BNI Agen46").MobileButton("Lanjut").Tap
+	If dtSubMenu_3 = "no" Then
+			Call CaptureImageUFTV2(Device("Device").App("BNI Agen46") , "Menu NSC Finance Blocked", " ", compatibilityMode.Mobile, ReportStatus.Passed)
+		End If
+	ElseIf dtSubMenu_2 = "Astra_Credit_Company_(ACC)" Then
+		Device("Device").App("BNI Agen46").MobileButton("Buat Input Baru").Tap
+		wait 2
+		Device("Device").App("BNI Agen46").MobileButton("Perusahaan").Tap
+		wait 2
+		Call CaptureImageUFTV2(Device("Device").App("BNI Agen46") , "Menu Astra Credit Company (ACC)", " ", compatibilityMode.Mobile, ReportStatus.Done)
+		wait 2
+		Device("Device").App("BNI Agen46").MobileObject("Astra Credit Company (AC").Tap
+		wait 2
+		Device("Device").App("BNI Agen46").MobileEdit("no.kontrak").Tap
+		wait 2
+		Device("Device").App("BNI Agen46").MobileEdit("no.kontrak").Set dtNoKontrak
+			wait 2
+		Call CaptureImageUFTV2(Device("Device").App("BNI Agen46") , "Input Menu Astra Credit Company (ACC)", " ", compatibilityMode.Mobile, ReportStatus.Done)
+		wait 1
+		Device("Device").App("BNI Agen46").MobileButton("Lanjut").Tap
+	If dtSubMenu_3 = "no" Then
+	wait 3
+			Call CaptureImageUFTV2(Device("Device").App("BNI Agen46") , "Menu Astra Credit Company (ACC) Blocked", " ", compatibilityMode.Mobile, ReportStatus.Passed)
+		End If
+	ElseIf dtSubMenu_2 = "Adira_Finance" Then
+		Device("Device").App("BNI Agen46").MobileButton("Buat Input Baru").Tap
+		wait 2
+		Device("Device").App("BNI Agen46").MobileButton("Perusahaan").Tap
+		wait 2
+		Call CaptureImageUFTV2(Device("Device").App("BNI Agen46") , "Menu Adira Finance", " ", compatibilityMode.Mobile, ReportStatus.Done)
+		wait 2
+		Device("Device").App("BNI Agen46").MobileObject("Adira Finance").Tap
+		wait 2
+		Device("Device").App("BNI Agen46").MobileEdit("no.kontrak").Tap
+		wait 2
+		Device("Device").App("BNI Agen46").MobileEdit("no.kontrak").Set dtNoKontrak
+			wait 2
+		Call CaptureImageUFTV2(Device("Device").App("BNI Agen46") , "Input Menu Adira Finance", " ", compatibilityMode.Mobile, ReportStatus.Done)
+		wait 1
+		Device("Device").App("BNI Agen46").MobileButton("Lanjut").Tap
+	If dtSubMenu_3 = "no" Then
+	wait 3
+			Call CaptureImageUFTV2(Device("Device").App("BNI Agen46") , "Menu Adira Finance Blocked", " ", compatibilityMode.Mobile, ReportStatus.Passed)
+		End If
+	ElseIf dtSubMenu_2 = "Bussan_Auto_Finance" Then
+		Device("Device").App("BNI Agen46").MobileButton("Buat Input Baru").Tap
+		wait 2
+		Device("Device").App("BNI Agen46").MobileButton("Perusahaan").Tap
+		wait 2
+		Call CaptureImageUFTV2(Device("Device").App("BNI Agen46") , "Menu Bussan Auto Finance", " ", compatibilityMode.Mobile, ReportStatus.Done)
+		wait 2
+	Device("Device").App("BNI Agen46").MobileObject("Bussan Auto Finance").Tap
+	wait 2
+	Device("Device").App("BNI Agen46").MobileEdit("no.kontrak").Tap
+		wait 2
+		Device("Device").App("BNI Agen46").MobileEdit("no.kontrak").Set dtNoKontrak
+			wait 2
+		Call CaptureImageUFTV2(Device("Device").App("BNI Agen46") , "Input Menu Bussan Auto Finance", " ", compatibilityMode.Mobile, ReportStatus.Done)
+		wait 1
+		Device("Device").App("BNI Agen46").MobileButton("Lanjut").Tap
+	If dtSubMenu_3 = "no" Then
+	wait 3
+			Call CaptureImageUFTV2(Device("Device").App("BNI Agen46") , "Menu Bussan Auto Finance Blocked", " ", compatibilityMode.Mobile, ReportStatus.Passed)
+		End If
+	ElseIf dtSubMenu_2 = "FIF" Then
+		Device("Device").App("BNI Agen46").MobileButton("Buat Input Baru").Tap
+		wait 2
+		Device("Device").App("BNI Agen46").MobileButton("Perusahaan").Tap
+		wait 2
+		Call CaptureImageUFTV2(Device("Device").App("BNI Agen46") , "Menu FIF", " ", compatibilityMode.Mobile, ReportStatus.Done)
+		wait 2
+	Device("Device").App("BNI Agen46").MobileObject("FIF").Tap
+	wait 2
+	Device("Device").App("BNI Agen46").MobileEdit("no.kontrak").Tap
+		wait 2
+		Device("Device").App("BNI Agen46").MobileEdit("no.kontrak").Set dtNoKontrak
+			wait 2
+		Call CaptureImageUFTV2(Device("Device").App("BNI Agen46") , "Input Menu FIF", " ", compatibilityMode.Mobile, ReportStatus.Done)
+		wait 1
+		Device("Device").App("BNI Agen46").MobileButton("Lanjut").Tap
+	If dtSubMenu_3 = "no" Then
+	wait 3
+			Call CaptureImageUFTV2(Device("Device").App("BNI Agen46") , "Menu FIF Blocked", " ", compatibilityMode.Mobile, ReportStatus.Passed)
+		End If
+	ElseIf dtSubMenu_2 = "Finansia/Kreditplus" Then
+		Device("Device").App("BNI Agen46").MobileButton("Buat Input Baru").Tap
+		wait 2
+		Device("Device").App("BNI Agen46").MobileButton("Perusahaan").Tap
+		wait 2
+	Call CaptureImageUFTV2(Device("Device").App("BNI Agen46") , "Menu Finansia/Kreditplus", " ", compatibilityMode.Mobile, ReportStatus.Done)
+		wait 2
+	Device("Device").App("BNI Agen46").MobileObject("Finansia/Kreditplus").Tap
+	wait 2
+	Device("Device").App("BNI Agen46").MobileEdit("no.kontrak").Tap
+		wait 2
+		Device("Device").App("BNI Agen46").MobileEdit("no.kontrak").Set dtNoKontrak
+			wait 2
+		Call CaptureImageUFTV2(Device("Device").App("BNI Agen46") , "Input Menu Finansia/Kreditplus", " ", compatibilityMode.Mobile, ReportStatus.Done)
+		wait 1
+		Device("Device").App("BNI Agen46").MobileButton("Lanjut").Tap
+	If dtSubMenu_3 = "no" Then
+	wait 3
+			Call CaptureImageUFTV2(Device("Device").App("BNI Agen46") , "Menu Finansia/Kreditplus Blocked", " ", compatibilityMode.Mobile, ReportStatus.Passed)
+		End If
+	ElseIf dtSubMenu_2 = "OTO_Kredit_Mobil/Motor" Then
+		Device("Device").App("BNI Agen46").MobileButton("Buat Input Baru").Tap
+		wait 2
+		Device("Device").App("BNI Agen46").MobileButton("Perusahaan").Tap
+		wait 2
+	Call CaptureImageUFTV2(Device("Device").App("BNI Agen46") , "Menu OTO Kredit Mobil/Motor", " ", compatibilityMode.Mobile, ReportStatus.Done)
+		wait 2
+	Device("Device").App("BNI Agen46").MobileObject("OTO Kredit Mobil/Motor").Tap
+	wait 2
+	Device("Device").App("BNI Agen46").MobileEdit("no.kontrak").Tap
+		wait 2
+		Device("Device").App("BNI Agen46").MobileEdit("no.kontrak").Set dtNoKontrak
+			wait 2
+		Call CaptureImageUFTV2(Device("Device").App("BNI Agen46") , "Input Menu OTO Kredit Mobil/Motor", " ", compatibilityMode.Mobile, ReportStatus.Done)
+		wait 1
+		Device("Device").App("BNI Agen46").MobileButton("Lanjut").Tap
+	If dtSubMenu_3 = "no" Then
+	wait 3
+			Call CaptureImageUFTV2(Device("Device").App("BNI Agen46") , "Menu OTO Kredit Mobil/Motors Blocked", " ", compatibilityMode.Mobile, ReportStatus.Passed)
+		End If
+	Else
+	Device("Device").App("BNI Agen46").MobileButton("Buat Input Baru").Tap
+		wait 2
+	Device("Device").App("BNI Agen46").MobileButton("Perusahaan").Tap
+		wait 2
+	Call CaptureImageUFTV2(Device("Device").App("BNI Agen46") , "SMS Finance", " ", compatibilityMode.Mobile, ReportStatus.Done)
+	wait 2
+	Device("Device").App("BNI Agen46").MobileObject("SMS Finance").Tap
+	wait 2
+	Device("Device").App("BNI Agen46").MobileEdit("no.kontrak").Tap
+		wait 2
+		Device("Device").App("BNI Agen46").MobileEdit("no.kontrak").Set dtNoKontrak
+			wait 2
+		Call CaptureImageUFTV2(Device("Device").App("BNI Agen46") , "Input Menu SMS Finance", " ", compatibilityMode.Mobile, ReportStatus.Done)
+		wait 1
+		Device("Device").App("BNI Agen46").MobileButton("Lanjut").Tap
+	If dtSubMenu_3 = "no" Then
+	wait 3
+			Call CaptureImageUFTV2(Device("Device").App("BNI Agen46") , "Menu SMS Finance Blocked", " ", compatibilityMode.Mobile, ReportStatus.Passed)
+		End If
+End  If
+End Sub
+
+Sub Pilih_Sub_Menu_Kartu_Kredit(dtSubMenu_2, dtSubMenu_3)
+	If dtSubMenu_2 = "Kartu_Kredit_BNI" Then
+	Call CaptureImageUFTV2(Device("Device").App("BNI Agen46") , "Menu Kartu Kredit BNI", " ", compatibilityMode.Mobile, ReportStatus.Done)
+		wait 2
+		Device("Device").App("BNI Agen46").MobileObject("Kartu Kredit BNI").Tap
+	If dtSubMenu_3 = "no" Then
+			Call CaptureImageUFTV2(Device("Device").App("BNI Agen46") , "Menu Kartu Kredit BNI Blocked", " ", compatibilityMode.Mobile, ReportStatus.Passed)
+		End If
+	else
+		Call CaptureImageUFTV2(Device("Device").App("BNI Agen46") , "Menu Kartu Kredit Non BNI", " ", compatibilityMode.Mobile, ReportStatus.Passed)
+	wait 2
+		Device("Device").App("BNI Agen46").MobileObject("Kartu Kredit Non BNI").Tap
+	If dtSubMenu_3 = "no" Then
+			Call CaptureImageUFTV2(Device("Device").App("BNI Agen46") , "Menu Kartu Kredit BNI Blocked", " ", compatibilityMode.Mobile, ReportStatus.Passed)
+		End If
+End If
+End Sub
+
+Sub Pilih_Sub_Menu_Pendidikan(dtSubMenu_2, dtSubMenu_3)
+	If dtSubMenu_2 = "UTBK_SNBT" Then
+	Call CaptureImageUFTV2(Device("Device").App("BNI Agen46") , "Menu UTBK SNBT", " ", compatibilityMode.Mobile, ReportStatus.Done)
+		wait 2
+	Device("Device").App("BNI Agen46").MobileObject("UTBK SNBT").Tap
+	If dtSubMenu_3 = "no" Then
+			Call CaptureImageUFTV2(Device("Device").App("BNI Agen46") , "Menu UTBK SNBT Blocked", " ", compatibilityMode.Mobile, ReportStatus.Passed)
+		End If
+	ElseIf dtSubMenu_2 = "UM_PTKIN" Then
+		Call CaptureImageUFTV2(Device("Device").App("BNI Agen46") , "Menu UM PTKIN", " ", compatibilityMode.Mobile, ReportStatus.Done)
+		wait 2
+		Device("Device").App("BNI Agen46").MobileObject("UM PTKIN").Tap
+	If dtSubMenu_3 = "no" Then
+			Call CaptureImageUFTV2(Device("Device").App("BNI Agen46") , "Menu UM PTKIN Blocked", " ", compatibilityMode.Mobile, ReportStatus.Passed)
+		End If
+	Else  
+		Call CaptureImageUFTV2(Device("Device").App("BNI Agen46") , "Menu Pembayaran Universitas", " ", compatibilityMode.Mobile, ReportStatus.Done)
+			wait 2
+		Device("Device").App("BNI Agen46").MobileObject("Pembayaran Universitas").Tap
+	If dtSubMenu_3 = "no" Then
+			Call CaptureImageUFTV2(Device("Device").App("BNI Agen46") , "Menu Pembayaran Universitas Blocked", " ", compatibilityMode.Mobile, ReportStatus.Passed)
+		End If
+End If
+End Sub
+
+Sub Pilih_Sub_Menu_Tarik_Tunai(dtSubMenu_2, dtSubMenu_3)
+	If dtSubMenu_2 = "Reguler" Then
+	Call CaptureImageUFTV2(Device("Device").App("BNI Agen46") , "Menu Tarik Tunai Reguler", " ", compatibilityMode.Mobile, ReportStatus.Done)
+		wait 2
+	Device("Device").App("BNI Agen46").MobileObject("Reguler Kartu debit BNI").Tap
+	wait 2
+	Device("Device").App("BNI Agen46").MobileObject("Lanjut").Tap
+	
+			Call CaptureImageUFTV2(Device("Device").App("BNI Agen46") , "Menu Tarik Tunai Reguler Blocked", " ", compatibilityMode.Mobile, ReportStatus.Passed)
+		
+	else
+	Call CaptureImageUFTV2(Device("Device").App("BNI Agen46") , "Menu Tarik Tunai Mobile Tunai", " ", compatibilityMode.Mobile, ReportStatus.Done)
+	wait 2
+	Device("Device").App("BNI Agen46").MobileObject("Mobile Tunai Scan barcod").Tap
+	wait 2
+
+			Call CaptureImageUFTV2(Device("Device").App("BNI Agen46") , "Menu Tarik Tunai Mobile Tunai Blocked", " ", compatibilityMode.Mobile, ReportStatus.Passed)
+	
+End  If
+End Sub
+
+Sub Pilih_Sub_Menu_Asuransi(dtSubMenu_2, dtSubMenu_3, dtNoKontrak, dtNominal, dtSubMenu_4)
+	If dtSubMenu_2 = "BNI_Life" Then
+	Call CaptureImageUFTV2(Device("Device").App("BNI Agen46") , "Menu BNI Life", " ", compatibilityMode.Mobile, ReportStatus.Done)
+		wait 2
+	Device("Device").App("BNI Agen46").MobileObject("BNI Life").Tap
+	If dtSubMenu_3 = "no" Then
+			Call CaptureImageUFTV2(Device("Device").App("BNI Agen46") , "Menu BNI Life Blocked", " ", compatibilityMode.Mobile, ReportStatus.Passed)
+		End If
+	ElseIf dtSubMenu_2 = "Jiwasraya" Then
+	Call CaptureImageUFTV2(Device("Device").App("BNI Agen46") , "Menu Jiwasraya", " ", compatibilityMode.Mobile, ReportStatus.Done)
+		wait 2
+	Device("Device").App("BNI Agen46").MobileObject("Jiwasraya").Tap
+	If dtSubMenu_3 = "no" Then
+			Call CaptureImageUFTV2(Device("Device").App("BNI Agen46") , "Menu Jiwasraya Blocked", " ", compatibilityMode.Mobile, ReportStatus.Passed)
+		End If
+	ElseIf dtSubMenu_2 = "Bumiputera" Then
+	Call CaptureImageUFTV2(Device("Device").App("BNI Agen46") , "Menu Bumiputera", " ", compatibilityMode.Mobile, ReportStatus.Done)
+		wait 2
+	Device("Device").App("BNI Agen46").MobileObject("Bumiputera").Tap
+	If dtSubMenu_3 = "no" Then
+			Call CaptureImageUFTV2(Device("Device").App("BNI Agen46") , "Menu Bumiputera Blocked", " ", compatibilityMode.Mobile, ReportStatus.Passed)
+		End If
+	else
+	Call CaptureImageUFTV2(Device("Device").App("BNI Agen46") , "Menu Prudential", " ", compatibilityMode.Mobile, ReportStatus.Done)
+		wait 2
+	Device("Device").App("BNI Agen46").MobileObject("Prudential").Tap
+	If dtSubMenu_3 = "no" Then
+			Call CaptureImageUFTV2(Device("Device").App("BNI Agen46") , "Menu Prudential Blocked", " ", compatibilityMode.Mobile, ReportStatus.Passed)
+		else
+		Call Pilih_Sub_Menu_Prudential(dtSubMenu_2, dtSubMenu_3, dtNoKontrak, dtNominal, dtSubMenu_4)
+		End If
+End  If
+End Sub
+
+Sub Pilih_Sub_Menu_BPJS(dtSubMenu_2, dtSubMenu_3)
+	Call CaptureImageUFTV2(Device("Device").App("BNI Agen46") , "Menu BPJS", " ", compatibilityMode.Mobile, ReportStatus.Done)
+		wait 2
+Device("Device").App("BNI Agen46").MobileObject("BPJS Kesehatan").Tap
+	If dtSubMenu_3 = "no" Then
+			Call CaptureImageUFTV2(Device("Device").App("BNI Agen46") , "Menu BPJS Kesehatan Blocked", " ", compatibilityMode.Mobile, ReportStatus.Passed)
+		End If
+End Sub
+
+Sub Pilih_Sub_Menu_Pajak(dtSubMenu_2, dtSubMenu_3)
+	If dtSubMenu_2 = "PBB" Then
+	Call CaptureImageUFTV2(Device("Device").App("BNI Agen46") , "Menu PBB", " ", compatibilityMode.Mobile, ReportStatus.Done)
+		wait 2
+	Device("Device").App("BNI Agen46").MobileObject("PBB").Tap
+	If dtSubMenu_3 = "no" Then
+			Call CaptureImageUFTV2(Device("Device").App("BNI Agen46") , "Menu PBB Blocked", " ", compatibilityMode.Mobile, ReportStatus.Passed)
+		End If
+	ElseIf dtSubMenu_2 = "Penerimaan_Negara_MPN" Then
+	Call CaptureImageUFTV2(Device("Device").App("BNI Agen46") , "Menu Penerimaan Negara MPN", " ", compatibilityMode.Mobile, ReportStatus.Done)
+	Device("Device").App("BNI Agen46").MobileObject("MPN").Tap
+	wait 1
+	Call CaptureImageUFTV2(Device("Device").App("BNI Agen46") , "List Penerimaan Negara MPN", " ", compatibilityMode.Mobile, ReportStatus.Done)
+	wait 1
+	If dtSubMenu_3 = "Pembuatan_Kode_Billing" Then
+			Device("Device").App("BNI Agen46").MobileObject("MPN Pembuatan Kode Biling").Tap
+			wait 2
+			Call CaptureImageUFTV2(Device("Device").App("BNI Agen46") , "Menu MPN Pembuatan Kode Billing Blocked", " ", compatibilityMode.Mobile, ReportStatus.Passed)
+			else
+			Device("Device").App("BNI Agen46").MobileObject("MPN Pembayaran").Tap
+			wait 1
+	Call CaptureImageUFTV2(Device("Device").App("BNI Agen46") , "Menu MPN Pembayaran Blocked", " ", compatibilityMode.Mobile, ReportStatus.Passed)
+		End If
+	else
+	Device("Device").App("BNI Agen46").MobileObject("BPHTB").Tap
+	wait 2
+	Call CaptureImageUFTV2(Device("Device").App("BNI Agen46") , "Menu BPHTB Blocked", " ", compatibilityMode.Mobile, ReportStatus.Passed)
+End  If
+
+End Sub
+
+Sub Pilih_Sub_Menu_Prudential(dtSubMenu_2, dtSubMenu_3, dtNoKontrak, dtNominal, dtSubMenu_4)
+	If dtSubMenu_3 = "Premi_Pertama" Then
+		Device("Device").App("BNI Agen46").MobileObject("Jenis Pembayaran Prudential").Tap
+		wait 2
+		Call CaptureImageUFTV2(Device("Device").App("BNI Agen46") , "Pilih Premi_Pertama", " ", compatibilityMode.Mobile, ReportStatus.Done)
+		wait 2
+		Device("Device").App("BNI Agen46").MobileObject("Premi Pertama Prudential").Tap
+		wait 2
+		Device("Device").App("BNI Agen46").MobileEdit("no.kontrak").Tap
+		wait 2
+		Device("Device").App("BNI Agen46").MobileEdit("no.kontrak").Set dtNoKontrak
+		wait 2
+		Device("Device").App("BNI Agen46").MobileEdit("nominal").Tap
+		wait 2
+		Device("Device").App("BNI Agen46").MobileEdit("nominal").Set dtNominal
+		wait 2
+		Call CaptureImageUFTV2(Device("Device").App("BNI Agen46") , "Input Premi Pertama", " ", compatibilityMode.Mobile, ReportStatus.Done)
+		wait 1
+		Device("Device").App("BNI Agen46").MobileButton("Lanjut").Tap
+	If dtSubMenu_4 = "no" Then
+			Call CaptureImageUFTV2(Device("Device").App("BNI Agen46") , "Menu  Premi Pertama Blocked", " ", compatibilityMode.Mobile, ReportStatus.Passed)
+		End If
+	ElseIf dtSubMenu_3 = "Premi_Lanjutan" Then
+		Device("Device").App("BNI Agen46").MobileObject("Jenis Pembayaran Prudential").Tap
+		wait 2
+		Call CaptureImageUFTV2(Device("Device").App("BNI Agen46") , "Pilih Premi Lanjutan", " ", compatibilityMode.Mobile, ReportStatus.Done)
+		wait 2
+		Device("Device").App("BNI Agen46").MobileObject("Premi Lanjutan Prudential").Tap
+		wait 2
+		Device("Device").App("BNI Agen46").MobileEdit("no.kontrak").Tap
+		wait 2
+		Device("Device").App("BNI Agen46").MobileEdit("no.kontrak").Set dtNoKontrak
+		wait 2
+		Device("Device").App("BNI Agen46").MobileEdit("nominal").Tap
+		wait 2
+		Device("Device").App("BNI Agen46").MobileEdit("nominal").Set dtNominal
+		wait 2
+		Call CaptureImageUFTV2(Device("Device").App("BNI Agen46") , "Input Premi Lanjutan", " ", compatibilityMode.Mobile, ReportStatus.Done)
+		wait 1
+		Device("Device").App("BNI Agen46").MobileButton("Lanjut").Tap
+	If dtSubMenu_4 = "no" Then
+			Call CaptureImageUFTV2(Device("Device").App("BNI Agen46") , "Menu Premi Lanjutan Blocked", " ", compatibilityMode.Mobile, ReportStatus.Passed)
+		End If
+		ElseIf dtSubMenu_3 = "Topup_Premi" Then
+		Device("Device").App("BNI Agen46").MobileObject("Jenis Pembayaran Prudential").Tap
+		wait 2
+		Call CaptureImageUFTV2(Device("Device").App("BNI Agen46") , "Pilih Topup Premi", " ", compatibilityMode.Mobile, ReportStatus.Done)
+		wait 2
+		Device("Device").App("BNI Agen46").MobileObject("Top Up Premi Prudential").Tap
+		wait 2
+		Device("Device").App("BNI Agen46").MobileEdit("no.kontrak").Tap
+		wait 2
+		Device("Device").App("BNI Agen46").MobileEdit("no.kontrak").Set dtNoKontrak
+		wait 2
+		Device("Device").App("BNI Agen46").MobileEdit("nominal").Tap
+		wait 2
+		Device("Device").App("BNI Agen46").MobileEdit("nominal").Set dtNominal
+		wait 2
+		Call CaptureImageUFTV2(Device("Device").App("BNI Agen46") , "Input Topup Premi", " ", compatibilityMode.Mobile, ReportStatus.Done)
+		wait 1
+		Device("Device").App("BNI Agen46").MobileButton("Lanjut").Tap
+	If dtSubMenu_4 = "no" Then
+			Call CaptureImageUFTV2(Device("Device").App("BNI Agen46") , "Menu Topup Premi Blocked", " ", compatibilityMode.Mobile, ReportStatus.Passed)
+		End If
+		ElseIf dtSubMenu_3 = "Biaya_Cetak_Ulang_Polis" Then
+		Device("Device").App("BNI Agen46").MobileObject("Jenis Pembayaran Prudential").Tap
+		wait 2
+		Call CaptureImageUFTV2(Device("Device").App("BNI Agen46") , "Pilih Biaya Cetak Ulang Polis", " ", compatibilityMode.Mobile, ReportStatus.Done)
+		wait 2
+		Device("Device").App("BNI Agen46").MobileObject("Biaya Cetak Ulang Polis Prudential").Tap
+		wait 2
+		Device("Device").App("BNI Agen46").MobileEdit("no.kontrak").Tap
+		wait 2
+		Device("Device").App("BNI Agen46").MobileEdit("no.kontrak").Set dtNoKontrak
+		wait 2
+		Device("Device").App("BNI Agen46").MobileEdit("nominal").Tap
+		wait 2
+		Device("Device").App("BNI Agen46").MobileEdit("nominal").Set dtNominal
+		wait 2
+		Call CaptureImageUFTV2(Device("Device").App("BNI Agen46") , "Input Biaya Cetak Ulang Polis", " ", compatibilityMode.Mobile, ReportStatus.Done)
+		wait 1
+		Device("Device").App("BNI Agen46").MobileButton("Lanjut").Tap
+	If dtSubMenu_4 = "no" Then
+			Call CaptureImageUFTV2(Device("Device").App("BNI Agen46") , "Menu Biaya Cetak Ulang Polis Blocked", " ", compatibilityMode.Mobile, ReportStatus.Passed)
+		End If
+	ElseIf dtSubMenu_3 = "Biaya_Perubahan_Polis" Then
+		Device("Device").App("BNI Agen46").MobileObject("Jenis Pembayaran Prudential").Tap
+		wait 2
+		Call CaptureImageUFTV2(Device("Device").App("BNI Agen46") , "Pilih Biaya Perubahan Polis", " ", compatibilityMode.Mobile, ReportStatus.Done)
+		wait 2
+		Device("Device").App("BNI Agen46").MobileObject("Biaya Perubahan Polis Prudential").Tap
+		wait 2
+		Device("Device").App("BNI Agen46").MobileEdit("no.kontrak").Tap
+		wait 2
+		Device("Device").App("BNI Agen46").MobileEdit("no.kontrak").Set dtNoKontrak
+		wait 2
+		Device("Device").App("BNI Agen46").MobileEdit("nominal").Tap
+		wait 2
+		Device("Device").App("BNI Agen46").MobileEdit("nominal").Set dtNominal
+		wait 2
+		Call CaptureImageUFTV2(Device("Device").App("BNI Agen46") , "Input Biaya Perubahan Polis", " ", compatibilityMode.Mobile, ReportStatus.Done)
+		wait 1
+		Device("Device").App("BNI Agen46").MobileButton("Lanjut").Tap
+	If dtSubMenu_4 = "no" Then
+			Call CaptureImageUFTV2(Device("Device").App("BNI Agen46") , "Menu Biaya Perubahan Polis Blocked", " ", compatibilityMode.Mobile, ReportStatus.Passed)
+		End If
+	ElseIf dtSubMenu_3 = "Biaya_Cetak_Kartu" Then
+		Device("Device").App("BNI Agen46").MobileObject("Jenis Pembayaran Prudential").Tap
+		wait 2
+		Call CaptureImageUFTV2(Device("Device").App("BNI Agen46") , "Pilih Biaya Cetak Kartu", " ", compatibilityMode.Mobile, ReportStatus.Done)
+		wait 2
+		Device("Device").App("BNI Agen46").MobileObject("Biaya Cetak Kartu Prudential").Tap
+		wait 2
+		Device("Device").App("BNI Agen46").MobileEdit("no.kontrak").Tap
+		wait 2
+		Device("Device").App("BNI Agen46").MobileEdit("no.kontrak").Set dtNoKontrak
+		wait 2
+		Device("Device").App("BNI Agen46").MobileEdit("nominal").Tap
+		wait 2
+		Device("Device").App("BNI Agen46").MobileEdit("nominal").Set dtNominal
+		wait 2
+		Call CaptureImageUFTV2(Device("Device").App("BNI Agen46") , "Input  Cetak Kartu Prudential", " ", compatibilityMode.Mobile, ReportStatus.Done)
+		wait 1
+		Device("Device").App("BNI Agen46").MobileButton("Lanjut").Tap
+	If dtSubMenu_4 = "no" Then
+			Call CaptureImageUFTV2(Device("Device").App("BNI Agen46") , "Menu  Cetak Kartu Prudential Blocked", " ", compatibilityMode.Mobile, ReportStatus.Passed)
+		End If
+End  If
+End Sub

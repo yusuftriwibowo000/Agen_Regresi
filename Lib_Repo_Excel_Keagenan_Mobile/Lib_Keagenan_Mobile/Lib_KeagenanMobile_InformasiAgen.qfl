@@ -1,0 +1,70 @@
+﻿REM -- Triggered Function
+
+Sub Info_Agen()
+'	Do
+'	Loop until Device("Device").App("BNI Agen46").MobileObject("AgenHOME46").Exist(5)
+	If Device("Device").App("BNI Agen46").MobileObject("Saldo anda").Exist(5) and Device("Device").App("BNI Agen46").MobileObject("Ibu DEWI KOMALA HALIM").Exist(5) and Device("Device").App("BNI Agen46").MobileObject("Nomor Agen : BNI06019893").Exist(5) Then 
+		
+		Device("Device").InsightObject("Tap Untuk Lihat").Click
+		wait 5
+		Call CaptureImageUFTV2(Device("Device").App("BNI Agen46") , "Saldo, Nama, dan kode cabang sesuai data user login", " ", compatibilityMode.Mobile, ReportStatus.Passed)
+		wait 5
+	Else 
+       	Reporter.ReportEvent micFail,  "Tidak terdapat Saldo, Nama dan kode cabang", "Gagal"
+        	wait 5
+    	End If 
+End Sub
+
+Sub Hide_Unhide_Saldo_Agen()
+   	Do
+	Loop until Device("Device").InsightObject("Tap Untuk Lihat").Exist(5)
+   	If Device("Device").InsightObject("Tap Untuk Lihat").Exist(5) Then
+       	Device("Device").InsightObject("Tap Untuk Lihat").Click
+      		wait 5
+       	Call CaptureImageUFTV2(Device("Device").App("BNI Agen46") , "Tombol unhide berfungsi dan saldo terlihat", " ", compatibilityMode.Mobile, ReportStatus.Passed)
+       	wait 5
+    	Else
+       	Reporter.ReportEvent micFail,  "Tombol unhide Tidak Ada", "Gagal Melihat Saldo"
+       	wait 5
+    	End If
+   	Do
+	Loop until Device("Device").InsightObject("eye_icon").Exist(5)
+       If Device("Device").InsightObject("eye_icon").Exist(5) Then
+       	Device("Device").InsightObject("eye_icon").Click
+        	wait 5
+        	Call CaptureImageUFTV2(Device("Device").App("BNI Agen46") , "Tombol hide berfungsi dan saldo tidak terlihat", " ", compatibilityMode.Mobile, ReportStatus.Passed)
+        	wait 5
+    	Else
+       	Reporter.ReportEvent micFail,  "Tombol hide Tidak Ada", "Gagal Hide Saldo"
+       	wait 5
+    	End If
+End Sub
+
+Sub Lihat_Profile()
+    	Do
+	Loop until Device("Device").App("BNI Agen46").MobileObject("Akun").Exist(5)
+   	If Device("Device").App("BNI Agen46").MobileObject("Akun").Exist(5) Then
+      		Device("Device").App("BNI Agen46").MobileObject("Akun").Tap
+        	wait 5
+        	Call CaptureImageUFTV2(Device("Device").App("BNI Agen46") , "Masuk ke menu akun", " ", compatibilityMode.Mobile, ReportStatus.Done)
+        	wait 5
+        	Do
+	    	Loop until Device("Device").App("BNI Agen46").MobileObject("Data Pribadi").Exist(5)
+        	If Device("Device").App("BNI Agen46").MobileObject("Data Pribadi").Exist(5) Then
+            		Device("Device").App("BNI Agen46").MobileObject("Data Pribadi").Tap
+            		If Device("Device").App("BNI Agen46").MobileObject("Data Pribadi_Detail").Exist(5) Then
+            			wait 5
+	           	 	Call CaptureImageUFTV2(Device("Device").App("BNI Agen46") , "Masuk ke menu data pribadi", " ", compatibilityMode.Mobile, ReportStatus.Passed)
+	            		wait 10
+            		End If
+            		Device("Device").App("BNI Agen46").MobileObject("Back").Tap
+            		wait 3
+'            		Device("Device").App("BNI Agen46").MobileObject("Beranda").Tap
+        	Else
+            		Reporter.ReportEvent micFail,  "Menu profile tidak di temukan", "Gagal masuk ke menu data pribadi"
+      		End If
+    	Else
+       	Reporter.ReportEvent micFail,  "Menu akun tidak di temukan", "Gagal masuk ke menu akun"
+        	wait 5
+    	End If
+End Sub

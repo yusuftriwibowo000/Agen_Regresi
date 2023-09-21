@@ -1,0 +1,114 @@
+<?xml version="1.0"?>
+<Results version="1.0">
+<ReportNode type="testrun">
+<ReportNode type="Iteration">
+<ReportNode type="Action">
+<ReportNode type="Iteration">
+<ReportNode type="Step">
+<Data>
+    <Name>Syntax error</Name>
+    <ErrorText>Syntax error</ErrorText>
+    <Description>&lt;BR/&gt;Line (24): &amp;quot;If dt_TCID = &amp;quot;MAG0038-005&amp;quot; or dt_TCID = &amp;quot;MAG0038-006&amp;quot; or dt_TCID = &amp;quot;MAG0038-007&amp;quot; or dt_TCID = &amp;quot;MAG0038-008&amp;quot; or dt_TCID = &amp;quot;MAG0038-021&amp;quot; or or dt_TCID = &amp;quot;MAG0038-022&amp;quot; or or dt_TCID = &amp;quot;MAG0038-023&amp;quot; or dt_TCID = &amp;quot;MAG0038-024&amp;quot; or dt_TCID = &amp;quot;MAG0038-037&amp;quot; or dt_TCID = &amp;quot;MAG0038-038&amp;quot; or dt_TCID = &amp;quot;MAG0038-039&amp;quot; or dt_TCID = &amp;quot;MAG0038-040&amp;quot; Then&amp;quot;.</Description>
+    <StartTime>2023-03-10 12:11:14</StartTime>
+    <Result>Failed</Result>
+    <Extension>
+      <IconKey>43cd3170b66b476cac2c781f107b4202</IconKey>
+      <IsPlainTextNodeName>True</IsPlainTextNodeName>
+      <MergeIsErrorIcon>True</MergeIsErrorIcon>
+    </Extension>
+    <Snapshot reference="Resources\Snapshots\61839639-053f-48fb-86d5-f753f33787de.jpeg" />
+    <DeviceInfo />
+  </Data>
+</ReportNode>
+<ReportNode type="Step">
+<Data>
+    <Name>Stop Run</Name>
+    <Description>Run stopped by user.</Description>
+    <StartTime>2023-03-10 12:11:35</StartTime>
+    <Result>Information</Result>
+    <Extension>
+      <IconKey>680c055a57fb4bd18acbc42b36d3b254</IconKey>
+      <IsPlainTextNodeName>True</IsPlainTextNodeName>
+    </Extension>
+  </Data>
+</ReportNode>
+<Data>
+    <Name>SMAG-0038 - BPJSK</Name>
+    <Description />
+    <StartTime>2023-03-10 12:11:14</StartTime>
+    <Duration>21</Duration>
+    <Result>Failed</Result>
+    <Extension>
+      <IconKey>a35f5e3ebd28449794a1f3f830dae167</IconKey>
+      <IsPlainTextNodeName>True</IsPlainTextNodeName>
+    </Extension>
+    <Index>1</Index>
+    <TestedApplications />
+  </Data>
+</ReportNode>
+<Data>
+    <Name>SMAG-0038 - BPJSK</Name>
+    <Description />
+    <StartTime>2023-03-10 12:11:14</StartTime>
+    <Duration>21</Duration>
+    <Result>Failed</Result>
+    <InputParameters />
+    <Extension>
+      <IconKey>96e9d56f30d042c4871df0bc59b4e285</IconKey>
+      <IsPlainTextNodeName>True</IsPlainTextNodeName>
+    </Extension>
+  </Data>
+</ReportNode>
+<Data>
+    <Name>Action0</Name>
+    <Description />
+    <StartTime>2023-03-10 12:11:14</StartTime>
+    <Duration>21</Duration>
+    <Result>Failed</Result>
+    <Extension>
+      <IconKey>a35f5e3ebd28449794a1f3f830dae167</IconKey>
+      <IsPlainTextNodeName>True</IsPlainTextNodeName>
+    </Extension>
+    <Index>1</Index>
+    <TestedApplications />
+  </Data>
+</ReportNode>
+<Data>
+    <Name>SMAG-0038_BPJSK_BPU_PMI_PU_Jakon</Name>
+    <ToolName>Micro Focus UFT One</ToolName>
+    <ToolVersion>2021</ToolVersion>
+    <ToolVersionStringLiteral>2021</ToolVersionStringLiteral>
+    <Description />
+    <StartTime>2023-03-10 12:11:12</StartTime>
+    <Duration>23</Duration>
+    <Result>Failed</Result>
+    <InputParameters />
+    <Extension>
+      <IconKey>190b5bea659e4d63a244704a484b6ba7</IconKey>
+      <IsPlainTextNodeName>True</IsPlainTextNodeName>
+    </Extension>
+    <Environment>
+      <Timezone>+07:00:00</Timezone>
+      <Locale>English (Indonesia)</Locale>
+      <User>1420</User>
+      <CpuInfo>AMD Ryzen 5 5500U with Radeon Graphics         </CpuInfo>
+      <NumberOfCores>12</NumberOfCores>
+      <TotalMemory>6006</TotalMemory>
+      <HostName>OKIKUSMAHESA</HostName>
+      <OSInfo>Windows 11 22H2 (x64)</OSInfo>
+    </Environment>
+    <TestedApplications />
+    <Links>
+      <Link type="DataTable" reference="Default.xlsx" displayname="Default Data Table" />
+    </Links>
+  </Data>
+</ReportNode>
+<GeneralInfo>
+    <ResultName>Res1</ResultName>
+    <RunStartTime>2023-03-10 12:11:12</RunStartTime>
+    <Timezone>+07:00:00</Timezone>
+    <OrchestrationToolName>Micro Focus UFT One</OrchestrationToolName>
+    <OrchestrationToolVersion>2021</OrchestrationToolVersion>
+    <OrchestrationToolVersionStringLiteral>2021</OrchestrationToolVersionStringLiteral>
+  </GeneralInfo>
+</Results>

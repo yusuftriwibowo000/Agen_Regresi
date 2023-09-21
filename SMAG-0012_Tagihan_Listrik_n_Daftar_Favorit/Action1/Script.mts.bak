@@ -1,0 +1,117 @@
+﻿Dim dt_TCID, dt_TestScenarioDesc, dt_ScenarioDesc, dt_ExpectedResult
+Dim dt_Username, dt_Password, dt_IdPelanggan, dt_Nominal, dt_NamaSaveFav, dt_PasswordTrx
+
+REM -------------- Call Function
+Call spLoadLibrary()
+Call spInitiateData("KeagenanMobile_Lib_Report.xlsx", "SMAG-0012_Tagihan_Listrik_n_Daftar_Favorit.xlsx", "SMAG-0012")
+Call spGetDatatable()
+
+Call fnRunningIterator()
+Call spReportInitiate()
+If dt_TCID = "MAG0012-001" or dt_TCID = "MAG0012-004" Then
+	Call spAddScenario(dt_TCID, dt_TestScenarioDesc, dt_ScenarioDesc, dt_ExpectedResult, Array("Username : " & dt_Username, "Password : " & dt_Password, "ID Pelanggan : " & dt_IdPelanggan, "Nominal : " & dt_Nominal, "Password Transaksi : " & dt_PasswordTrx))
+ElseIf dt_TCID = "MAG0012-002" Then 
+	Call spAddScenario(dt_TCID, dt_TestScenarioDesc, dt_ScenarioDesc, dt_ExpectedResult, Array("Username : " & dt_Username, "Password : " & dt_Password, "ID Pelanggan Favorit : " & dt_IdPelanggan, "Save Nama Favorit : " & dt_NamaSaveFav, "Password Transaksi : " & dt_PasswordTrx))
+ElseIf dt_TCID = "MAG0011-003" Then 
+	Call spAddScenario(dt_TCID, dt_TestScenarioDesc, dt_ScenarioDesc, dt_ExpectedResult, Array("Username : " & dt_Username, "Password : " & dt_Password, "ID Pelanggan Dari Favorit : " & dt_IdPelanggan, "Save Nama Favorit : " & dt_NamaSaveFav, "Password Transaksi : " & dt_PasswordTrx))
+End If
+
+REM ------- Keagenan Mobile
+If dt_TCID = "MAG0012-001" or dt_TCID = "MAG0012-003" Then
+	Call Pass_Login()
+End If
+If dt_TCID = "MAG0012-001" Then
+	Call GoTo_TagihanListrik()
+	Call New_Add_Fav_List()
+	Call Input_Pass_Trx()
+	Call Verif_Trx()
+ElseIf dt_TCID = "MAG0012-002" Then
+	Call GoTo_TransferBNI()
+	Call New_Add_Fav_List()
+	Call Input_Pass_Trx()
+	Call Verif_Trx_Save()
+ElseIf dt_TCID = "MAG0011-003" Then
+	Call GoTo_TransferBNI()
+	Call Choice_Fav_List()
+	Call Input_Pass_Trx()
+	Call Verif_Trx()
+ElseIf dt_TCID = "MAG0011-004" Then
+	Call GoTo_TransferBNI()
+	Call New_Add_Fav_List()
+	Call Input_Pass_Trx()
+	Call Verif_Wrong_Pin_Trx()
+	Call Back_to_Home()
+End If
+'ElseIf dt_TCID = "MAG0011-005" Then
+'	Call GoTo_TransferBNI()
+'	Call New_Add_Fav_List()
+''	Call Error_Log()
+'	Call Input_Pass_Trx()
+'	Call Verif_Max_Limit_Trx()
+'	Call Back_to_Home()
+'ElseIf dt_TCID = "MAG0011-006" Then
+'	Call GoTo_TransferBNI()
+'	Call New_Add_Fav_List()
+'	Call Input_Pass_Trx()
+'	Call Verif_Saldo_Kurang_Trx()
+'	Call Back_to_Home()
+'ElseIf dt_TCID = "MAG0011-007" Then
+'	Call GoTo_TransferBNI()
+'	Call New_Add_Fav_List()
+'	Call Input_Pass_Trx()
+'	Call Verif_Rekening_Tutup_Trx()
+'	Call Back_to_Home()
+If dt_TCID = "MAG0012-002" or dt_TCID = "MAG0012-004" Then
+	Call Logout()
+End If
+
+REM ------ Report Save
+Call spReportSave()
+	
+REM ------- Load Function & Repository
+Sub spLoadLibrary()
+	Dim LibPathKeagenanMobile, LibReport, LibRepo, objSysInfo
+	Dim tempKeagenanMobilePath, tempKeagenanMobilePath2, PathKeagenanMobile
+	
+	Set objSysInfo 		= Createobject("Wscript.Network")	
+	
+	tempKeagenanMobilePath 	= Environment.Value("TestDir")
+	tempKeagenanMobilePath2 	= InStrRev(tempKeagenanMobilePath, "\")
+	PathKeagenanMobile 		= Left(tempKeagenanMobilePath, tempKeagenanMobilePath2)
+	
+	LibPathKeagenanMobile	= PathKeagenanMobile & "Lib_Repo_Excel_Keagenan_Mobile\Lib_Keagenan_Mobile\"
+	LibReport					= PathKeagenanMobile & "Lib_Repo_Excel_Keagenan_Mobile\LibReport\"
+	LibRepo					= PathKeagenanMobile & "Lib_Repo_Excel_Keagenan_Mobile\Repo_Keagenan_Mobile\"
+
+	REM ------- Report Library
+	LoadFunctionLibrary (LibReport & "BNI_GlobalFunction.qfl")
+	LoadFunctionLibrary (LibReport & "Run Report BNI.vbs")
+	
+	REM ---- Keagenan Mobile Library
+	LoadFunctionLibrary (LibPathKeagenanMobile & "Lib_Keagenan_Mobile.qfl")
+	Call RepositoriesCollection.Add(LibRepo & "RP_Keagenan_Mobile.tsr")
+	
+	REM ---- Login Keagenan Mobile Library
+	LoadFunctionLibrary (LibPathKeagenanMobile & "Lib_KeagenanMobile_Login.qfl")
+	Call RepositoriesCollection.Add(LibRepo & "RP_KeagenanMobile_Login.tsr")
+	
+	REM ---- Tagihan Listrik Keagenan Mobile Library
+	LoadFunctionLibrary (LibPathKeagenanMobile & "Lib_KeagenanMobile_TagihanListrik.qfl")
+	Call RepositoriesCollection.Add(LibRepo & "RP_KeagenanMobile_TagihanListrik.tsr")
+End Sub
+
+Sub spGetDatatable()
+	REM --------- Reporting
+	dt_TCID						= DataTable.Value("TC_ID", dtLocalSheet)
+	dt_TestScenarioDesc			= DataTable.Value("TEST_SCENARIO_DESC", dtLocalSheet)
+	dt_ScenarioDesc				= DataTable.Value("SCENARIO_DESC", dtLocalSheet)
+	dt_ExpectedResult			= DataTable.Value("EXPECTED_RESULT", dtLocalSheet)
+
+	REM --------- Login
+	dt_Username			= DataTable.Value("USERNAME", dtLocalSheet)
+	dt_Password			= DataTable.Value("PASSWORD", dtLocalSheet)
+	dt_IdPelanggan		= DataTable.Value("ID_PELANGGAN", dtLocalSheet)
+	dt_Nominal			= DataTable.Value("NOMINAL", dtLocalSheet)
+	dt_NamaSaveFav		= DataTable.Value("NAMA_SAVE_FAV", dtLocalSheet)
+	dt_PasswordTrx		= DataTable.Value("PASSWORD_TRX", dtLocalSheet)
+End Sub

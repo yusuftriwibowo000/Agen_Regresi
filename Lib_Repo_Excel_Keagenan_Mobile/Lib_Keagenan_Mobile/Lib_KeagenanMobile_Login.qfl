@@ -1,0 +1,559 @@
+﻿REM -- Triggered Function
+Sub Skip_Update()
+	Do
+		If Device("Device").InsightObject("Ok_Kerahasiaan").Exist(0) Then
+			Device("Device").InsightObject("Ok_Kerahasiaan").Click
+		Else
+			wait 3
+		End If
+	Loop until Device("Device").InsightObject("Username").Exist(0)
+End Sub
+
+Sub spLoadingScreenLogin()
+	Call Skip_Update()
+	wait 4
+	Call CaptureImageUFTV2(Device("Device").App("BNI Agen46"), "Buka Aplikasi Mobile Agen", " ", compatibilityMode.Mobile, ReportStatus.Done)
+	wait 4
+End Sub
+
+REM -- Cek Filed
+Function Isi_field_Login(dt_Username, dt_Password)
+	AIUtil.SetContext Device("Device")
+	AIUtil("text_box", "Username").Type dt_Username
+	AIUtil("text_box", "Password Login").Type dt_Password
+	wait 1
+	Call CaptureImageUFTV2(Device("Device"), "Halaman Input Login ", " ", compatibilityMode.Mobile, ReportStatus.Done)
+	
+'	Set Login_Param = CreateObject("WScript.Shell")
+'	If Device("Device").InsightObject("Username").Exist(5) Then
+'		Device("Device").InsightObject("Username").Click
+'		wait 3
+'		Login_Param.SendKeys(dt_Username)
+
+
+'		wait 3
+'		If Device("Device").InsightObject("Password_Login").Exist(5) Then
+'		Device("Device").InsightObject("Password_Login").Click
+'		wait 3
+'		Login_Param.SendKeys(dt_Password)
+'		End  If
+'		wait 4
+'		If dt_Username <> "" and dt_Password <> "" Then
+'			Call CaptureImageUFTV2(Device("Device").App("BNI Agen46"), "User Memasukan Username & Password", " ", compatibilityMode.Mobile, ReportStatus.Done)
+'		ElseIf Username = "" and Password <> "" Then
+'			Call CaptureImageUFTV2(Device("Device").App("BNI Agen46"), "User Memasukan Username Kosong & Password Diisi", " ", compatibilityMode.Mobile, ReportStatus.Done)
+'		ElseIf Username <> "" and Password = "" Then
+'			Call CaptureImageUFTV2(Device("Device").App("BNI Agen46"), "User Memasukan Username Diisi & Password Kosong", " ", compatibilityMode.Mobile, ReportStatus.Done)
+'		ElseIf Username = "" and Password = "" Then
+'			Call CaptureImageUFTV2(Device("Device").App("BNI Agen46"), "User Memasukan Username & Password Kosong", " ", compatibilityMode.Mobile, ReportStatus.Done)
+'		End If
+'		wait 4
+'	Else
+'		Reporter.ReportEvent micFail, "Gagal Melakukan Input Username & Passowrd", "Gagal"
+'	End If
+End Function
+
+Sub verify_passed_login()
+	Do
+		wait 3
+	Loop until Device("Device").InsightObject("Hallaman_Menu").Exist(0)
+	If Device("Device").InsightObject("Hallaman_Menu").Exist(0) Then
+		wait 4
+		Call CaptureImageUFTV2(Device("Device").App("BNI Agen46") , "User Berhasil Login", " ", compatibilityMode.Mobile, ReportStatus.Passed)
+		wait 4
+	Else
+		Reporter.ReportEvent micFail, "Gagal Melakukan Login", "Gagal"
+	End If
+	Device("Device").InsightObject("Ok_Skip_JagaKerahasian").Click
+End Sub
+
+Sub verify_fail_login()
+'	Do
+'		wait 3
+'	Loop until Device("Device").InsightObject("Ok_Kode_Agen").Exist(0)
+	If Device("Device").InsightObject("Ok_Kode_Agen").Exist(0) Then
+		wait 4
+		Call CaptureImageUFTV2(Device("Device").App("BNI Agen 46") , "User Gagal Login", " ", compatibilityMode.Mobile, ReportStatus.Passed)
+		wait 4
+		Device("Device").InsightObject("Ok_Kode_Agen").Click
+	Else
+		Reporter.ReportEvent micFail, "User Berhasil Login", "Gagal"
+	End If
+End Sub
+
+Sub verify_fail_login_blocked()
+'	Do
+'		wait 3	
+'	Loop until AIUtil("button", "Buka Blokir").Exist(0)
+	If AIUtil("button", "Buka Blokir").Exist(0) Then
+		wait 3
+		Call CaptureImageUFTV2(Device("Device").App("BNI Agen 46") , "Login Gagal dan muncul alert akun sudah terblokir", " ", compatibilityMode.Mobile, ReportStatus.Passed)
+		wait 3
+		AIUtil("button", "Buka Blokir").Click
+	Else
+		Reporter.ReportEvent micFail, "User Berhasil Login", "Gagal"
+	End If
+End Sub
+
+Function Login_lama(dt_Username, dt_Password)
+	wait 5 
+	Call spLoadingScreenLogin()
+	Call Isi_field_Login(dt_Username, dt_Password)
+	Device("Device").InsightObject("Masuk_Btn").Click
+	wait 3
+'	If Device("Device").InsightObject("Ok_Notif_linkresmiagen46").Exist(0) Then
+'	Device("Device").InsightObject("Ok_Notif_linkresmiagen46").Click
+	if Device("Device").InsightObject("Ok_Skip_JagaKerahasian").Exist(0) Then
+	Device("Device").InsightObject("Ok_Skip_JagaKerahasian").Click
+	End If
+End Function
+
+Function Login(dt_Username, dt_Password)
+	AIUtil.SetContext Device("Device")
+	AIUtil("text_box", "Username").Type dt_Username
+	AIUtil("text_box", "Password Login").Type dt_Password
+	wait 1
+	Call CaptureImageUFTV2(Device("Device"), "Halaman Input Login ", " ", compatibilityMode.Mobile, ReportStatus.Done)
+	
+	AIUtil("button", "Masuk").Click
+	if Device("Device").InsightObject("Ok_Skip_JagaKerahasian").Exist(1) Then
+	Device("Device").InsightObject("Ok_Skip_JagaKerahasian").Click
+
+
+'	If Device("Device").InsightObject("Ok_Notif_linkresmiagen46").Exist(0) Then
+'	Device("Device").InsightObject("Ok_Notif_linkresmiagen46").Click
+	Else 
+	End If
+End Function
+
+
+Function Pass_Login(dt_Username, dt_Password)
+	Call spLoadingScreenLogin()
+	Call Isi_field_Login(dt_Username, dt_Password)
+	Device("Device").InsightObject("Masuk_Btn").Click
+	wait 1
+	Call verify_passed_login()
+End Function
+
+Function Login_Simpan_Uname(dt_Username, dt_Password)
+	Call spLoadingScreenLogin()
+	Call Isi_field_Login(dt_Username, dt_Password)
+	Do
+		wait 3
+	Loop until Device("Device").InsightObject("Ceklis_Uname").Exist(0)
+	If Device("Device").InsightObject("Ceklis_Uname").Exist(0) Then
+		Device("Device").InsightObject("Ceklis_Uname").Click
+		wait 4
+		Call CaptureImageUFTV2(Device("Device").App("BNI Agen 46"), "User Ceklis Simpan Username", " ", compatibilityMode.Mobile, ReportStatus.Done)
+		wait 4
+	Else
+		Reporter.ReportEvent micFail, "User Gagal Ceklist", "Gagal"
+	End If
+	Device("Device").InsightObject("Masuk_Btn").Click
+	Call verify_passed_login()
+End Function
+
+Function Unceklis_Uname(dt_Username)
+	Do
+		wait 3
+	Loop until Device("Device").InsightObject("Unceklis_Uname").Exist(0)
+	Device("Device").InsightObject("Unceklis_Uname").Click
+	Do
+	Loop until Device("Device").InsightObject("No_Empty_Field").Exist(0)
+	Device("Device").InsightObject("No_Empty_Field").Click
+	wait 2
+	Set objkey = CreateObject("WScript.Shell")
+	Dim U_Leng
+	For U_Leng = 1 To dt_Username.Length()
+		wait 3
+		objkey.SendKeys "{BACKSPACE}"
+		wait 3
+	Next
+End Function
+
+Function Wrong_Password(dt_Username, dt_Password)
+	Call spLoadingScreenLogin()
+	Call Isi_field_Login(dt_Username, dt_Password)
+	Do
+		wait 3
+	Loop until Device("Device").InsightObject("Eye").Exist(0)
+	If Device("Device").InsightObject("Eye").Exist(0) Then
+		Device("Device").InsightObject("Eye").Click
+		wait 4
+		Call CaptureImageUFTV2(Device("Device").App("BNI Agen 46") , "User Memasukan Password Username yang Salah", " ", compatibilityMode.Mobile, ReportStatus.Done)
+		wait 4
+	End If
+	Device("Device").InsightObject("Masuk_Btn").Click
+	Call verify_fail_login()
+End Function
+
+Function Empty_Password(dt_Username, dt_Password)
+	Call spLoadingScreenLogin()
+	Call Isi_field_Login(dt_Username, dt_Password)
+	Device("Device").InsightObject("Masuk_Btn").Click
+	Do
+		wait 3
+	Loop until Device("Device").InsightObject("Password_Wajib_Diisi").Exist(0)
+	If Device("Device").InsightObject("Password_Wajib_Diisi").Exist(0) Then
+		wait 4
+		Call CaptureImageUFTV2(Device("Device").App("BNI Agen46"), "Login Gagal dan ada warning pada informasi (field is empety)", " ", compatibilityMode.Mobile, ReportStatus.Passed)
+		wait 4
+	End If
+End Function
+
+Function Credential_User(dt_Username, dt_Password)
+	Call spLoadingScreenLogin()
+	Call Isi_field_Login(dt_Username, dt_Password)
+	Do
+		wait 3
+	Loop until Device("Device").InsightObject("Eye").Exist(0)
+	If Device("Device").InsightObject("Eye").Exist(0) Then
+		Device("Device").InsightObject("Eye").Click
+		wait 4
+		Call CaptureImageUFTV2(Device("Device").App("BNI Agen 46") , "Akun user yang sedang login di perangkat lain", " ", compatibilityMode.Mobile, ReportStatus.Done)
+		wait 4
+	End If
+	Device("Device").InsightObject("Masuk_Btn").Click
+	Call verify_fail_login()
+End Function
+
+
+
+Sub Repeat_Login()
+AIUtil.SetContext Device("Device")
+	If AIUtil("button", "Ok").Exist(0) Then
+		Call CaptureImageUFTV2(Device("Device").App("BNI Agen 46") , "Error Input Password Salah 1", " ", compatibilityMode.Mobile, ReportStatus.Done)
+		AIUtil("button", "Ok").Click
+	End If
+	wait 3
+	AIUtil("button", "Masuk").Click
+	wait 2
+	If AIUtil("button", "Ok").Exist(0) Then
+		Call CaptureImageUFTV2(Device("Device").App("BNI Agen 46") , "Error Input Password Salah 2", " ", compatibilityMode.Mobile, ReportStatus.Done)
+		AIUtil("button", "Ok").Click
+		Call CaptureImageUFTV2(Device("Device").App("BNI Agen 46") , "Muncul PopUp User sudah Terblokir", " ", compatibilityMode.Mobile, ReportStatus.Done)
+	End If
+	AIUtil("button", "Masuk").Click
+	wait 2
+End Sub
+
+Function Go_To_Login_Biometric(dt_TCID, dt_Username)
+	Set objkey = CreateObject("WScript.Shell")
+	Do
+		wait 3
+	Loop until Device("Device").InsightObject("Finger").Exist(0) or Device("Device").InsightObject("Face").Exist(0)
+	If Device("Device").InsightObject("Finger").Exist(0) or Device("Device").InsightObject("Face").Exist(0) Then
+		Device("Device").InsightObject("Username").Click
+		objkey.SendKeys(dt_Username)
+		wait 4
+		Call CaptureImageUFTV2(Device("Device").App("BNI Agen46") , "Login Dengan Biometrik", " ", compatibilityMode.Mobile, ReportStatus.Passed)
+		wait 4
+		If dt_TCID = "MAG0001-013" Then
+'			Device("Device").InsightObject("Face").Click
+msgbox "klik face recognition"
+		ElseIf dt_TCID = "MAG0001-014" Then
+'			Device("Device").InsightObject("Finger").Click
+msgbox "klik finger recognition"
+		End If
+		wait 4
+		Call CaptureImageUFTV2(Device("Device").App("BNI Agen46") , "Konfirmasi Login Dengan Biometrik", " ", compatibilityMode.Mobile, ReportStatus.Passed)
+		wait 15
+		MsgBox ("Verify Your Biometrict Now !!")
+		wait 15
+	Else
+    	Reporter.ReportEvent micFail, "Gagal Login dan Konfirmasi Biometrik","Gagal"
+	End If
+End Function
+
+Sub Open_MAgen()
+'	Do
+'		wait 3
+'	Loop until Device("Device").App("BNI Agen46").MobileObject("AgenHOME46").Exist(0)
+	If Device("Device").App("BNI Agen46").MobileObject("AgenHOME46").Exist(0) Then
+		wait 4
+		Call CaptureImageUFTV2(Device("Device").App("BNI Agen46"), "Buka Aplikasi Mobile Agen", " ", compatibilityMode.Mobile, ReportStatus.Done)
+		wait 4
+	Else
+		Reporter.ReportEvent micFail, "Gagal Login dan Konfirmasi Biometrik","Gagal"
+	End If
+End Sub
+
+Sub Verify_CekValue() 
+   	Do 
+		wait 3
+	Loop until Device("Device").InsightObject("Tap untuk lihatt_Pendapatan").Exist(0) 
+   	If Device("Device").InsightObject("Tap untuk lihatt_Pendapatan").Exist(0) Then
+       	Device("Device").InsightObject("Tap untuk lihatt_Pendapatan").Click
+      	wait 3
+       	Call CaptureImageUFTV2(Device("Device").App("BNI Agen46") , "User Klik tap disini untuk melihat Saldo Pendapatan", " ", compatibilityMode.Mobile, ReportStatus.Passed)
+       	wait 3
+    Else
+       	Reporter.ReportEvent micFail,  "Tombol unhide Tidak Ada", "Gagal Melihat Saldo"
+    End If
+End Sub
+
+Sub Verify_HideUnhide()
+	Do
+		wait 20
+	Loop until Device("Device").InsightObject("Eye_Pendapatan").Exist(0)
+   	If Device("Device").InsightObject("Eye_Pendapatan").Exist(0) Then
+       	Device("Device").InsightObject("Eye_Pendapatan").Click
+      	wait 4
+       	Call CaptureImageUFTV2(Device("Device").App("BNI Agen46") , "User Klik ikon tap untuk melihat (ikon mata silang/unhide)", " ", compatibilityMode.Mobile, ReportStatus.Passed)
+       	wait 4
+    Else
+       	Reporter.ReportEvent micFail,  "Tombol unhide Tidak Ada", "Gagal Melihat Saldo"
+    End If
+End Sub
+
+Sub Verivy_OpenForNewOSVersion()
+'	Do
+'		wait 3
+'	Loop until Device("Device").InsightObject("Aktivasi").Exist(0)
+	If Device("Device").InsightObject("Aktivasi").Exist(0) Then
+	    wait 4
+       	Call CaptureImageUFTV2(Device("Device").App("BNI Agen46") , "User Aktivasi Agen Atas Upgrade OS", " ", compatibilityMode.Mobile, ReportStatus.Passed)
+       	wait 4
+		Device("Device").InsightObject("Aktivasi").Click
+	Else
+		Reporter.ReportEvent micFail,  "Gagal Aktivasi Atas Upgrade OS", "Gagal"
+	End If
+End Sub
+
+Sub Verivy_OpenForNewOSVersionWithOTP()
+	Do
+		wait 3
+	Loop until Device("Device").InsightObject("Aktivasi").Exist(0)
+	If Device("Device").InsightObject("Aktivasi").Exist(0) Then
+	    wait 4
+       	Call CaptureImageUFTV2(Device("Device").App("BNI Agen46") , "User Aktivasi Agen Atas Upgrade OS", " ", compatibilityMode.Mobile, ReportStatus.Done)
+       	wait 4
+		Device("Device").InsightObject("Aktivasi").Click
+		Do
+		Loop until Device("Device").App("BNI Agen46").MobileObject("Masukkan OTP Anda").Exist(0)
+		If Device("Device").App("BNI Agen46").MobileObject("Masukkan OTP Anda").Exist(0) Then
+			wait 4
+	       	Call CaptureImageUFTV2(Device("Device").App("BNI Agen46") , "User Memasukan Kode OTP Atas Upgrade OS", " ", compatibilityMode.Mobile, ReportStatus.Passed)
+	       	wait 4
+	       	MsgBox "Masukkan OTP"
+	       	Call CaptureImageUFTV2(Device("Device").App("BNI Agen46") , "Berhasil Memasukan Kode OTP", " ", compatibilityMode.Mobile, ReportStatus.Passed)
+			  wait 2
+			  If Device("Device").InsightObject("Masuk_Aktivasi").Exist(0) Then
+				    Call CaptureImageUFTV2(Device("Device").App("BNI Agen46") , "Berhasil Aktivasi", " ", compatibilityMode.Mobile, ReportStatus.Passed)
+				   wait 3
+				    Device("Device").InsightObject("Masuk_Aktivasi").Click
+			   End If
+	    Else
+	       	Reporter.ReportEvent micFail,  "Gagal Memasukan Kode OTP Atas Upgrade OS", "Gagal"
+	    End If
+	Else
+		Reporter.ReportEvent micFail,  "Gagal Aktivasi Atas Upgrade OS", "Gagal"
+	End If
+End Sub
+
+Sub Logout()
+'	Do
+'		Device("Device").InsightObject("Logout_Btn").Click
+'	Loop until Device("Device").InsightObject("Ya_Logout").Exist(0)
+	AIUtil.SetContext Device("Device")
+'	Device("Device").App("BNI Agen46").MobileButton("Saya mengerti").Tap
+	wait 2
+Do 
+	Device("Device").Back()
+	wait 1
+Loop until Device("Device").InsightObject("Ya_Logout").Exist(0)
+	If Device("Device").InsightObject("Ya_Logout").Exist(0) Then
+		wait 4
+		Call CaptureImageUFTV2(Device("Device").App("BNI Agen46"), "Konfirmasi Logout", " ", compatibilityMode.Mobile, ReportStatus.Passed)
+		wait 4
+		Device("Device").InsightObject("Ya_Logout").Click
+		wait 10
+		Call After_Logout()
+	Else 
+		Reporter.ReportEvent micFail,  "User Gagal logout", "Gagal"
+	End If
+End Sub
+
+Sub After_Logout()
+	Do
+		wait 3
+	Loop until Device("Device").InsightObject("Ok_Kerahasiaan").Exist(0) 
+	If Device("Device").InsightObject("Ok_Kerahasiaan").Exist(0) Then
+		wait 4
+		Call CaptureImageUFTV2(Device("Device").App("BNI Agen46"), "User Berhasil Logout", " ", compatibilityMode.Mobile, ReportStatus.Passed)
+		wait 4
+	Else
+		Reporter.ReportEvent micFail,  "Tidak berhasil Logout", "Gagal"
+	End If
+End Sub
+
+Sub End_Session()
+	Do
+		wait 4
+	Loop until Device("Device").InsightObject("Ok_Kerahasiaan").Exist(0) 
+	If Device("Device").InsightObject("Ok_Kerahasiaan").Exist(0) Then
+		wait 4
+		Call CaptureImageUFTV2(Device("Device").App("BNI Agen46"), "Sesi login habis dan screen ke halaman login", " ", compatibilityMode.Mobile, ReportStatus.Passed)
+		wait 4
+	Else
+		Reporter.ReportEvent micFail,  "Tidak berhasil Logout", "Gagal"
+	End If
+End Sub
+
+Sub Session_Idle()
+	Do
+'		MsgBox("Wait For Halaman Menu")
+	Loop until Device("Device").App("BNI Agen46").MobileObject("AgenHOME46").Exist(0)
+	If Device("Device").App("BNI Agen46").MobileObject("AgenHOME46").Exist(0) Then
+		wait 340
+		Device("Device").App("BNI Agen46").MobileObject("AgenHOME46").Tap
+		wait 5
+		Call CaptureImageUFTV2(Device("Device").App("BNI Agen46") , "Session telah Expired", " ", compatibilityMode.Mobile, ReportStatus.Done)
+		wait 5
+	Else
+		Reporter.ReportEvent micFail,  "Tidak berhasil Logout", "Gagal"
+	End If
+	If Device("Device").InsightObject("Ok_Sayamengerti_cobamasuk").Exist Then
+		Device("Device").InsightObject("Ok_Sayamengerti_cobamasuk").Click
+	End If
+End Sub
+
+
+'Sub Repeat_Login_Oki()
+'	Dim Repeat
+'	Repeat = 1
+'	Do 
+'		If Device("Device").InsightObject("Ok_Kode_Agen").Exist(0) Then
+'			Device("Device").InsightObject("Ok_Kode_Agen").Click
+'		End If
+'		wait 3
+'		Device("Device").InsightObject("Masuk_Btn").Click
+'		wait 1
+'	Loop While (Repeat <= 2)
+'End Sub
+'
+Function Blocked_User(dt_Username, dt_Password)
+	Call spLoadingScreenLogin()
+	Call Login(dt_Username, dt_Password)
+'	Call Isi_field_Login(dt_Username, dt_Password)
+'	Do
+'		wait 3
+'	Loop until AIUtil("view").Exist(0)
+	AIUtil.SetContext Device("Device")
+	If AIUtil("view").Exist(1) Then
+		AIUtil("view").Click
+		wait 3
+		Call CaptureImageUFTV2(Device("Device").App("BNI Agen 46") , "Masukan password username salah", " ", compatibilityMode.Mobile, ReportStatus.Done)
+		wait 3
+	End If
+	AIUtil("button", "Masuk").Click
+	Call Repeat_Login()
+	Call verify_fail_login_blocked() 
+End Function
+
+Sub Input_Verifikasi_Data(dt_TCID, dtVerifUsername, dtVerifEmail, dtVerifNoIdentitas, dtVerifNoRek, dtTglLahir)
+	Call CaptureImageUFTV2(Device("Device").App("BNI Agen 46") , "Input Data Verifikasi", " ", compatibilityMode.Mobile, ReportStatus.Done)
+	Device("Device").App("BNI Agen46").MobileEdit("Verifikasi Data Username").Tap
+	Device("Device").App("BNI Agen46").MobileEdit("Verifikasi Data Username").Set dtVerifUsername
+	wait 2
+	Device("Device").App("BNI Agen46").MobileEdit("Verifikasi Data Email").Tap
+	Device("Device").App("BNI Agen46").MobileEdit("Verifikasi Data Email").Set dtVerifEmail
+	wait 2
+	Device("Device").App("BNI Agen46").MobileEdit("Verifikasi Data Nomer Identitas").Tap
+	Device("Device").App("BNI Agen46").MobileEdit("Verifikasi Data Nomer Identitas").Set dtVerifNoIdentitas
+	wait 2
+	Device("Device").App("BNI Agen46").MobileEdit("Verifikasi Data Nomer Rek").Tap
+	Device("Device").App("BNI Agen46").MobileEdit("Verifikasi Data Nomer Rek").Set dtVerifNoRek
+	wait 2
+	If dt_TCID = "MAG0071-022" Then
+		Device("Device").App("BNI Agen46").MobileButton("Verifikasi Lanjut").Tap
+		wait 2
+		Call verif_input_kosong(dt_TCID, dtVerifUsername, dtVerifEmail, dtVerifNoIdentitas, dtVerifNoRek, dtTglLahir)
+	else
+		Call Verifikasi_Tanggal_Lahir(dt_TCID, dtTglLahir)
+		wait 2
+		Call Verif_Input_Kosong(dt_TCID, dtVerifUsername, dtVerifEmail, dtVerifNoIdentitas, dtVerifNoRek, dtTglLahir)
+	End If
+	Device("Device").App("BNI Agen46").MobileButton("Verifikasi Lanjut").Tap
+End Sub
+
+Sub Verifikasi_Tanggal_Lahir(dt_TCID, dtTglLahir)
+	Device("Device").App("BNI Agen46").MobileObject("Verifikasi Data Tanggal Lahir 2").Tap
+	wait 2
+	Device("Device").App("BNI Agen46").MobileButton("Date Edit").Tap
+	wait 2
+	Device("Device").App("BNI Agen46").MobileEdit("Verifikasi Data Username").Set dtTglLahir
+	wait 2
+	Device("Device").App("BNI Agen46").MobileButton("Select Date OK").Tap
+End Sub
+
+
+Sub Verif_Input_Kosong(dt_TCID, dtVerifUsername, dtVerifEmail, dtVerifNoIdentitas, dtVerifNoRek, dtTglLahir)
+		If dtVerifUsername = "" Then
+		Call CaptureImageUFTV2(Device("Device").App("BNI Agen 46") , "Username Kosong", " ", compatibilityMode.Mobile, ReportStatus.Passed)
+	ElseIf dtVerifEmail = "" Then
+		Call CaptureImageUFTV2(Device("Device").App("BNI Agen 46") , "Email Kosong", " ", compatibilityMode.Mobile, ReportStatus.Passed)
+	ElseIf dtVerifNoIdentitas = "" Then
+		Call CaptureImageUFTV2(Device("Device").App("BNI Agen 46") , "Nomer Identitas Kosong", " ", compatibilityMode.Mobile, ReportStatus.Passed)
+	ElseIf dtVerifNoRek = "" Then
+		Call CaptureImageUFTV2(Device("Device").App("BNI Agen 46") , "Nomer Rekening Kosong", " ", compatibilityMode.Mobile, ReportStatus.Passed)
+	ElseIf dtTglLahir = "" Then
+		Call CaptureImageUFTV2(Device("Device").App("BNI Agen 46") , "Tanggal Lahir Kosong", " ", compatibilityMode.Mobile, ReportStatus.Passed)
+	End If
+End Sub
+
+
+Sub Verifikasi_Data(dt_TCID)
+	If dt_TCID = "MAG0071-023" or dt_TCID = "MAG0071-014" Then
+		Call CaptureImageUFTV2(Device("Device").App("BNI Agen 46") , "Username TIdak Sesuai", " ", compatibilityMode.Mobile, ReportStatus.Passed)
+	ElseIf dt_TCID = "MAG0071-024" or dt_TCID = "MAG0071-013" Then
+		Call CaptureImageUFTV2(Device("Device").App("BNI Agen 46") , "Email TIdak Sesuai", " ", compatibilityMode.Mobile, ReportStatus.Passed)
+	ElseIf dt_TCID = "MAG0071-025" Then
+		Call CaptureImageUFTV2(Device("Device").App("BNI Agen 46") , "Nomer Identitas TIdak Sesuai", " ", compatibilityMode.Mobile, ReportStatus.Passed)
+	ElseIf dt_TCID = "MAG0071-026" Then
+		Call CaptureImageUFTV2(Device("Device").App("BNI Agen 46") , "Nomer Rekening TIdak Sesuai", " ", compatibilityMode.Mobile, ReportStatus.Passed)
+	ElseIf dt_TCID = "MAG0071-027" Then
+		Call CaptureImageUFTV2(Device("Device").App("BNI Agen 46") , "Tanggal Lahir TIdak Sesuai", " ", compatibilityMode.Mobile, ReportStatus.Passed)
+	ElseIf dt_TCID = "MAG0071-028" Then
+		Call CaptureImageUFTV2(Device("Device").App("BNI Agen 46") , "Password Login Kosong", " ", compatibilityMode.Mobile, ReportStatus.Passed)
+	ElseIf dt_TCID = "MAG0071-029" Then
+		Call CaptureImageUFTV2(Device("Device").App("BNI Agen 46") , "Konfirmasi Password Login Kosong", " ", compatibilityMode.Mobile, ReportStatus.Passed)
+	ElseIf dt_TCID = "MAG0071-030" Then
+		Call CaptureImageUFTV2(Device("Device").App("BNI Agen 46") , "Password Login dan Konfirmasi Password Login Berbeda", " ", compatibilityMode.Mobile, ReportStatus.Passed)
+	ElseIf dt_TCID = "MAG0071-031" Then
+		Call CaptureImageUFTV2(Device("Device").App("BNI Agen 46") , "Password Login Baru Berbeda Dari Konfirmasi Password Login", " ", compatibilityMode.Mobile, ReportStatus.Passed)
+	else
+		Call CaptureImageUFTV2(Device("Device").App("BNI Agen 46") , "Data Inputan Tidak Sesuai", " ", compatibilityMode.Mobile, ReportStatus.Passed)
+	End If
+End Sub
+
+Sub Lupa_Password()
+	AIUtil.SetContext Device("Device")
+	Call CaptureImageUFTV2(Device("Device").App("BNI Agen 46") , "Klik Lupa Password", " ", compatibilityMode.Mobile, ReportStatus.Done)
+	AIUtil.FindTextBlock("Lupa password? Klik disini").Click
+	wait 2 
+	Call CaptureImageUFTV2(Device("Device").App("BNI Agen 46") , "Atur Ulang Password", " ", compatibilityMode.Mobile, ReportStatus.Done)
+	Device("Device").App("BNI Agen46").MobileButton("Verifikasi Lanjut").Tap
+End Sub
+
+Sub Password_Login_Baru(dt_Password)
+	AIUtil.SetContext Device("Device")
+	AIUtil("button", "OK").Click
+	wait 5
+'	---Inii isi halaman email waktu email masuk waktu pertama---
+	wait 2
+	AIUtil.FindTextBlock("https://nurdiana.github.io/", micFromBottom, 1).Click
+	wait 2
+	Device("Device").App("BNI Agen46").MobileEdit("Password login Baru").Tap
+	Device("Device").App("BNI Agen46").MobileEdit("Password login Baru").Set dt_Password
+	wait 2
+	Device("Device").App("BNI Agen46").MobileEdit("Konfirmasi Password Login Baru").Tap
+	Device("Device").App("BNI Agen46").MobileEdit("Konfirmasi Password Login Baru").Set dt_Password
+	wait 2
+	Device("Device").App("BNI Agen46").MobileButton("Password Baru Lanjut").Tap
+	
+End Sub
+
+Sub OTP()
+	
+End Sub

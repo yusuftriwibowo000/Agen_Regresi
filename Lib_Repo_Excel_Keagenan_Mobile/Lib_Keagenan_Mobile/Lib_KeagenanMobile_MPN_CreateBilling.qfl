@@ -1,0 +1,122 @@
+﻿Sub Goto_PajakMPN()
+'	Do
+'	Loop until Device("Device").App("BNI Agen46").MobileObject("Bayar dan Beli").Exist(0)
+	If Device("Device").App("BNI Agen46").MobileObject("Bayar dan Beli").Exist(0) Then
+		wait 3
+		Call CaptureImageUFTV2(Device("Device").App("BNI Agen46") , "User Memilih Menu Bayar dan Beli", " ", compatibilityMode.Mobile, ReportStatus.Done)
+		wait 3
+		Device("Device").App("BNI Agen46").MobileObject("Bayar dan Beli").Tap
+		If Device("Device").App("BNI Agen46").MobileObject("Pajak").Exist(5) Then
+			wait 3
+			Call CaptureImageUFTV2(Device("Device").App("BNI Agen46") , "User Memilih Menu Pajak", " ", compatibilityMode.Mobile, ReportStatus.Done)
+			wait 3
+			Device("Device").App("BNI Agen46").MobileObject("Pajak").Tap
+			Call Choice_MPN()
+		End If
+	Else
+		Reporter.ReportEvent micFail, "User Gagal Memilih Menu Bayar & Beli Pajak PBB","Gagal"
+	End If
+End Sub
+
+Sub Choice_MPN()
+'	Do
+'		MsgBox("Pilih Menu PBB")
+'	Loop until pbb.Exist(0)
+	If Device("Device").App("BNI Agen46").MobileObject("Penerimaan Negara (MPN)").Exist(0) Then
+		wait 3
+		Call CaptureImageUFTV2(Device("Device").App("BNI Agen46") , "User Memilih Menu PBB", " ", compatibilityMode.Mobile, ReportStatus.Done)
+		wait 3
+		Device("Device").App("BNI Agen46").MobileObject("Penerimaan Negara (MPN)").Tap
+	Else
+		Reporter.ReportEvent micFail, "User Gagal Memilih Menu PBB","Gagal"
+	End If
+	wait 3
+	If dt_TCID = "MAG0047-001" Then
+		Device("Device").App("BNI Agen46").MobileObject("Pembuatan Kode Billing").Tap
+	else
+	 Device("Device").App("BNI Agen46").MobileObject("Pembayaran").Tap
+	End If
+End Sub
+
+Sub Input_Pembuatan_Kode_Biling(dt_NPWP, dt_Bulan, dt_Tahun, dt_NPWP_Penyetor, dt_Nominal)
+	If Device("Device").App("BNI Agen46").MobileEdit("NPWP").Exist(0) Then
+		wait 2
+		Call CaptureImageUFTV2(Device("Device").App("BNI Agen46") , "Pembuatan Kode Billing", " ", compatibilityMode.Mobile, ReportStatus.Done)
+		wait 2
+	End If
+	wait 2
+	Device("Device").App("BNI Agen46").MobileEdit("NPWP").Tap
+	wait 2
+	Device("Device").App("BNI Agen46").MobileEdit("NPWP").Set dt_NPWP
+	wait 2
+	Device("Device").App("BNI Agen46").MobileObject("Jenis Masa Pajak").Tap
+	wait 2
+	Device("Device").App("BNI Agen46").MobileObject("PPh Pasal 21 Masa").Tap
+	wait 2
+	Device("Device").App("BNI Agen46").MobileEdit("Bulan Kerja").Tap
+	wait 2
+	Device("Device").App("BNI Agen46").MobileEdit("Bulan Kerja").Set dt_Bulan
+	wait 2
+	Device("Device").App("BNI Agen46").MobileEdit("Tahun Kerja").Tap
+	wait 2
+	Device("Device").App("BNI Agen46").MobileEdit("Tahun Kerja").Set dt_Tahun
+	wait 2
+	Device("Device").App("BNI Agen46").MobileEdit("NPWP Penyetor").tap
+	wait 2
+	Device("Device").App("BNI Agen46").MobileEdit("NPWP Penyetor").Set dt_NPWP_Penyetor
+	wait 2
+	Device("Device").App("BNI Agen46").MobileEdit("Nominal").Tap
+	wait 2
+	Device("Device").App("BNI Agen46").MobileEdit("Nominal").Set dt_Nominal
+	wait 4
+	Device("Device").App("BNI Agen46").MobileButton("Lanjut").Tap
+End Sub
+
+
+
+
+
+
+
+
+Sub Verify_Success_Save()
+'	Do 
+'		MsgBox("Confirm Ok")
+'	Loop until Device("Device").InsightObject("Ok_Confirm_Berhasil").Exist(0)
+	If Device("Device").InsightObject("Ok_Confirm_Berhasil").Exist(0) Then
+		wait 3
+		Call CaptureImageUFTV2(Device("Device").App("BNI Agen46") , "Berhasil Simpan ke Daftar Favorit", " ", compatibilityMode.Mobile, ReportStatus.Passed)
+		wait 3
+		Device("Device").InsightObject("Ok_Confirm_Berhasil").Click
+	End If
+'	Do
+'		MsgBox("Beranda")
+'	Loop until Device("Device").App("BNI Agen46").MobileObject("Beranda").Exist(1) 
+	If Device("Device").App("BNI Agen46").MobileObject("Beranda").Exist(5) Then
+		wait 3
+		Call CaptureImageUFTV2(Device("Device").App("BNI Agen46") , "Transaksi Berhasil", " ", compatibilityMode.Mobile, ReportStatus.Passed)
+		wait 3
+		Device("Device").App("BNI Agen46").MobileObject("Beranda").Tap
+	Else
+		Reporter.ReportEvent micFail, "Transaksi Gagal","Gagal"
+	End If
+End Sub
+
+Sub Verification()
+'	Do
+'		MsgBox("Verification")
+'	Loop until Device("Device").App("BNI Agen46").MobileObject("Beranda").Exist(0)
+	If Device("Device").App("BNI Agen46").MobileObject("Beranda").Exist(0) Then
+		wait 3
+		Call CaptureImageUFTV2(Device("Device").App("BNI Agen46") , "Transaksi Berhasil", " ", compatibilityMode.Mobile, ReportStatus.Passed)
+		wait 3
+		Device("Device").App("BNI Agen46").MobileObject("Beranda").Tap
+	ElseIf Device("Device").InsightObject("Ok_BTN").Exist(5) Then
+		wait 3
+		Call CaptureImageUFTV2(Device("Device").App("BNI Agen46") , "Muncul Alert Error", " ", compatibilityMode.Mobile, ReportStatus.Passed)
+		wait 3
+		Device("Device").InsightObject("Ok_BTN").Click
+	Else
+		Reporter.ReportEvent micFail, "Gagal Verifikasi","Gagal"
+	End If
+End Sub

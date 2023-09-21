@@ -1,0 +1,272 @@
+﻿Rem -- Obj
+'Device("Device").App("BNI Agen46").Launch
+'Device("Device").App("BNI Agen46").MobileButton("<").Tap
+'Device("Device").App("BNI Agen46").MobileButton("Buat Input Baru").Tap
+'Device("Device").App("BNI Agen46").MobileEdit("PassTrx").Set
+'Device("Device").App("BNI Agen46").MobileEdit("PasswordTRX").Set
+'Device("Device").App("BNI Agen46").MobileObject("<TopUp").Tap
+'Device("Device").App("BNI Agen46").MobileObject("Batal").Tap
+'Device("Device").App("BNI Agen46").MobileObject("Beranda").Tap
+'Device("Device").App("BNI Agen46").MobileObject("Lanjut").Tap
+'Device("Device").App("BNI Agen46").MobileObject("Top Up Uang Elektronik").Tap
+'Device("Device").App("BNI Agen46").MobileObject("Simpan ke daftar favorit").Tap
+'Device("Device").App("BNI Agen46").MobileObject("Rp20.000,-").Tap
+'Device("Device").InsightObject("Ok_BTN").Click
+'Device("Device").InsightObject("Ok_Confirm_Berhasil").Click
+'Device("Device").App("BNI Agen46").MobileObject("Link Aja").Tap
+'Device("Device").App("BNI Agen46").MobileButton("Lanjut").Tap
+'Device("Device").App("BNI Agen46").MobileObject("Gopay Customer").Tap
+'Device("Device").App("BNI Agen46").MobileObject("Gopay Driver").Tap
+'Device("Device").App("BNI Agen46").MobileObject("Gopay").Tap
+'Device("Device").App("BNI Agen46").MobileObject("Gopay Merchant").Tap
+
+Sub	Goto_TopUp_LinkAja()
+	Do
+	Loop until Device("Device").App("BNI Agen46").MobileObject("Top Up Uang Elektronik").Exist(1)
+	If Device("Device").App("BNI Agen46").MobileObject("Top Up Uang Elektronik").Exist(5) Then
+		wait 5
+		Call CaptureImageUFTV2(Device("Device").App("BNI Agen46") , "User Memilih Menu Top Up Uang Elektronik", " ", compatibilityMode.Mobile, ReportStatus.Done)
+		wait 5
+		Device("Device").App("BNI Agen46").MobileObject("Top Up Uang Elektronik").Tap
+		If Device("Device").App("BNI Agen46").MobileObject("Link Aja").Exist(5) Then
+			wait 5
+			Call CaptureImageUFTV2(Device("Device").App("BNI Agen46") , "User Pilih Top Up Link Aja", " ", compatibilityMode.Mobile, ReportStatus.Done)
+			wait 5
+			Device("Device").App("BNI Agen46").MobileObject("Link Aja").Tap
+		End If
+	Else
+		Reporter.ReportEvent micFail, "User Gagal Memilih Menu Top Up Link Aja","Gagal"
+	End If
+End Sub
+
+Function Input_Baru(dt_TCID, dt_NoHp)
+	Do
+	Loop until Device("Device").App("BNI Agen46").MobileButton("Buat Input Baru").Exist(1)
+	If Device("Device").App("BNI Agen46").MobileButton("Buat Input Baru").Exist(5) Then
+		wait 5
+		Call CaptureImageUFTV2(Device("Device").App("BNI Agen46") , "User Buat Input Baru", " ", compatibilityMode.Mobile, ReportStatus.Done)
+		wait 5
+		Device("Device").App("BNI Agen46").MobileButton("Buat Input Baru").Tap
+		Do
+		Loop until Device("Device").App("BNI Agen46").MobileEdit("NoHp_n_SavNama").Exist(1)
+		Device("Device").App("BNI Agen46").MobileEdit("NoHp_n_SavNama").Tap
+		Device("Device").App("BNI Agen46").MobileEdit("NoHp_n_SavNama").Set dt_NoHp
+		If dt_TCID = "MAG0020-006" Then
+			wait 5
+			Call CaptureImageUFTV2(Device("Device").App("BNI Agen46") , "User Memasukan No Hp Tidak Terdaftar", " ", compatibilityMode.Mobile, ReportStatus.Done)
+			wait 5
+		Else
+			wait 5
+			Call CaptureImageUFTV2(Device("Device").App("BNI Agen46") , "User Memasukan No Hp", " ", compatibilityMode.Mobile, ReportStatus.Done)
+			wait 5
+		End If
+		Device("Device").App("BNI Agen46").MobileButton("Lanjut").Tap
+	Else
+		Reporter.ReportEvent micFail, "User Gagal Membuat Input Baru","Gagal"
+	End If
+End Function
+
+Function Input_Nama(dt_SaveName)
+	Rem -- Input Nama
+	Do
+	Loop until Device("Device").App("BNI Agen46").MobileEdit("NoHp_n_SavNama").Exist(5)
+	Device("Device").App("BNI Agen46").MobileEdit("NoHp_n_SavNama").Tap
+	Device("Device").App("BNI Agen46").MobileEdit("NoHp_n_SavNama").Set dt_SaveName 
+	wait 5
+	Call CaptureImageUFTV2(Device("Device").App("BNI Agen46") , "Nama Pelanggan di Inputkan pada Simpan ke Daftar Davorit", " ", compatibilityMode.Mobile, ReportStatus.Done)
+	wait 5
+End Function
+
+Function Simpan_Nama(dt_SaveName)
+	Do
+	Loop until Device("Device").App("BNI Agen46").MobileObject("Simpan ke daftar favorit").Exist(1)
+	If Device("Device").App("BNI Agen46").MobileObject("Simpan ke daftar favorit").Exist(5) Then
+		Device("Device").App("BNI Agen46").MobileObject("Simpan ke daftar favorit").Tap
+		wait 5
+		Call CaptureImageUFTV2(Device("Device").App("BNI Agen46") , "Ceklis Simpan ke Daftar Favorit", " ", compatibilityMode.Mobile, ReportStatus.Done)
+		wait 5
+		Call Input_Nama(dt_SaveName)
+	Else
+		Reporter.ReportEvent micFail, "Gagal Simpan Daftar Favorit","Gagal"
+	End If
+End Function
+
+Function Nominal_Lainnya(dt_Nominal)
+	Set objkey = CreateObject("WScript.Shell")
+	Do
+	Loop until Device("Device").App("BNI Agen46").MobileObject("Nominal Lainnya").Exist(1)
+	If Device("Device").App("BNI Agen46").MobileObject("Nominal Lainnya").Exist(5) Then
+		wait 5
+		Call CaptureImageUFTV2(Device("Device").App("BNI Agen46") , "User Pilih Nominal Lainnya", " ", compatibilityMode.Mobile, ReportStatus.Done)
+		wait 5
+		Device("Device").App("BNI Agen46").MobileObject("Nominal Lainnya").Tap
+		wait 5
+		Call CaptureImageUFTV2(Device("Device").App("BNI Agen46") , "User Input Nominal Lainnya", " ", compatibilityMode.Mobile, ReportStatus.Done)
+		wait 5
+		Device("Device").App("BNI Agen46").MobileEdit("NoHp_n_SavNama").Tap
+		wait 3
+		objkey.SendKeys(dt_Nominal)
+		wait 3
+		Device("Device").App("BNI Agen46").MobileButton("Lanjut").Tap
+	End If
+End Function
+
+Function Pilih_Nominal(dt_TCID,dt_SaveName)
+	Do
+	Loop until Device("Device").App("BNI Agen46").MobileObject("Rp20.000,-").Exist(1)
+	If Device("Device").App("BNI Agen46").MobileObject("Rp20.000,-").Exist(5) Then
+		If dt_TCID = "MAG0022-005" or dt_TCID = "MAG0022-003" Then
+			Device("Device").App("BNI Agen46").MobileObject("Rp250.000,-").Tap
+		Else
+			Device("Device").App("BNI Agen46").MobileObject("Rp20.000,-").Tap
+		End  If
+		wait 5
+		Call CaptureImageUFTV2(Device("Device").App("BNI Agen46") , "User Pilih Nominal Top Up", " ", compatibilityMode.Mobile, ReportStatus.Done)
+		wait 5
+		If dt_TCID = "MAG0022-002" Then
+			Call Simpan_Nama(dt_SaveName)
+		End If
+		Device("Device").App("BNI Agen46").MobileButton("Lanjut").Tap
+	Else
+		Reporter.ReportEvent micFail, "User Gagal Membuat Input Baru","Gagal"
+	End If
+End Function
+
+Sub Choice_Fav()
+'	Do
+'	Loop until .Exist(1)
+	If Device("Device").App("BNI Agen46_2").MobileObject("M Savee 085659262060").Exist(5) Then
+		wait 5
+		Call CaptureImageUFTV2(Device("Device").App("BNI Agen46") , "Pilih Nama List Yang ada di Daftar Favorit", " ", compatibilityMode.Mobile, ReportStatus.Done)
+		wait 5
+		Device("Device").App("BNI Agen46_2").MobileObject("M Savee 085659262060").Tap
+	Else
+		Reporter.ReportEvent micFail, "Gagal Memilih Daftar Favorit","Gagal"
+	End If
+End Sub
+
+Function Input_Pass(dt_TCID, dt_PinTrx)
+	Do
+	Loop until Device("Device").App("BNI Agen46").MobileEdit("PasswordTRX").Exist(1)
+	If Device("Device").App("BNI Agen46").MobileEdit("PasswordTRX").Exist(5) Then
+		Device("Device").App("BNI Agen46").MobileEdit("PasswordTRX").Tap
+		Device("Device").App("BNI Agen46").MobileEdit("PasswordTRX").Set dt_PinTrx
+		If dt_TCID = "MAG0021-004" Then
+			wait 5
+			Call CaptureImageUFTV2(Device("Device").App("BNI Agen46") , "User Memasukan Salah Password TRX", " ", compatibilityMode.Mobile, ReportStatus.Done)
+			wait 5
+		Else
+			wait 5
+			Call CaptureImageUFTV2(Device("Device").App("BNI Agen46") , "User Memasukan Password TRX", " ", compatibilityMode.Mobile, ReportStatus.Done)
+			wait 5
+		End If
+		Device("Device").App("BNI Agen46").MobileObject("Lanjut").Tap
+	End If
+End Function
+
+Sub Verify_Success()
+	Do
+	Loop until Device("Device").App("BNI Agen46").MobileObject("Beranda").Exist(1)
+	If Device("Device").App("BNI Agen46").MobileObject("Beranda").Exist(5) Then
+		wait 5
+		Call CaptureImageUFTV2(Device("Device").App("BNI Agen46") , "Transaksi Berhasil", " ", compatibilityMode.Mobile, ReportStatus.Passed)
+		wait 5
+		Device("Device").App("BNI Agen46").MobileObject("Beranda").Tap
+	Else
+		Reporter.ReportEvent micFail, "Transaksi Gagal","Gagal"
+	End If
+End Sub
+
+Sub Verify_Success_Save()
+	Do 
+	Loop until Device("Device").InsightObject("Ok_Confirm_Berhasil").Exist(1)
+	If Device("Device").InsightObject("Ok_Confirm_Berhasil").Exist(5) Then
+		wait 5
+		Call CaptureImageUFTV2(Device("Device").App("BNI Agen46") , "Berhasil Simpan ke Daftar Favorit", " ", compatibilityMode.Mobile, ReportStatus.Passed)
+		wait 5
+		Device("Device").InsightObject("Ok_Confirm_Berhasil").Click
+	End If
+	Do
+	Loop until Device("Device").App("BNI Agen46").MobileObject("Beranda").Exist(1) 
+	If Device("Device").App("BNI Agen46").MobileObject("Beranda").Exist(5) Then
+		wait 5
+		Call CaptureImageUFTV2(Device("Device").App("BNI Agen46") , "Transaksi Berhasil", " ", compatibilityMode.Mobile, ReportStatus.Passed)
+		wait 5
+		Device("Device").App("BNI Agen46").MobileObject("Beranda").Tap
+	Else
+		Reporter.ReportEvent micFail, "Transaksi Gagal","Gagal"
+	End If
+End Sub
+
+Sub Verify_Fail()
+	
+'	Do
+'	Loop until Device("Device").InsightObject("Ok_BTN").Exist(1)
+'	If Device("Device").InsightObject("Ok_BTN").Exist(5) Then
+		wait 3
+		Call CaptureImageUFTV2(Device("Device").App("BNI Agen46") , "Muncul Alert Error", " ", compatibilityMode.Mobile, ReportStatus.Passed)
+		wait 3
+		AIUtil.SetContext Device("Device")
+		AIUtil("button", "Ok").Click
+'		Device("Device").InsightObject("Ok_BTN").Click
+'	Else
+'		Reporter.ReportEvent micFail, "Gagal Verifikasi Error","Gagal"
+'	End If
+End Sub
+
+Sub Verify_Fail_Disable()
+	Do
+	Loop until Device("Device").App("BNI Agen46").MobileObject("Minimal Nominal Rp. 10.0").Exist(1)
+	If Device("Device").App("BNI Agen46").MobileObject("Minimal Nominal Rp. 10.0").Exist(5) Then
+		wait 5
+		Call CaptureImageUFTV2(Device("Device").App("BNI Agen46") , "Muncul warning dan button disable", " ", compatibilityMode.Mobile, ReportStatus.Passed)
+		wait 5
+	End If
+End Sub
+
+Sub Back_Wrong_Pin()
+	If Device("Device").App("BNI Agen46").MobileObject("Batal").Exist(5) Then
+		Device("Device").App("BNI Agen46").MobileObject("Batal").Tap
+		wait 2
+		Device("Device").App("BNI Agen46").MobileButton("<").Tap
+		wait 2
+		Device("Device").App("BNI Agen46").MobileButton("<").Tap
+		wait 2
+		Device("Device").App("BNI Agen46").MobileButton("<").Tap
+		wait 2
+		Device("Device").App("BNI Agen46").MobileObject("<TopUp").Tap
+	End If
+End Sub
+
+Sub Back_Wrong()
+	Do
+	Loop until Device("Device").InsightObject("Ok_Confirm_Berhasil").Exist(5)
+	If Device("Device").InsightObject("Ok_Confirm_Berhasil").Exist(1) Then
+		Device("Device").InsightObject("Ok_Confirm_Berhasil").Click
+		If Device("Device").App("BNI Agen46").MobileObject("Batal").Exist(5) Then
+			Device("Device").App("BNI Agen46").MobileObject("Batal").Tap
+			wait 2
+			Device("Device").App("BNI Agen46").MobileButton("<").Tap
+			wait 2
+			Device("Device").App("BNI Agen46").MobileButton("<").Tap
+			wait 2
+			Device("Device").App("BNI Agen46").MobileButton("<").Tap
+			wait 2
+			Device("Device").App("BNI Agen46").MobileObject("<TopUp").Tap
+		End If
+	End If
+End Sub
+
+Sub Back_Nominal()
+	If Device("Device").App("BNI Agen46").MobileButton("<").Exist(5) Then
+		Device("Device").App("BNI Agen46").MobileButton("<").Tap
+		wait 2
+		Device("Device").App("BNI Agen46").MobileButton("<").Tap
+		wait 2
+		Device("Device").App("BNI Agen46").MobileButton("<").Tap
+		wait 2
+		Device("Device").App("BNI Agen46").MobileObject("<TopUp").Tap
+	End If
+End Sub
+
+

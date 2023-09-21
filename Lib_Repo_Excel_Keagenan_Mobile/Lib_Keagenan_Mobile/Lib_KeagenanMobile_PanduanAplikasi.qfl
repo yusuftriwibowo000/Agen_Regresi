@@ -1,0 +1,63 @@
+﻿Sub BukaMenu_Akun()
+	Do
+	Loop until Device("Device").App("BNI Agen46").MobileObject("Akun").Exist(1)
+	If Device("Device").App("BNI Agen46").MobileObject("Akun").Exist(5) Then
+		Device("Device").App("BNI Agen46").MobileObject("Akun").Tap
+		wait 4
+		Call CaptureImageUFTV2(Device("Device").App("BNI Agen46") , "User Buka Menu Akun", " ", compatibilityMode.Mobile, ReportStatus.Done)
+		wait 4
+	Else
+		Reporter.ReportEvent micFail, "Gagal Buka Menu AKun","Gagal"
+	End If
+End Sub
+
+Sub Buka_BantuanApk()
+	Do
+	Loop until Device("Device").App("BNI Agen46").MobileObject("Panduan Aplikasi").Exist(1)
+	If Device("Device").App("BNI Agen46").MobileObject("Panduan Aplikasi").Exist(5) Then
+		Device("Device").App("BNI Agen46").MobileObject("Panduan Aplikasi").Tap
+		wait 4
+		Call CaptureImageUFTV2(Device("Device").App("BNI Agen46") , "User Pilih Menu Panduan Aplikasi", " ", compatibilityMode.Mobile, ReportStatus.Done)
+		wait 4
+	Else
+		Reporter.ReportEvent micFail, "Gagal Buka Menu AKun","Gagal"
+	End If
+End Sub
+
+Sub Verivy_OpenPanduanAplikasi()
+	Do
+	Loop until Device("Device").App("BNI Agen46").MobileObject("Panduan Aplikasi_Header").Exist(1) and Device("Device").App("BNI Agen46").MobileObject("Layanan Keuangan").Exist(1)
+	If Device("Device").App("BNI Agen46").MobileObject("Panduan Aplikasi_Header").Exist(1) and Device("Device").App("BNI Agen46").MobileObject("Layanan Keuangan").Exist(1) Then
+		wait 4
+		Call CaptureImageUFTV2(Device("Device").App("BNI Agen46") , "Muncul Semua Menu Panduan Aplikasi", " ", compatibilityMode.Mobile, ReportStatus.Passed)
+		wait 4
+		Device("Device").App("BNI Agen46").MobileObject("Layanan Keuangan").Tap
+		If Device("Device").App("BNI Agen46").MobileObject("Hubungi Sekarang").Exist(5) Then
+			wait 4
+			Call CaptureImageUFTV2(Device("Device").App("BNI Agen46") , "Flow, Design Tampilan, Button, Pop Error sesuai dengan design BSDD, Figma", " ", compatibilityMode.Mobile, ReportStatus.Passed)
+			wait 4
+		End If
+	Else
+		Reporter.ReportEvent micFail, "Tidak Muncul semua menu panduan Aplikasi","Gagal"
+	End If
+End Sub
+
+
+Sub Verivy_DialUpCallBantuan()
+	Do
+	Loop until Device("Device").App("BNI Agen46").MobileObject("Panduan Aplikasi_Header").Exist(1) and Device("Device").App("BNI Agen46").MobileObject("Layanan Keuangan").Exist(1)
+	If Device("Device").App("BNI Agen46").MobileObject("Panduan Aplikasi_Header").Exist(1) and Device("Device").App("BNI Agen46").MobileObject("Layanan Keuangan").Exist(1) Then
+		wait 4
+		Call CaptureImageUFTV2(Device("Device").App("BNI Agen46") , "Muncul Semua Menu Panduan Aplikasi", " ", compatibilityMode.Mobile, ReportStatus.Passed)
+		wait 4
+		Device("Device").App("BNI Agen46").MobileObject("Layanan Keuangan").Tap
+		If Device("Device").App("BNI Agen46").MobileObject("Hubungi Sekarang").Exist(5) Then
+			Device("Device").App("BNI Agen46").MobileObject("Hubungi Sekarang").Tap		
+			wait 4
+			Call CaptureImageUFTV2(Device("Device").App("Phone") , "Button berfungsi dan tampil dialup ke 1500146", " ", compatibilityMode.Mobile, ReportStatus.Passed)
+			wait 4
+		End If
+	Else
+		Reporter.ReportEvent micFail, "Tidak Muncul semua menu panduan Aplikasi","Gagal"
+	End If
+End Sub

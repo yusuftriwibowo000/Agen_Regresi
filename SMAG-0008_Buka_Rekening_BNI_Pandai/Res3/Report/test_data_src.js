@@ -1,0 +1,1 @@
+﻿var __testDataSource={items:[{dataFilePath:'Default.xlsx',dataFileFormat:'excel',dataFileFolder:'C:\\Mobile Keagenan Android\\SMAG-0008_Buka_Rekening_BNI_Pandai\\Res3',namePairs:[]}]};

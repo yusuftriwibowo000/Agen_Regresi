@@ -1,0 +1,115 @@
+﻿Sub Go_toAkun()
+	Do
+	Loop until Device("Device").App("BNI Agen46").MobileObject("Akun").Exist(1)
+	If Device("Device").App("BNI Agen46").MobileObject("Akun").Exist(5) Then
+		wait 5
+		Call CaptureImageUFTV2(Device("Device").App("BNI Agen46"), "Pilih Menu Akun", " ", compatibilityMode.Mobile, ReportStatus.Done)
+		wait 5
+		Device("Device").App("BNI Agen46").MobileObject("Akun").Tap
+	End If
+End Sub
+
+Sub Go_toKeamananAkun()
+	Do
+	Loop until Device("Device").App("BNI Agen46").MobileObject("Keamanan Akun").Exist(1)
+	If Device("Device").App("BNI Agen46").MobileObject("Keamanan Akun").Exist(5) Then
+		wait 5
+		Call CaptureImageUFTV2(Device("Device").App("BNI Agen46"), "Pilih Keamanan Akun", " ", compatibilityMode.Mobile, ReportStatus.Done)
+		wait 5
+		Device("Device").App("BNI Agen46").MobileObject("Keamanan Akun").Tap
+	End If
+End Sub
+
+Function Do_BiometrikSet(dt_TCID)
+	Do
+	Loop until Device("Device").App("BNI Agen46").MobileObject("Login Biometrik").Exist(1) and Device("Device").InsightObject("SwitchButton_Biometrik").Exist(1)
+	If Device("Device").InsightObject("SwitchButton_Biometrik").Exist(5) Then
+		If dt_TCID = "MAG0017-001" Then
+			wait 5
+			Call CaptureImageUFTV2(Device("Device").App("BNI Agen46"), "Klik Button Enable Login Biometrik Menggunakan Hp Face Recognation", " ", compatibilityMode.Mobile, ReportStatus.Done)
+			wait 5
+		ElseIf dt_TCID = "MAG0017-002" Then
+			wait 5
+			Call CaptureImageUFTV2(Device("Device").App("BNI Agen46"), "Klik Button Enable Login Biometrik Menggunakan Hp Fingerprint", " ", compatibilityMode.Mobile, ReportStatus.Done)
+			wait 5
+		End  If
+		Device("Device").InsightObject("SwitchButton_Biometrik").Click
+		wait 3
+		If Device("Device").App("BNI Agen46").MobileObject("Lanjut_SK").Exist(5) Then
+			Device("Device").App("BNI Agen46").MobileObject("Lanjut_SK").Tap
+		End If
+	End If
+End Function
+
+Function Do_Biometrik_UnSet(dt_TCID)
+	Do
+	Loop until Device("Device").App("BNI Agen46").MobileObject("Login Biometrik").Exist(1) and Device("Device").InsightObject("SwitchButton_Biometrik_Ennable").Exist(1)
+	If Device("Device").InsightObject("SwitchButton_Biometrik_Ennable").Exist(5) Then
+		If dt_TCID = "MAG0017-001" Then
+			wait 5
+			Call CaptureImageUFTV2(Device("Device").App("BNI Agen46"), "Klik Button Enable Login Biometrik Menggunakan Hp Face Recognation", " ", compatibilityMode.Mobile, ReportStatus.Done)
+			wait 5
+		ElseIf dt_TCID = "MAG0017-002" Then
+			wait 5
+			Call CaptureImageUFTV2(Device("Device").App("BNI Agen46"), "Klik Button Enable Login Biometrik Menggunakan Hp Fingerprint", " ", compatibilityMode.Mobile, ReportStatus.Done)
+			wait 5
+		End  If
+		Device("Device").InsightObject("SwitchButton_Biometrik_Ennable").Click
+		wait 3
+		If Device("Device").App("BNI Agen46").MobileObject("Ya").Exist(5) Then
+			Device("Device").App("BNI Agen46").MobileObject("Ya").Tap
+		End If
+	End If
+End Function
+
+Function Input_PassTrx(dt_InputPin)
+	If Device("Device").App("BNI Agen46").MobileEdit("Input_Trx").Exist(5) Then
+		Device("Device").App("BNI Agen46").MobileEdit("Input_Trx").Tap
+		Device("Device").App("BNI Agen46").MobileEdit("Input_Trx").Set dt_InputPin
+		wait 5
+		Call CaptureImageUFTV2(Device("Device").App("BNI Agen46"), "Masukan Password Transaksi", " ", compatibilityMode.Mobile, ReportStatus.Done)
+		wait 5
+		Device("Device").App("BNI Agen46").MobileObject("Simpan").Tap
+	End If
+End Function
+
+Function Pass_Verify_Biometric(dt_TCID)
+	Do
+	Loop until Device("Device").InsightObject("Ok_Btn_Modal_Success").Exist(1)
+	If Device("Device").InsightObject("Ok_Btn_Modal_Success").Exist(5) Then
+		If dt_TCID = "MAG0017-001" or dt_TCID = "MAG0017-002" Then
+			wait 5
+			Call CaptureImageUFTV2(Device("Device").App("BNI Agen46"), "Biometrik Login Berhasil Di Simpan", " ", compatibilityMode.Mobile, ReportStatus.Passed)
+			wait 5
+		ElseIf dt_TCID = "MAG0017-003" or dt_TCID = "MAG0017-004" Then
+			wait 5
+			Call CaptureImageUFTV2(Device("Device").App("BNI Agen46"), "Biometrik login berhasil De-aktifasi Biometrik", " ", compatibilityMode.Mobile, ReportStatus.Passed)
+			wait 5
+		End  If
+		Device("Device").InsightObject("Ok_Btn_Modal_Success").Click
+	Else
+		Reporter.ReportEvent micFail,  "Gagal Set Biometric Login", "Gagal"
+	End If
+End Function
+
+Sub CameBack()
+	If Device("Device").App("BNI Agen46").MobileObject("<").Exist(5) Then
+		Device("Device").App("BNI Agen46").MobileObject("<").Tap
+		wait 1
+		Device("Device").App("BNI Agen46").MobileObject("Beranda").Tap
+	End If
+End Sub
+
+Rem --- Repository Pengaturan Biometrik
+'Device("Device").App("BNI Agen46").MobileEdit("Input_Trx").Set
+'Device("Device").App("BNI Agen46").MobileObject("AgenHOME46").Tap
+'Device("Device").App("BNI Agen46").MobileObject("Akun").Tap
+'Device("Device").App("BNI Agen46").MobileObject("Fitur biometrik telah di").Tap
+'Device("Device").App("BNI Agen46").MobileObject("Keamanan Akun").Tap
+'Device("Device").App("BNI Agen46").MobileObject("Lanjut_SK").Tap
+'Device("Device").App("BNI Agen46").MobileObject("Login Biometrik").Tap
+'Device("Device").App("BNI Agen46").MobileObject("Simpan").Tap
+'Device("Device").InsightObject("Ok_Btn_Modal_Success").Click
+'Device("Device").InsightObject("SwitchButton_Biometrik").Click
+'Device("Device").InsightObject("SwitchButton_Biometrik_Ennable").Click
+

@@ -1,0 +1,1 @@
+﻿var __testDataSource={items:[{dataFilePath:'Default.xlsx',dataFileFormat:'excel',dataFileFolder:'C:\\Mobile Keagenan Android\\SMAG-0015_Keamanan_Akun\\Res64',namePairs:[]}]};

@@ -1,0 +1,479 @@
+﻿Sub Action_Lewati()
+	Do
+		wait 9
+	Loop until Device("Device").InsightObject("Lewati").Exist(0)
+	If Device("Device").InsightObject("Lewati").Exist(0) Then
+		wait 3
+		Call CaptureImageUFTV2(Device("Device"),"Buka Aplikasi Mobile Agen,Masuk ke Halaman On Boarding", " ", compatibilityMode.Mobile,ReportStatus.Done)
+		wait 3
+		Device("Device").InsightObject("Lewati").Click
+	Else
+    		Reporter.ReportEvent micFail, "Gagal Masuk Halaman Onboarding","Gagal"
+	End If
+End Sub
+
+Sub Go_To_Pendaftaran()
+	Call Action_Lewati()
+	Do
+		wait 9
+	Loop until Device("Device").App("BNI Agen46").MobileObject("Cek Status Pendaftaran").Exist(0)
+	If Device("Device").App("BNI Agen46").MobileObject("Cek Status Pendaftaran").Exist(0) Then
+		wait 3
+		Call CaptureImageUFTV2(Device("Device").App("BNI Agen46"), "User Melakukan Cek Status Pendaftaran", " ", compatibilityMode.Mobile, ReportStatus.Passed)
+ 		wait 3
+		Device("Device").App("BNI Agen46").MobileObject("Cek Status Pendaftaran").Tap
+	Else
+    	Reporter.ReportEvent micFail, "Gagal Ke Menu Cek Status Pendaftaran","Gagal"
+	End If
+End Sub
+
+Sub GoTo_Registrasi()
+	Call Action_Lewati()
+	Do
+		wait 9
+	Loop until Device("Device").App("BNI Agen46").MobileObject("Daftar Sekarang").Exist(0)
+	If Device("Device").App("BNI Agen46").MobileObject("Daftar Sekarang").Exist(0) Then
+		wait 9
+		Call CaptureImageUFTV2(Device("Device").App("BNI Agen46"), "User Melakukan Klik Daftar Sekarang", " ", compatibilityMode.Mobile, ReportStatus.Passed)
+ 		wait 9
+		Device("Device").App("BNI Agen46").MobileObject("Daftar Sekarang").Tap
+	Else
+    	Reporter.ReportEvent micFail, "Gagal Ke Menu Onboarding dan Daftar Sekarang","Gagal"
+	End If
+End Sub
+
+Function Cek_Status(dt_NamaBelakang, dt_KodeRegistrasi)
+	Do
+		wait 9
+	Loop until Device("Device").App("BNI Agen46").MobileObject("Cek Approval Pendaftaran").Exist(0)
+	If Device("Device").App("BNI Agen46").MobileEdit("Kode_Registrasi").Exist(0) and Device("Device").App("BNI Agen46").MobileEdit("Nama_Belakang").Exist(0) Then
+		Device("Device").App("BNI Agen46").MobileEdit("Nama_Belakang").Tap
+		wait 9
+		Device("Device").App("BNI Agen46").MobileEdit("Nama_Belakang").Set dt_NamaBelakang
+		wait 9
+		Device("Device").App("BNI Agen46").MobileEdit("Kode_Registrasi").Tap
+		wait 9
+		Device("Device").App("BNI Agen46").MobileEdit("Kode_Registrasi").Set dt_KodeRegistrasi
+		wait 3
+		Call CaptureImageUFTV2(Device("Device").App("BNI Agen46") , "User Mengisi Nama Belakang dan Kode Registrasi", " ", compatibilityMode.Mobile, ReportStatus.Done)
+ 		wait 3
+	Else
+		Reporter.ReportEvent micFail, "Gagal Melakukan Cek Approval Pendaftaran","Gagal"
+	End If
+End Function
+
+Function Input_DataDiri(dt_NamaLengkap, dt_NoIdentitas, dt_NPWP, dt_Occupation, dt_NoTelpRumah, dt_NoHp, dt_Email)
+	Do
+		wait 9
+	Loop until Device("Device").InsightObject("Registrasi_DataDiri").Exist(0)
+	If Device("Device").InsightObject("Registrasi_DataDiri").Exist(0) Then
+		Set InputParam = CreateObject("WScript.Shell")
+		wait 9
+		Rem --- Input NamaLengkap
+		Do
+			wait 9
+		Loop until Device("Device").InsightObject("NamaLengkap").Exist(0)
+		If Device("Device").InsightObject("NamaLengkap").Exist(0) Then
+			Device("Device").InsightObject("NamaLengkap").Click
+			wait 9
+			InputParam.SendKeys(dt_NamaLengkap)
+		End If
+		Rem --- JenisIdentitas
+		Do
+			wait 9
+		Loop until Device("Device").InsightObject("JenisIdentitas").Exist(0)
+		If Device("Device").InsightObject("JenisIdentitas").Exist(0) Then
+			Device("Device").InsightObject("JenisIdentitas").Click
+			wait 9
+			Device("Device").App("BNI Agen46").MobileObject("Kartu Tanda Penduduk").Tap
+		End If
+		Rem --- NoIdentitas
+		Do
+			wait 9
+		Loop until Device("Device").InsightObject("No Identitas").Exist(0)
+		If Device("Device").InsightObject("No Identitas").Exist(0) Then
+			Device("Device").InsightObject("No Identitas").Click
+			wait 9
+			InputParam.SendKeys(dt_NoIdentitas)
+		End If
+		Rem --- NPWP
+		Do
+			wait 9
+		Loop until Device("Device").InsightObject("Npwp").Exist(0)
+		If Device("Device").InsightObject("Npwp").Exist(0) Then
+			Device("Device").InsightObject("Npwp").Click
+			wait 9
+			InputParam.SendKeys(dt_NPWP)
+		End If
+		Rem --- Jenis Pekerjaan
+		Do
+			wait 9
+		Loop until Device("Device").InsightObject("JenisPekerjaan").Exist(0)
+		If Device("Device").InsightObject("JenisPekerjaan").Exist(0) Then
+			Device("Device").InsightObject("JenisPekerjaan").Click
+			wait 9
+			Device("Device").App("BNI Agen46").MobileObject("Wiraswasta (Sembako/Kelo").Tap
+		End If
+		Rem --- No Telpon Rumah
+		Do
+			wait 9
+		Loop until Device("Device").InsightObject("No Telpon Rumah").Exist(0)
+		If Device("Device").InsightObject("No Telpon Rumah").Exist(0) Then
+			Device("Device").InsightObject("No Telpon Rumah").Click
+			wait 9
+			InputParam.SendKeys(dt_NoTelpRumah)
+		End If
+		Rem --- Nomer HP
+		Do
+			wait 9
+		Loop until Device("Device").InsightObject("Nomer Hp").Exist(0)
+		If Device("Device").InsightObject("Nomer Hp").Exist(0) Then		
+			Device("Device").InsightObject("Nomer Hp").Click
+			wait 9
+			InputParam.SendKeys(dt_NoHp)
+		End If
+		Rem --- Email
+		Do
+			Device("Device").App("BNI Agen46").MobileEdit("MobileEdit").Pan 565,80,594,-503,0,0
+		Loop until Device("Device").InsightObject("Email").Exist(0)
+		If Device("Device").InsightObject("Email").Exist(0) Then
+			Device("Device").InsightObject("Email").Click
+			wait 9
+			InputParam.SendKeys(dt_Email)
+		End If
+		wait 3
+		Call CaptureImageUFTV2(Device("Device").App("BNI Agen46") , "User Melakukan Input Data Diri", " ", compatibilityMode.Mobile, ReportStatus.Done)
+		wait 3
+	Else
+		Reporter.ReportEvent micFail, "Gagal Melakukan Registrasi Data Diri","Gagal"
+	End If
+End Function
+
+Function Input_AlamatIdentitas(dt_Address, dt_Rt, dt_Rw, dt_Provinsi, dt_City, dt_Kec, dt_Kel, dt_KPos)
+	Do
+		Device("Device").App("BNI Agen46").MobileEdit("MobileEdit_2").Pan 358,66,375,408,0,0
+	Loop until Device("Device").InsightObject("Registrasi_AlamatIdentitas").Exist(0)
+	If Device("Device").InsightObject("Registrasi_AlamatIdentitas").Exist(0) Then
+		Set InputParam = CreateObject("WScript.Shell")
+		Rem --- Alamat Lengkap
+		Do
+			wait 9
+		Loop until Device("Device").InsightObject("AlamatLengkap").Exist(0)
+		If Device("Device").InsightObject("AlamatLengkap").Exist(0) Then
+			Device("Device").InsightObject("AlamatLengkap").Click
+			wait 9
+			InputParam.SendKeys(dt_Address)
+		End If
+		Rem --- RT
+		Do
+			wait 9
+		Loop until Device("Device").InsightObject("RT").Exist(0)
+		If Device("Device").InsightObject("RT").Exist(0) Then
+			Device("Device").InsightObject("RT").Click
+			wait 9
+			InputParam.SendKeys(dt_Rt)
+		End If
+		Rem --- RW
+		Do
+			wait 9
+		Loop until Device("Device").InsightObject("RW").Exist(0)
+		If Device("Device").InsightObject("RW").Exist(0) Then
+			Device("Device").InsightObject("RW").Click
+			wait 9
+			InputParam.SendKeys(dt_Rw)
+		End If
+		Rem --- Provinsi
+		Do
+			wait 9
+		Loop until Device("Device").InsightObject("Provinsi").Exist(0)
+		If Device("Device").InsightObject("Provinsi").Exist(0) Then
+			Device("Device").InsightObject("Provinsi").Click
+			wait 9
+			Device("Device").App("BNI Agen46").MobileObject("DKI Jakarta").Tap
+		End If
+		Rem --- Kota/Kabupaten
+		Do
+			wait 9
+		Loop until Device("Device").InsightObject("Kota/Kabupaten").Exist(0)
+		If Device("Device").InsightObject("Kota/Kabupaten").Exist(0) Then
+			Device("Device").InsightObject("Kota/Kabupaten").Click
+			wait 9
+			Device("Device").App("BNI Agen46").MobileObject("Kab Kepulauan Seribu").Tap
+		End If
+		wait 10
+		Rem --- Desa Kecamatan
+		Do
+			wait 9
+		Loop until Device("Device").InsightObject("Kecamatan").Exist(0)
+		If Device("Device").InsightObject("Kecamatan").Exist(0) Then
+			Device("Device").InsightObject("Kecamatan").Click
+			wait 9
+			Device("Device").App("BNI Agen46").MobileObject("Kepulauan Seribu Selatan").Tap
+		End If
+		wait 9
+		Rem --- Desa Kelurahan
+		Do
+			wait 9
+		Loop until Device("Device").InsightObject("DesaKelurahan").Exist(0)
+		If Device("Device").InsightObject("DesaKelurahan").Exist(0) Then
+			Device("Device").InsightObject("DesaKelurahan").Click
+			wait 9
+			Device("Device").App("BNI Agen46").MobileObject("Pulau Untung Jawa").Tap
+		End If
+		Rem --- Kode Pos
+		Do
+			wait 9
+		Loop until Device("Device").InsightObject("KodePos").Exist(0)
+		If Device("Device").InsightObject("KodePos").Exist(0) Then
+			Device("Device").InsightObject("KodePos").Click
+			wait 9
+			Device("Device").App("BNI Agen46").MobileObject("14510").Tap
+		End If
+		wait 3
+		Call CaptureImageUFTV2(Device("Device").App("BNI Agen46") , "User Melakukan Input Alamat Identitas", " ", compatibilityMode.Mobile, ReportStatus.Done)
+		wait 3
+	Else
+		Reporter.ReportEvent micFail, "Gagal Melakukan Registrasi Alamat Identitas","Gagal"
+	End If
+End Function
+
+Function Input_AlamatUsaha(dt_JenisUsaha, dt_NamaToko)
+	Do
+		Device("Device").App("BNI Agen46").MobileEdit("MobileEdit_2").Pan 358,66,375,408,0,0
+	Loop until Device("Device").InsightObject("Registrasi_AlamatIdentitas").Exist(0)
+	If Device("Device").InsightObject("Registrasi_AlamatIdentitas").Exist(0) Then
+		Call Checlkist_AlamatUsaha()
+		Set InputParam = CreateObject("WScript.Shell")
+		Rem --- JenisLokasiUsaha
+		Do
+			Device("Device").App("BNI Agen46").MobileEdit("MobileEdit_3").Pan 194,96,172,-678,0,0
+		Loop until Device("Device").InsightObject("JenisLokasiUsaha").Exist(0)
+		If Device("Device").InsightObject("JenisLokasiUsaha").Exist(0) Then
+			Device("Device").InsightObject("JenisLokasiUsaha").Click
+			wait 9
+			Device("Device").App("BNI Agen46").MobileObject("Pemukiman/Perumahan").Tap
+		End If
+		Rem --- Nama Toko
+		Do
+			wait 9
+		Loop until Device("Device").InsightObject("Nama_Toko").Exist(0)
+		If Device("Device").InsightObject("Nama_Toko").Exist(0) Then
+			Device("Device").InsightObject("Nama_Toko").Click
+			wait 9
+			InputParam.SendKeys(dt_NamaToko)
+		End If
+		wait 3
+		Call CaptureImageUFTV2(Device("Device").App("BNI Agen46") , "User Melakukan Input Alamat Identitas Usaha", " ", compatibilityMode.Mobile, ReportStatus.Done)
+		wait 3
+	Else
+		Reporter.ReportEvent micFail, "Gagal Melakukan Registrasi Alamat Identitas","Gagal"
+	End If
+End Function
+
+Function Verifikasi_KantorCabang(dt_KantorCabang)
+	Do
+		wait 9
+	Loop until Device("Device").InsightObject("Registrasi_Verifikasi").Exist(0)
+	If Device("Device").InsightObject("Registrasi_Verifikasi").Exist(0) Then
+		Rem --- Kantor Cabang
+		Do
+			wait 9
+		Loop until Device("Device").InsightObject("KantorCabang").Exist(0)
+		If Device("Device").InsightObject("KantorCabang").Exist(0) Then
+			Device("Device").InsightObject("KantorCabang").Click
+			wait 9
+			Device("Device").App("BNI Agen46").MobileObject("KCU Jakarta Kota (JL.LAD").Tap
+		End If
+		wait 9
+		Call Checklis_Verification()
+		wait 3
+		Call CaptureImageUFTV2(Device("Device").App("BNI Agen46") , "User Melakukan Input Verifikasi", " ", compatibilityMode.Mobile, ReportStatus.Passed)
+		wait 3
+	Else
+		Reporter.ReportEvent micFail, "Gagal Melakukan Registrasi Verifikasi","Gagal"
+	End If
+End Function
+
+Sub Check_Action()
+	Do
+		wait 9
+	Loop until Device("Device").App("BNI Agen46").MobileButton("Check").Exist(0)
+	If Device("Device").App("BNI Agen46").MobileButton("Check").Exist(0) Then
+		Device("Device").App("BNI Agen46").MobileButton("Check").Tap
+	End If
+End Sub
+
+Sub Back_Action()
+	Do
+		wait 3
+	Loop until Device("Device").App("BNI Agen46").MobileButton("Back").Exist(0)
+	If Device("Device").App("BNI Agen46").MobileButton("Back").Exist(0) Then
+		Device("Device").App("BNI Agen46").MobileButton("Back").Tap
+	End If
+End Sub
+
+Sub Next_Action()
+	Do 
+		wait 9
+	Loop until Device("Device").App("BNI Agen46").MobileObject("Lanjut").Exist(0)
+	If Device("Device").App("BNI Agen46").MobileObject("Lanjut").Exist(0) Then
+		Device("Device").App("BNI Agen46").MobileObject("Lanjut").Tap
+	End If
+End Sub
+
+Sub Checlkist_AlamatUsaha()
+	Do
+		wait 9
+	Loop until Device("Device").App("BNI Agen46").MobileObject("Checklis_AlamatSama").Exist(0)
+	If Device("Device").App("BNI Agen46").MobileObject("Checklis_AlamatSama").Exist(0) Then
+		Device("Device").App("BNI Agen46").MobileObject("Checklis_AlamatSama").Tap
+		wait 3
+		Call CaptureImageUFTV2(Device("Device").App("BNI Agen46") , "User Melakukan Checklist Alamat Usaha sama dengan Alamat Identitas", " ", compatibilityMode.Mobile, ReportStatus.Done)
+		wait 3
+	Else
+		Reporter.ReportEvent micFail, "Gagal Melakukan Checklist Alamat Usaha Sama","Gagal"
+	End If
+End Sub
+
+Sub Checklis_Verification()
+	Do
+		wait 9
+	Loop until Device("Device").App("BNI Agen46").MobileObject("Radio_Verifikasi").Exist(0)
+	If Device("Device").App("BNI Agen46").MobileObject("Radio_Verifikasi").Exist(0) Then
+		Device("Device").App("BNI Agen46").MobileObject("Radio_Verifikasi").Tap
+	End If
+End Sub
+
+Sub Kirim()
+	Do
+		wait 9
+	Loop until Device("Device").App("BNI Agen46").MobileObject("Kirim").Exist(0)
+	If Device("Device").App("BNI Agen46").MobileObject("Kirim").Exist(0) Then
+		wait 3
+		Call CaptureImageUFTV2(Device("Device").App("BNI Agen46") , "Muncul Alert Konfirmasi, Tekan Kirim, ", " ", compatibilityMode.Mobile, ReportStatus.Passed)
+		wait 3
+		Device("Device").App("BNI Agen46").MobileObject("Kirim").Tap
+	End If
+End Sub
+
+Sub Verif_Success()
+	Do
+		wait 9
+	Loop until Device("Device").InsightObject("Ok_BTN").Exist(0)
+	If Device("Device").InsightObject("Ok_BTN").Exist(0) Then
+		wait 3
+		Call CaptureImageUFTV2(Device("Device").App("BNI Agen46") , "Alert Sukses, Pendaftaran Terkirim", " ", compatibilityMode.Mobile, ReportStatus.Passed)
+		wait 3
+		Device("Device").InsightObject("Ok_BTN").Click
+	Else
+		Reporter.ReportEvent micFail, "Gagal Melakukan Registrasi","Gagal"
+	End If
+End Sub
+
+Sub Verif_Salah_NoIdentitas()
+	Do
+		wait 9
+	Loop until Device("Device").InsightObject("HarapPeriksaKembali").Exist(0)
+	If Device("Device").InsightObject("HarapPeriksaKembali").Exist(0) Then
+		wait 3
+		Call CaptureImageUFTV2(Device("Device").App("BNI Agen46") , "Muncul Alert Error, Harap Periksa kembali Pengisisan Data", " ", compatibilityMode.Mobile, ReportStatus.Passed)
+		wait 3
+		Do
+			Device("Device").InsightObject("Ok_BTN").Click
+		Loop until Device("Device").App("BNI Agen46").MobileObject("KTP harus terdiri dari 1").Exist(0)
+		If Device("Device").App("BNI Agen46").MobileObject("KTP harus terdiri dari 1").Exist(0) Then
+			wait 3
+			Call CaptureImageUFTV2(Device("Device").App("BNI Agen46") , "Error Harap Periksa kembali Pengisisan Data dan ada Warning dibawah Field Identitas", " ", compatibilityMode.Mobile, ReportStatus.Passed)
+			wait 3
+		End If
+	Else
+		Reporter.ReportEvent micFail, "Gagal Melakukan Verif No Identitas Kurang Dari 16","Gagal"
+	End If
+End Sub
+
+Sub Verif_Empty_Field()
+	wait 3
+	Call CaptureImageUFTV2(Device("Device").App("BNI Agen46") , "Tidak Bisa Lanjut Button Lanjut Disable", " ", compatibilityMode.Mobile, ReportStatus.Passed)
+	wait 3
+End Sub
+
+Sub Data_Telah_Digunakan()
+	Do
+		wait 9
+	Loop until Device("Device").InsightObject("Ok_BTN_SudahDigunakan").Exist(0)
+	If Device("Device").InsightObject("Ok_BTN_SudahDigunakan").Exist(0) Then
+		wait 3
+		Call CaptureImageUFTV2(Device("Device").App("BNI Agen46") , "Pendaftaran Gagal, Data Sudah Digunakan", " ", compatibilityMode.Mobile, ReportStatus.Done)
+		wait 3
+		Device("Device").InsightObject("Ok_BTN_SudahDigunakan").Click
+	Else
+		Reporter.ReportEvent micFail, "Gagal Melakukan Verif Data Telah Digunakan","Gagal"
+	End If
+End Sub
+
+Sub Cek_Status_Pass()
+	Do
+		wait 9
+	Loop until Device("Device").App("BNI Agen46").MobileObject("Pendaftaran anda masih d").Exist(0) or Device("Device").InsightObject("Ok_BTN_Antrian").Exist(0)
+	If Device("Device").InsightObject("Ok_BTN_Antrian").Exist(0) or Device("Device").App("BNI Agen46").MobileObject("Pendaftaran anda masih d").Exist(0) Then
+		wait 3
+		Call CaptureImageUFTV2(Device("Device").App("BNI Agen46") , "Berhasil Melakukan Cek Approval Pendaftaran Agen 46", " ", compatibilityMode.Mobile, ReportStatus.Passed)
+		wait 3
+		Device("Device").InsightObject("Ok_BTN_Antrian").Click
+	Else
+		Reporter.ReportEvent micFail, "Gagal Melakukan Cek Approval Pendaftaran Agen 46","Gagal"
+	End If
+End Sub
+
+Sub Cek_Status_Fail()
+	Do
+		wait 9
+	Loop until Device("Device").App("BNI Agen46").MobileObject("! Pendaftar tidak ditemu").Exist(0) or Device("Device").App("BNI Agen46").MobileObject("Kembali").Exist(0)
+	If Device("Device").App("BNI Agen46").MobileObject("Kembali").Exist(0) or Device("Device").App("BNI Agen46").MobileObject("! Pendaftar tidak ditemu").Exist(0) Then
+		wait 3
+		Call CaptureImageUFTV2(Device("Device").App("BNI Agen46") , "Muncul Alert Error, Gagal Melakukan Cek Approval Pendaftaran Agen 46", " ", compatibilityMode.Mobile, ReportStatus.Passed)
+		wait 3
+		Device("Device").App("BNI Agen46").MobileObject("Kembali").Tap
+	Else
+		Reporter.ReportEvent micFail, "Gagal Melakukan Cek Gagal Approval Pendaftaran Agen 46","Gagal"
+	End If
+End Sub
+
+REM --- Object Repository
+'Device("Device").App("BNI Agen46").Launch
+'Device("Device").App("BNI Agen46").MobileObject("Cek Status Pendaftaran").Tap
+'Device("Device").InsightObject("AlamatLengkap").Click
+'Device("Device").InsightObject("Batal").Click
+'Device("Device").App("BNI Agen46").MobileObject("Checklis_AlamatSama").Click
+'Device("Device").App("BNI Agen46").MobileObject("Daftar Sekarang").Click
+'Device("Device").InsightObject("DesaKelurahan").Click
+'Device("Device").InsightObject("Email").Click
+'Device("Device").InsightObject("Registrasi_DataDiri").Click
+'Device("Device").InsightObject("JenisIdentitas").Click
+'Device("Device").InsightObject("JenisLokasiUsaha").Click
+'Device("Device").InsightObject("KantorCabang").Click
+'Device("Device").InsightObject("Kecamatan").Click
+'Device("Device").InsightObject("Kirim").Click
+'Device("Device").InsightObject("KodePos").Click
+'Device("Device").InsightObject("Kota/Kabupaten").Click
+'Device("Device").App("BNI Agen46").MobileObject("Lanjut").Click
+'Device("Device").InsightObject("Lewati").Click
+'Device("Device").InsightObject("Login").Click
+'Device("Device").InsightObject("Modal_Success").Click
+'Device("Device").InsightObject("Modal_Verifikasi").Click
+'Device("Device").InsightObject("Nama_Toko").Click
+'Device("Device").InsightObject("NamaLengkap").Click
+'Device("Device").InsightObject("No Telpon Rumah").Click
+'Device("Device").InsightObject("Nomer Hp").Click
+'Device("Device").InsightObject("Npwp").Click
+'Device("Device").InsightObject("Ok_BTN").Click
+'Device("Device").InsightObject("Provinsi").Click
+'Device("Device").App("BNI Agen46").MobileObject("Radio_Verifikasi").Click
+'Device("Device").InsightObject("Registras_Verifikasi").Click
+'Device("Device").InsightObject("Registrasi_AlamatIdentitas").Click
+'Device("Device").InsightObject("RegistrasiDataDiri").Click
+'Device("Device").InsightObject("RT").Click
+'Device("Device").InsightObject("RW").Click
+'Device("Device").InsightObject("VerifikasiSukses_Daftar").Click
+'Device("Device").TextObject("Lewati").Click
+

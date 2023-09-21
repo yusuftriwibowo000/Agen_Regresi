@@ -1,0 +1,251 @@
+﻿Sub Go_toAkun()
+	Do
+	Loop until Device("Device").App("BNI Agen46").MobileObject("Akun").Exist(1)
+	If Device("Device").App("BNI Agen46").MobileObject("Akun").Exist(5) Then
+		wait 5
+		Call CaptureImageUFTV2(Device("Device").App("BNI Agen46"), "Pilih Menu Akun", " ", compatibilityMode.Mobile, ReportStatus.Done)
+		wait 5
+		Device("Device").App("BNI Agen46").MobileObject("Akun").Tap
+	End If
+End Sub
+
+Sub Go_toRiwayatPesan()
+	Do
+	Loop until Device("Device").App("BNI Agen46").MobileObject("Riwayat Pesan").Exist(1)
+	If Device("Device").App("BNI Agen46").MobileObject("Riwayat Pesan").Exist(5) Then
+		wait 5
+		Call CaptureImageUFTV2(Device("Device").App("BNI Agen46"), "Pilih Riwayat Pesan", " ", compatibilityMode.Mobile, ReportStatus.Done)
+		wait 5
+		Device("Device").App("BNI Agen46").MobileObject("Riwayat Pesan").Tap
+	End If
+End Sub
+
+Sub Go_toBelumTerbaca()
+	Do
+	Loop until Device("Device").App("BNI Agen46").MobileObject("Belum Terbaca").Exist(1)
+	If Device("Device").App("BNI Agen46").MobileObject("Belum Terbaca").Exist(5) Then
+		wait 5
+		Call CaptureImageUFTV2(Device("Device").App("BNI Agen46"), "Pilih Pesan Belum Terbaca", " ", compatibilityMode.Mobile, ReportStatus.Done)
+		wait 5
+		Device("Device").App("BNI Agen46").MobileObject("Belum Terbaca").Tap
+	End If
+End Sub
+
+Sub Go_toPesanTerbaca()
+	Do
+	Loop until Device("Device").App("BNI Agen46").MobileObject("Terbaca").Exist(1)
+	If Device("Device").App("BNI Agen46").MobileObject("Terbaca").Exist(5) Then
+		wait 5
+		Call CaptureImageUFTV2(Device("Device").App("BNI Agen46"), "Pilih Pesan Terbaca", " ", compatibilityMode.Mobile, ReportStatus.Done)
+		wait 5
+		Device("Device").App("BNI Agen46").MobileObject("Terbaca").Tap
+	End If
+End Sub
+
+Sub Go_toPesanTerhapus()
+	Do
+	Loop until Device("Device").App("BNI Agen46").MobileObject("Terhapus").Exist(1)
+	If Device("Device").App("BNI Agen46").MobileObject("Terhapus").Exist(5) Then
+		wait 5
+		Call CaptureImageUFTV2(Device("Device").App("BNI Agen46"), "Pilih Pesan Terhapus", " ", compatibilityMode.Mobile, ReportStatus.Done)
+		wait 5
+		Device("Device").App("BNI Agen46").MobileObject("Terhapus").Tap
+	End If
+End Sub
+
+Sub Go_toBroadCastMessage()
+	Do
+	Loop until Device("Device").App("BNI Agen46").MobileObject("Broadcast Message").Exist(1)
+	If Device("Device").App("BNI Agen46").MobileObject("Broadcast Message").Exist(5) Then
+		wait 5
+		Call CaptureImageUFTV2(Device("Device").App("BNI Agen46"), "Pilih Broadcast Message", " ", compatibilityMode.Mobile, ReportStatus.Done)
+		wait 5
+		Device("Device").App("BNI Agen46").MobileObject("Broadcast Message").Tap
+	End If
+End Sub
+
+Function Pilih_VerifyOpenPesan(dt_TCID)
+	If dt_TCID = "MAG0016-001" Then
+'		Do
+'		Loop until Device("Device").App("BNI Agen46").MobileObject("Test Broadcast Message 37253").Exist(1)
+'		If Device("Device").App("BNI Agen46").MobileObject("Test Broadcast Message 37253").Exist(5) Then
+			AIUtil.SetContext Device("Device")
+			Do
+			Loop until AIUtil.FindTextBlock("test 002").Exist(1)
+			If AIUtil.FindTextBlock("test 002").Exist(1) Then
+			wait 5
+			Call CaptureImageUFTV2(Device("Device").App("BNI Agen46"), "Muncul Pesan Daftar Pesan Belum Terbaca", " ", compatibilityMode.Mobile, ReportStatus.Done)
+			wait 5
+'			Device("Device").App("BNI Agen46").MobileObject("Test Broadcast Message 37253").Tap
+			AIUtil.FindTextBlock("test 002").Click
+			wait 5
+			Call CaptureImageUFTV2(Device("Device").App("BNI Agen46"), "Berhasil Pilih Pesan Belum Terbaca", " ", compatibilityMode.Mobile, ReportStatus.Passed)
+			wait 7
+			Call CaptureImageUFTV2(Device("Device").App("BNI Agen46"), "Isi Pesan Yang Belum Terbaca", " ", compatibilityMode.Mobile, ReportStatus.Passed)
+		Else
+			Reporter.ReportEvent micFail,  "Gagal Memilih Pesan", "Gagal"
+		End If
+	ElseIf dt_TCID = "MAG0016-003" Then
+'		Do
+'		Loop until Device("Device").App("BNI Agen46").MobileObject("TEST Dari:  Admin 17/01/").Exist(1)
+'		If Device("Device").App("BNI Agen46").MobileObject("TEST Dari:  Admin 17/01/").Exist(5) Then
+			AIUtil.SetContext Device("Device")
+			Do
+			Loop until AIUtil.FindTextBlock("test12").Exist(1)
+			If AIUtil.FindTextBlock("test12").Exist(1) Then
+			wait 5
+			Call CaptureImageUFTV2(Device("Device").App("BNI Agen46"), "Muncul Pesan Daftar Pesan Terbaca", " ", compatibilityMode.Mobile, ReportStatus.Done)
+			wait 5
+'			Device("Device").App("BNI Agen46").MobileObject("TEST Dari:  Admin 17/01/").Tap
+			AIUtil.FindTextBlock("test12").Click
+			wait 5
+			Call CaptureImageUFTV2(Device("Device").App("BNI Agen46"), "Berhasil Pilih Pesan Terbaca", " ", compatibilityMode.Mobile, ReportStatus.Passed)
+			wait 5
+		Else
+			Reporter.ReportEvent micFail,  "Gagal Memilih Pesan", "Gagal"
+		End If
+	ElseIf dt_TCID = "MAG0016-005" Then
+'		Do
+'		Loop until Device("Device").App("BNI Agen46").MobileObject("Test Broadcast Message D_Delete").Exist(1)
+'		If Device("Device").App("BNI Agen46").MobileObject("Test Broadcast Message D_Delete").Exist(5) Then\
+			AIUtil.SetContext Device("Device")
+			Do
+			Loop until AIUtil.FindTextBlock("test13").Exist(1)
+			If AIUtil.FindTextBlock("test13").Exist(1) Then
+			wait 5
+			Call CaptureImageUFTV2(Device("Device").App("BNI Agen46"), "Muncul Pesan Daftar Pesan Terhapus", " ", compatibilityMode.Mobile, ReportStatus.Done)
+			wait 5
+'			Device("Device").App("BNI Agen46").MobileObject("Test Broadcast Message D_Delete").Tap
+			AIUtil.FindTextBlock("test13").Click
+			wait 7
+			Call CaptureImageUFTV2(Device("Device").App("BNI Agen46"), "Berhasil Pilih Pesan Terhapus", " ", compatibilityMode.Mobile, ReportStatus.Passed)
+			wait 5
+		Else
+			Reporter.ReportEvent micFail,  "Gagal Memilih Pesan", "Gagal"
+		End If
+	End If
+End Function
+
+Function Pilih_VerifyHapusPesan(dt_TCID)
+	If dt_TCID = "MAG0016-002" Then
+'		Do
+'		Loop until Device("Device").App("BNI Agen46").MobileObject("Testing Dari:  40805 21/").Exist(1)
+'		If Device("Device").App("BNI Agen46").MobileObject("Testing Dari:  40805 21/").Exist(5) Then
+			AIUtil.SetContext Device("Device")
+			Do
+			Loop until AIUtil.FindTextBlock("tes 777").Exist(1)
+			If AIUtil.FindTextBlock("test 777").Exist(1) Then
+			wait 5
+			Call CaptureImageUFTV2(Device("Device").App("BNI Agen46"), "Muncul Pesan Daftar Pesan Belum Terbaca", " ", compatibilityMode.Mobile, ReportStatus.Done)
+			wait 5
+'			Device("Device").App("BNI Agen46").MobileObject("Testing Dari:  40805 21/").LongPress micNoCoordinate,micNoCoordinate,7
+			AIUtil.FindTextBlock("Dari; 19639").LongClick
+			wait 1
+			Call CaptureImageUFTV2(Device("Device").App("BNI Agen46"), "Pesan Dipilih Untuk Dihapus", " ", compatibilityMode.Mobile, ReportStatus.Done)
+			wait 2
+			AIUtil("trash").Click
+			Call CaptureImageUFTV2(Device("Device").App("BNI Agen46"), "Klik Ya Untuk Menghapus", " ", compatibilityMode.Mobile, ReportStatus.Done)
+			AIUtil("button", "").Click
+			wait 1
+			Call CaptureImageUFTV2(Device("Device").App("BNI Agen46"), "Pesan Terhapus", " ", compatibilityMode.Mobile, ReportStatus.Passed)
+			wait 2
+		Else
+			Reporter.ReportEvent micFail,  "Gagal Menghapus Pesan", "Gagal"
+		End If
+	End If
+	If dt_TCID = "MAG0016-004" Then
+'		Do
+'		Loop until Device("Device").App("BNI Agen46").MobileObject("Test Broadcast Message D").Exist(5)
+'		If Device("Device").InsightObject("Test Broadcast Message D").Exist(5) Then
+			AIUtil.SetContext Device("Device")
+			Do
+			Loop until AIUtil.FindTextBlock("test12").Exist(1)
+			If AIUtil.FindTextBlock("test12").Exist(1) Then
+		wait 4
+		Call CaptureImageUFTV2(Device("Device").App("BNI Agen46"), "Muncul Pesan Daftar Pesan Terbaca", " ", compatibilityMode.Mobile, ReportStatus.Done)
+'			Device("Device").InsightObject("Test Broadcast Message D").LongClick
+			AIUtil.FindTextBlock("Dari; 40805").LongClick
+			wait 2
+			Call CaptureImageUFTV2(Device("Device").App("BNI Agen46"), "Pilih Pesan Untuk Dihapus", " ", compatibilityMode.Mobile, ReportStatus.Done)
+			wait 2
+			AIUtil("trash").Click
+			Call CaptureImageUFTV2(Device("Device").App("BNI Agen46"), "Klik Ya Untuk Menghapus", " ", compatibilityMode.Mobile, ReportStatus.Done)
+			AIUtil("button", "").Click
+			wait 1
+			Call CaptureImageUFTV2(Device("Device").App("BNI Agen46"), "Pesan Terhapus", " ", compatibilityMode.Mobile, ReportStatus.Passed)
+			wait 2
+'			Device("Device").App("BNI Agen46").MobileObject("Test Broadcast Message D").LongPress micNoCoordinate,micNoCoordinate,5
+		Else
+			Reporter.ReportEvent micFail,  "Gagal Menghapus Pesan", "Gagal"
+		End If
+	End If
+'	wait 5
+'	Call CaptureImageUFTV2(Device("Device").App("BNI Agen46"), "User Klik Hold pesan yang ingin di Hapus", " ", compatibilityMode.Mobile, ReportStatus.Done)
+'	wait 5
+'	If Device("Device").App("BNI Agen46").MobileObject("Bin").Exist(0) Then
+'		Device("Device").App("BNI Agen46").MobileObject("Bin").Tap
+'	End If
+'	wait 5
+'	Call CaptureImageUFTV2(Device("Device").App("BNI Agen46"), "User Klik Ya, Konfirmasi Hapus Item", " ", compatibilityMode.Mobile, ReportStatus.Done)
+'	wait 5
+'	Device("Device").App("BNI Agen46").MobileObject("Ya").Tap
+'	wait 5
+'	Call CaptureImageUFTV2(Device("Device").App("BNI Agen46"), "Item Berhasil di Hapus", " ", compatibilityMode.Mobile, ReportStatus.Passed)
+'	wait 5
+End Function
+
+Sub CameBack()
+	wait 3
+	If Device("Device").App("BNI Agen46").MobileButton("Kembali").Exist(5) Then
+		Device("Device").App("BNI Agen46").MobileButton("Kembali").Tap	
+		wait 1
+		Device("Device").App("BNI Agen46").MobileButton("Kembali").Tap
+		wait 1
+		Device("Device").App("BNI Agen46").MobileButton("Kembali").Tap
+		wait 1
+		Device("Device").App("BNI Agen46").MobileObject("Beranda").Tap
+	End If
+End Sub
+
+Sub CameBack2()
+	If Device("Device").App("BNI Agen46").MobileButton("Kembali").Exist(5) Then
+		Device("Device").App("BNI Agen46").MobileButton("Kembali").Tap	
+		wait 1
+		Device("Device").App("BNI Agen46").MobileButton("Kembali").Tap
+		wait 1
+		Device("Device").App("BNI Agen46").MobileObject("Beranda").Tap
+	End If
+End Sub
+
+
+
+'Reporter.ReportEvent micFail,  "Gagal Set Biometric Login", "Gagal"
+
+Rem -- Repository Riwayat Pesan
+'Device("Device").App("BNI Agen46").MobileButton("XButton").Tap
+'Device("Device").App("BNI Agen46").MobileObject("Akun").Tap
+'Device("Device").App("BNI Agen46").MobileObject("Belum Terbaca").Tap
+'Device("Device").App("BNI Agen46").MobileObject("Bin").Tap
+'Device("Device").App("BNI Agen46").MobileObject("Broadcast Message").Tap
+'Device("Device").App("BNI Agen46").MobileObject("Cek Broadcast Rekan-Reka").Tap
+'Device("Device").App("BNI Agen46").MobileObject("Kirim Ulang Data").Tap
+'Device("Device").App("BNI Agen46").MobileObject("Perubahan Data Berhasil").Tap
+'Device("Device").App("BNI Agen46").MobileObject("Reset SSN").Tap
+'Device("Device").App("BNI Agen46").MobileObject("Riwayat Pesan").Tap
+'Device("Device").App("BNI Agen46").MobileObject("Terbaca").Tap
+'Device("Device").App("BNI Agen46").MobileObject("Terhapus").Tap
+'Device("Device").App("BNI Agen46").MobileObject("Test Broadcast Message D").Tap
+'Device("Device").App("BNI Agen46").MobileObject("Test Broadcast Message D_2").Tap
+'Device("Device").App("BNI Agen46").MobileObject("Test Broadcast Message D_Delete").Tap
+'Device("Device").App("BNI Agen46").MobileObject("TEST Dari:  Admin 17/01/").Tap
+'Device("Device").App("BNI Agen46").MobileObject("Testing Dari:  40805 21/").Tap
+'Device("Device").App("BNI Agen46").MobileObject("Tidak").Tap
+'Device("Device").App("BNI Agen46").MobileObject("Ya").Tap
+'Device("Device").InsightObject("Back_FromReadMessage").Click
+'Device("Device").InsightObject("Confirm_Ok").Click
+
+'Device("Device").App("BNI Agen46").MobileObject("Error: Not found Ok").Tap
+'Device("Device").App("BNI Agen46").MobileObject("Kirim Ulang Data_Verivy").Tap
+'Device("Device").App("BNI Agen46").MobileObject("Reset SSN_Verify").Tap
+'Device("Device").App("BNI Agen46").MobileObject("Perubahan Data Berhasil_Verify").Tap
+

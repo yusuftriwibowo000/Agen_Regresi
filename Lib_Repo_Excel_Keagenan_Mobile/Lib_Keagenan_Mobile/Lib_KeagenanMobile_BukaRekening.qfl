@@ -1,0 +1,428 @@
+﻿Rem -- Go To Buka Rekening
+Sub Go_LayananKeuangan()
+	Do
+		Reporter.ReportEvent micDone, "Memilih Layanan Keuangan","Done"
+	Loop until Device("Device").App("BNI Agen46").MobileObject("Layanan Keuangan").Exist(0)
+	If Device("Device").App("BNI Agen46").MobileObject("Layanan Keuangan").Exist(0) Then
+		wait 3
+		Call CaptureImageUFTV2( Device("Device").App("BNI Agen46"), "Pilih Layanan Ke4angan", " ", compatibilityMode.Mobile, ReportStatus.Done)
+		wait 3
+		Device("Device").App("BNI Agen46").MobileObject("Layanan Keuangan").Tap
+	Else
+		Reporter.ReportEvent micFail,  "Gagal Pilih Layanan Keuangan", "Gagal"
+	End If
+End Sub
+
+Sub Go_BukaRekening()
+	Do
+		Reporter.ReportEvent micDone, "Memilih Buka Rekening","Done"
+	Loop until Device("Device").App("BNI Agen46").MobileObject("BukaRekening").Exist(0)
+	If Device("Device").App("BNI Agen46").MobileObject("BukaRekening").Exist(0) Then
+		wait 3
+		Call CaptureImageUFTV2( Device("Device").App("BNI Agen46"), "Pilih Menu Buka Rekening", " ", compatibilityMode.Mobile, ReportStatus.Done)
+		wait 3
+		Device("Device").App("BNI Agen46").MobileObject("BukaRekening").Tap
+	Else
+		Reporter.ReportEvent micFail,  "Gagal Pilih Menu Buka Rekening", "Gagal"
+	End If
+End Sub
+
+Sub Go_Buka_Rekening_Page()
+	Call Go_LayananKeuangan()
+	Call Go_BukaRekening()
+End Sub
+
+Function Input_Setoran_Awal(dt_SetoranAwal)
+	Do
+		Reporter.ReportEvent micDone, "Inpput Field","Done"
+	Loop until Device("Device").App("BNI Agen46").MobileEdit("Nominal_n_NamaDepan_n_Almat_BoHp").Exist(0)
+	If Device("Device").App("BNI Agen46").MobileEdit("Nominal_n_NamaDepan_n_Almat_BoHp").Exist(0) Then
+		Device("Device").App("BNI Agen46").MobileEdit("Nominal_n_NamaDepan_n_Almat_BoHp").Tap
+		wait 2
+		Device("Device").App("BNI Agen46").MobileEdit("Nominal_n_NamaDepan_n_Almat_BoHp").Set dt_SetoranAwal
+		wait 3
+		Call CaptureImageUFTV2( Device("Device").App("BNI Agen46"), "Masukan Setoran Awal", " ", compatibilityMode.Mobile, ReportStatus.Done)
+		wait 3
+	Else
+		Reporter.ReportEvent micFail,  "Gagal Pilih Menu Buka Rekening", "Gagal"
+	End If
+End Function
+
+Sub Act_Lanjut()
+	Do
+		Reporter.ReportEvent micDone, "Memilih Layanan Keuangan","Done"
+	Loop until Device("Device").App("BNI Agen46").MobileButton("Lanjut").Exist(0)
+	Device("Device").App("BNI Agen46").MobileButton("Lanjut").Tap
+End Sub
+
+Sub Act_Lanjut_Pass()
+	Do
+		Reporter.ReportEvent micDone, "Memilih Layanan Keuangan","Done"
+	Loop until Device("Device").App("BNI Agen46").MobileObject("Lanjut_VerivPass").Exist(0)
+	Device("Device").App("BNI Agen46").MobileObject("Lanjut_VerivPass").Tap
+End Sub
+
+Sub Konfirmasi_Setoran_Awal()
+	Call Act_Lanjut()
+	Do
+		Reporter.ReportEvent micDone, "Memilih Layanan Keuangan","Done"
+	Loop until Device("Device").App("BNI Agen46").MobileObject("Lanjut").Exist(0)
+	Device("Device").App("BNI Agen46").MobileObject("Lanjut").Tap
+End Sub
+
+Sub Act_Lanjutkan()
+	Do
+		Reporter.ReportEvent micDone, "Memilih Layanan Keuangan","Done"
+	Loop until Device("Device").InsightObject("Lanjutkan").Exist(0)
+	Device("Device").InsightObject("Lanjutkan").Click
+End Sub
+
+Rem --- Input Data Diri
+Function Input_Data_Diri(dt_NamaDepan, dt_NamaTengah, dt_NamaBelakang, dt_Email, dt_TempatLahir, dt_NoKtp, dt_NPWP)
+	Set objkey = CreateObject("WScript.Shell")
+	Do
+		Reporter.ReportEvent micDone, "Input Field","Done"
+	Loop until Device("Device").App("BNI Agen46").MobileEdit("Nominal_n_NamaDepan_n_Almat_BoHp").Exist(0)
+	If Device("Device").App("BNI Agen46").MobileEdit("Nominal_n_NamaDepan_n_Almat_BoHp").Exist(0) Then
+		Rem -- Input Nama Depan
+		Device("Device").App("BNI Agen46").MobileEdit("Nominal_n_NamaDepan_n_Almat_BoHp").Tap
+		wait 2
+		Device("Device").App("BNI Agen46").MobileEdit("Nominal_n_NamaDepan_n_Almat_BoHp").Set dt_NamaDepan
+		Rem -- Input Nama Tengah
+		wait 4
+		Device("Device").App("BNI Agen46").MobileEdit("NamaTengah_RT_DescPekerjaan").Tap
+		wait 2
+		Device("Device").App("BNI Agen46").MobileEdit("NamaTengah_RT_DescPekerjaan").Set dt_NamaTengah
+		Rem -- Input Nama Belakang
+		wait 4
+		Device("Device").App("BNI Agen46").MobileEdit("NamaBelakang_n_TGmptLahir_Rw_n_Penghasilan").Tap
+		wait 2
+		Device("Device").App("BNI Agen46").MobileEdit("NamaBelakang_n_TGmptLahir_Rw_n_Penghasilan").Set dt_NamaBelakang
+		Rem -- Input eMAIL
+		wait 4
+		Device("Device").App("BNI Agen46").MobileEdit("NoKTP").Tap
+		wait 2
+		Device("Device").App("BNI Agen46").MobileEdit("NoKTP").Set dt_Email
+		Rem -- Input Jenis Kelamin
+		wait 4
+		Device("Device").App("BNI Agen46").MobileObject("Jenis Kelamin").Tap
+		wait 2
+		Device("Device").App("BNI Agen46").MobileObject("Laki-laki").Tap
+		Rem -- Input Status Kawin
+		wait 4
+		Device("Device").App("BNI Agen46").MobileObject("Status Kawin").Tap
+		wait 2
+		Device("Device").App("BNI Agen46").MobileObject("Belum Menikah").Tap
+		REM -- Input Tempat Lahir
+		wait 4
+		Device("Device").InsightObject("TempatLahir").Click
+		wait 2
+		objkey.SendKeys (dt_TempatLahir)
+		REM -- Input Tanggal Lahir
+		wait 4
+		Device("Device").App("BNI Agen46").MobileEdit("MobileEdit").Pan 529,82,500,-1693,0,0
+		Call Input_TglLahir()
+		Rem -- Input No KTP
+		wait 4
+		Device("Device").InsightObject("NOKTP").Click
+		wait 2
+		objkey.SendKeys (dt_NoKtp)
+		Rem -- Input KTP Active
+		wait 4
+		Device("Device").App("BNI Agen46").MobileObject("Berlaku Seumur Hidup").Tap
+		Rem -- Input NPWP
+		wait 4
+		Device("Device").App("BNI Agen46").MobileEdit("NamaBelakang_n_TGmptLahir_Rw_n_Penghasilan").Tap
+		wait 2
+		Device("Device").App("BNI Agen46").MobileEdit("NamaBelakang_n_TGmptLahir_Rw_n_Penghasilan").Set dt_NPWP
+		wait 3
+		Call CaptureImageUFTV2( Device("Device").App("BNI Agen46"), "User Telah Melakukan Input Data Diri", " ", compatibilityMode.Mobile, ReportStatus.Passed)
+		wait 3
+	Else
+		Reporter.ReportEvent micFail,  "Gagal Input Data Diri", "Gagal"
+	End If
+End Function
+
+Rem --- Special Input
+Sub Input_TglLahir()
+	Do
+		Reporter.ReportEvent micDone, "Input Tanggal Lahir","Done"
+	Loop until Device("Device").App("BNI Agen46").MobileObject("Tanggal Lahir").Exist(0)
+	If Device("Device").App("BNI Agen46").MobileObject("Tanggal Lahir").Exist(0) Then
+		Device("Device").App("BNI Agen46").MobileObject("Tanggal Lahir").Tap
+		wait 2
+		Device("Device").App("BNI Agen46").MobileButton("Select year").Tap
+		wait 2
+		Device("Device").App("BNI Agen46").MobileButton("1996").Tap
+		wait 2
+		Device("Device").App("BNI Agen46").MobileObject("1, Monday, January 1, 19").Tap
+		wait 2
+		Device("Device").App("BNI Agen46").MobileButton("OK_Callender").Tap
+	Else
+		Reporter.ReportEvent micFail,  "Gagal Input Tanggal Lahir", "Gagal"
+	End If
+End Sub
+
+Function Input_Alamat(dt_Alamat, dt_RT, dt_RW)
+	Do
+		Reporter.ReportEvent micDone, "Field Nama","Done"
+	Loop until Device("Device").App("BNI Agen46").MobileEdit("Nominal_n_NamaDepan_n_Almat_BoHp").Exist(0)
+	If Device("Device").App("BNI Agen46").MobileEdit("Nominal_n_NamaDepan_n_Almat_BoHp").Exist(0) Then
+		Rem -- Input Alamat
+		Device("Device").App("BNI Agen46").MobileEdit("Nominal_n_NamaDepan_n_Almat_BoHp").Tap
+		wait 2
+		Device("Device").App("BNI Agen46").MobileEdit("Nominal_n_NamaDepan_n_Almat_BoHp").Set dt_Alamat
+		Rem -- Input RT
+		wait 4
+		Device("Device").App("BNI Agen46").MobileEdit("NamaTengah_RT_DescPekerjaan").Tap
+		wait 2
+		Device("Device").App("BNI Agen46").MobileEdit("NamaTengah_RT_DescPekerjaan").Set dt_RT
+		Rem -- Input RW
+		wait 4
+		Device("Device").App("BNI Agen46").MobileEdit("NamaBelakang_n_TGmptLahir_Rw_n_Penghasilan").Tap
+		wait 2
+		Device("Device").App("BNI Agen46").MobileEdit("NamaBelakang_n_TGmptLahir_Rw_n_Penghasilan").Set dt_RW
+		Rem -- Input Provinsi
+		wait 4
+		Device("Device").App("BNI Agen46").MobileObject("Provinsi").Tap
+		wait 2
+		Device("Device").App("BNI Agen46").MobileObject("DKI Jakarta").Tap
+		Rem -- Input Kabupaten
+		wait 4
+		Device("Device").App("BNI Agen46").MobileObject("Kota/Kabupaten").Tap
+		wait 2
+		Device("Device").App("BNI Agen46").MobileObject("Kota Jakarta Pusat").Tap
+		Rem -- Input Kecamatan
+		wait 4
+		Device("Device").App("BNI Agen46").MobileObject("Kecamatan").Tap
+		wait 2
+		Device("Device").App("BNI Agen46").MobileObject("Cempaka Putih").Tap
+		Rem -- Input Kelurahan
+		wait 4
+		Device("Device").App("BNI Agen46").MobileObject("Desa/Kelurahan").Tap
+		wait 2
+		Device("Device").App("BNI Agen46").MobileObject("Cempaka Putih Barat").Tap
+		Rem -- Input Kode Pos
+		wait 4
+		Device("Device").App("BNI Agen46").MobileObject("Kode Pos").Tap
+		wait 2
+		Device("Device").App("BNI Agen46").MobileObject("10520").Tap
+		wait 3
+		Call CaptureImageUFTV2( Device("Device").App("BNI Agen46"), "User Berhasil Melakukan Input Alamat", " ", compatibilityMode.Mobile, ReportStatus.Passed)
+		wait 3
+		Call Act_Lanjutkan()
+	Else
+		Reporter.ReportEvent micFail,  "Gagal Input Alamat", "Gagal"
+	End If 
+End Function
+
+Function Input_Kontak_Nasabah(dt_NoHp, dt_DescPekerjaan, dt_Penghasilan)
+	Do
+		Reporter.ReportEvent micDone, "Field Nama","Done"
+	Loop until Device("Device").App("BNI Agen46").MobileEdit("Nominal_n_NamaDepan_n_Almat_BoHp").Exist(0)
+	If Device("Device").App("BNI Agen46").MobileEdit("Nominal_n_NamaDepan_n_Almat_BoHp").Exist(0) Then
+		Rem -- Input No Hp
+		Device("Device").App("BNI Agen46").MobileEdit("Nominal_n_NamaDepan_n_Almat_BoHp").Tap
+		wait 2
+		Device("Device").App("BNI Agen46").MobileEdit("Nominal_n_NamaDepan_n_Almat_BoHp").Set dt_NoHp
+		Rem -- Input Pekerjaan
+		wait 4
+		Device("Device").App("BNI Agen46").MobileEdit("NamaTengah_RT_DescPekerjaan").Tap
+		wait 2
+		Device("Device").App("BNI Agen46").MobileEdit("NamaTengah_RT_DescPekerjaan").Set dt_DescPekerjaan
+		Rem -- Input Pekerjaan
+		wait 4
+		Device("Device").App("BNI Agen46").MobileObject("Pekerjaan").Tap
+		wait 2
+		Device("Device").App("BNI Agen46").MobileObject("Pegawai BUMN/BUMD").Tap
+		Rem -- Input Penghasilan
+		wait 4
+		Device("Device").App("BNI Agen46").MobileEdit("NamaBelakang_n_TGmptLahir_Rw_n_Penghasilan").Tap
+		wait 2
+		Device("Device").App("BNI Agen46").MobileEdit("NamaBelakang_n_TGmptLahir_Rw_n_Penghasilan").Set dt_Penghasilan
+		wait 3
+		Call CaptureImageUFTV2( Device("Device").App("BNI Agen46"), "User Berhasil Melakukan Input Kontak Nasabah", " ", compatibilityMode.Mobile, ReportStatus.Passed)
+		wait 3
+		Call Act_Lanjutkan()
+	Else
+		Reporter.ReportEvent micFail,  "Gagal Input Kontak Nasabah", "Gagal"
+	End If
+End Function
+
+Function Input_Detail_Pekerjaan(dt_NamaPerusahaan, dt_AlamatPerusahaan, dt_KotaPerusahaan, dt_DetaiPekerjaan)
+	Do
+		Reporter.ReportEvent micDone, "Input Field","Done"
+	Loop until Device("Device").App("BNI Agen46").MobileEdit("Nominal_n_NamaDepan_n_Almat_BoHp").Exist(0)
+	If Device("Device").App("BNI Agen46").MobileEdit("Nominal_n_NamaDepan_n_Almat_BoHp").Exist(0) Then
+		wait 2
+		Device("Device").App("BNI Agen46").MobileEdit("Nominal_n_NamaDepan_n_Almat_BoHp").Tap
+		wait 2
+		Device("Device").App("BNI Agen46").MobileEdit("Nominal_n_NamaDepan_n_Almat_BoHp").Set dt_NamaPerusahaan
+		Rem -- Input Alamat Perusahaan
+		wait 4
+		Device("Device").App("BNI Agen46").MobileEdit("NamaTengah_RT_DescPekerjaan").Tap
+		wait 2
+		Device("Device").App("BNI Agen46").MobileEdit("NamaTengah_RT_DescPekerjaan").Set dt_AlamatPerusahaan
+		Rem -- Input Kota Perusahaan
+		wait 4
+		Device("Device").App("BNI Agen46").MobileEdit("NamaBelakang_n_TGmptLahir_Rw_n_Penghasilan").Tap
+		wait 2
+		Device("Device").App("BNI Agen46").MobileEdit("NamaBelakang_n_TGmptLahir_Rw_n_Penghasilan").Set dt_KotaPerusahaan
+		Rem -- Input Detail Pekerjaan
+		wait 4
+		Device("Device").App("BNI Agen46").MobileEdit("NoKTP").Tap
+		wait 2
+		Device("Device").App("BNI Agen46").MobileEdit("NoKTP").Set dt_DetaiPekerjaan
+		wait 3
+		Call CaptureImageUFTV2( Device("Device").App("BNI Agen46"), "User Berhasil Melakukan Input Detail Pekerjaan", " ", compatibilityMode.Mobile, ReportStatus.Passed)
+		wait 3
+		Call Act_Lanjutkan()
+	Else
+		Reporter.ReportEvent micFail,  "Gagal Input Detail Pekerjaan Nasabah", "Gagal"
+	End If
+End Function
+
+Function Upload_n_InputPassTrx(dt_PassTrx)
+'	Do
+'		Reporter.ReportEvent micDone, "Upload For Foto","Done"
+'	Loop until Device("Device").App("BNI Agen46").MobileObject("Foto_UploadFoto").Exist(0)
+	If Device("Device").App("BNI Agen46").MobileObject("Foto_UploadFoto").Exist(0) and Device("Device").App("BNI Agen46").MobileObject("Foto_UploadKTP").Exist(0) Then
+		Rem -- Upload Foto Diri
+		Device("Device").App("BNI Agen46").MobileObject("Foto_UploadFoto").Tap
+		wait 2
+		Device("Device").App("BNI Agen46").MobileObject("Photo Library").Tap
+		wait 4
+		Device("Device").App("Files").MobileObject("PhotoSelect").Tap
+		wait 2
+		Device("Device").App("BNI Agen46").MobileButton("Crop").Tap
+		wait 2
+		Rem -- Upload Foto KTP
+		Device("Device").App("BNI Agen46").MobileObject("Foto_UploadKTP").Tap
+		wait 2
+		Device("Device").App("BNI Agen46").MobileObject("Photo Library").Tap
+		wait 4
+		Device("Device").App("Files").MobileObject("PhotoSelect").Tap
+		wait 2
+		Device("Device").App("BNI Agen46").MobileButton("Crop").Tap
+		wait 2
+		Do
+			wait 2
+		Loop until Device("Device").App("BNI Agen46").MobileEdit("Pass_TRX").Exist(0)
+		Device("Device").App("BNI Agen46").MobileEdit("Pass_TRX").Tap
+		wait 2
+		Device("Device").App("BNI Agen46").MobileEdit("Pass_TRX").Set dt_PassTrx
+		wait 3
+		Call CaptureImageUFTV2( Device("Device").App("BNI Agen46"), "User Berhasil Melakukan Upload Foto dan Input Password Transaksi", " ", compatibilityMode.Mobile, ReportStatus.Passed)
+		wait 3
+		Call Act_Lanjut_Pass()
+		Call Konfirmasi_Final()
+	Else
+		Reporter.ReportEvent micFail,  "Gagal Upload Photo dan Password Trx", "Gagal"
+	End If
+End Function
+
+Sub Konfirmasi_Final()
+	Do
+		Reporter.ReportEvent micDone, "Wait","Done"
+	Loop until Device("Device").App("BNI Agen46").MobileObject("Lanjut").Exist(0)
+	Device("Device").App("BNI Agen46").MobileObject("Lanjut").Tap
+End Sub
+
+Sub VerifySukses_BukaRekening()
+	Do
+		Reporter.ReportEvent micDone, "Beranda","Done"
+	Loop until Device("Device").App("BNI Agen46").MobileObject("Beranda").Exist(0)
+	If Device("Device").App("BNI Agen46").MobileObject("Beranda").Exist(0) Then
+		wait 3
+		Call CaptureImageUFTV2( Device("Device").App("BNI Agen46"), "User Berhasil Melakukan Pembukaan Rekening", " ", compatibilityMode.Mobile, ReportStatus.Passed)
+		wait 3
+		Device("Device").App("BNI Agen46").MobileObject("Beranda").Tap
+	Else
+		Reporter.ReportEvent micFail,  "USer Gagal Melakukan Pembukaan Rekening", "Gagal"
+	End If
+End Sub
+
+Sub Verify_PasswordTrx_Salah()
+	Do
+		MsgBox("Wait for Ok Confirm")
+	Loop until Device("Device").InsightObject("Ok_Password_Salah").Exist(0)
+	If Device("Device").InsightObject("Ok_Password_Salah").Exist(0) Then
+		wait 3
+		Call CaptureImageUFTV2( Device("Device").App("BNI Agen46"), "Alert Error, Password Trx yang Dimasukan Salah", " ", compatibilityMode.Mobile, ReportStatus.Passed)
+		wait 3
+	Else
+		Reporter.ReportEvent micFail,  "User Gagal Melakukan Salah Password Trx", "Gagal"
+	End If
+End Sub
+
+Sub Verify_DataKosong()
+	wait 3
+	Call CaptureImageUFTV2( Device("Device").App("BNI Agen46"), "User Melakukan Pengosongan Data Mandatory, Button Lanjut Disable", " ", compatibilityMode.Mobile, ReportStatus.Passed)
+	wait 3
+End Sub
+
+Sub Verify_Data_Sudah_Digunakan()
+	Do
+		Reporter.ReportEvent micDone, "Ok Button","Done"
+	Loop until Device("Device").InsightObject("Ok_BTN").Exist(0)
+	If Device("Device").InsightObject("Ok_BTN").Exist(0) Then
+		wait 3
+		Call CaptureImageUFTV2( Device("Device").App("BNI Agen46"), "Buka Rekening Gagal, ID Telah Ada dan Digunakan", " ", compatibilityMode.Mobile, ReportStatus.Passed)
+		wait 3
+		Device("Device").InsightObject("Ok_BTN").Click
+	Else
+		Reporter.ReportEvent micFail,  "User Gagal Melakukan Pengosongan Data Mandatory", "Gagal"
+	End If
+End Sub
+
+
+Rem --- Object Repository
+'Device("Device").App("BNI Agen46").MobileButton("Lanjut").Tap
+'Device("Device").App("BNI Agen46").MobileButton("OK").Tap
+'Device("Device").App("BNI Agen46").MobileButton("OK_Callender").Tap
+'Device("Device").App("BNI Agen46").MobileButton("PincilTanggal").Tap
+'Device("Device").App("BNI Agen46").MobileButton("Select year").Tap
+'Device("Device").App("BNI Agen46").MobileButton("Switch to calendar").Tap
+'Device("Device").App("BNI Agen46").MobileEdit("NamaBelakang_n_TGmptLahir_Rw_n_Penghasilan").Set
+'Device("Device").App("BNI Agen46").MobileEdit("NamaTengah_RT_DescPekerjaan").Set
+'Device("Device").App("BNI Agen46").MobileEdit("NoKTP").Set
+'Device("Device").App("BNI Agen46").MobileEdit("Nominal_n_NamaDepan_n_Almat_BoHp").Set
+'Device("Device").App("BNI Agen46").MobileEdit("Pass_TRX").Set
+'Device("Device").App("BNI Agen46").MobileButton("Crop").Tap
+'Device("Device").App("BNI Agen46").MobileObject("1, Monday, January 1, 19").Tap
+'Device("Device").App("BNI Agen46").MobileObject("10520").Tap
+'Device("Device").App("BNI Agen46").MobileObject("1996").Tap
+'Device("Device").App("BNI Agen46").MobileObject("Apakah nasabah Anda yaki").Tap
+'Device("Device").App("BNI Agen46").MobileObject("Bagikan").Tap
+'Device("Device").App("BNI Agen46").MobileObject("Belum Menikah").Tap
+'Device("Device").App("BNI Agen46").MobileObject("Beranda").Tap
+'Device("Device").App("BNI Agen46").MobileObject("Berlaku Seumur Hidup").Tap
+'Device("Device").App("BNI Agen46").MobileObject("BukaRekening").Tap
+'Device("Device").App("BNI Agen46").MobileObject("Cempaka Putih").Tap
+'Device("Device").App("BNI Agen46").MobileObject("Cempaka Putih Barat").Tap
+'Device("Device").App("BNI Agen46").MobileObject("Cetak").Tap
+'Device("Device").App("BNI Agen46").MobileObject("Desa/Kelurahan").Tap
+'Device("Device").App("BNI Agen46").MobileObject("DKI Jakarta").Tap
+'Device("Device").App("BNI Agen46").MobileObject("Foto_UploadFoto").Tap
+'Device("Device").App("BNI Agen46").MobileObject("Foto_UploadKTP").Tap
+'Device("Device").App("BNI Agen46").MobileObject("Jenis Kelamin").Tap
+'Device("Device").App("BNI Agen46").MobileObject("Kecamatan").Tap
+'Device("Device").App("BNI Agen46").MobileObject("Kode Pos").Tap
+'Device("Device").App("BNI Agen46").MobileObject("Kota Jakarta Pusat").Tap
+'Device("Device").App("BNI Agen46").MobileObject("Kota/Kabupaten").Tap
+'Device("Device").App("BNI Agen46").MobileObject("Laki-laki").Tap
+'Device("Device").App("BNI Agen46").MobileObject("Lanjut").Tap
+'Device("Device").App("BNI Agen46").MobileObject("Lanjutkan").Tap
+'Device("Device").App("BNI Agen46").MobileObject("Layanan Keuangan").Tap
+'Device("Device").App("BNI Agen46").MobileObject("Masa Berlaku KTP").Tap
+'Device("Device").App("BNI Agen46").MobileObject("Password transaksi yang").Tap
+'Device("Device").App("BNI Agen46").MobileObject("Pegawai BUMN/BUMD").Tap
+'Device("Device").App("BNI Agen46").MobileObject("Pekerjaan").Tap
+'Device("Device").App("BNI Agen46").MobileObject("Photo Library").Tap
+'Device("Device").App("BNI Agen46").MobileObject("Provinsi").Tap
+'Device("Device").App("BNI Agen46").MobileObject("Status Kawin").Tap
+'Device("Device").App("BNI Agen46").MobileObject("Tanggal Lahir").Tap
+'Device("Device").App("Files").MobileObject("PhotoSelect").Tap
+'Device("Device").InsightObject("Ok_BTN").Click
+'Device("Device").InsightObject("Ok_Confirm_Berhasil").Click
+

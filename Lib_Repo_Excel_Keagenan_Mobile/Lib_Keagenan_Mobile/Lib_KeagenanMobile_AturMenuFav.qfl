@@ -1,0 +1,93 @@
+﻿Sub Atur_Menu()
+	Do
+'		MsgBox("Wait for Ubah")
+	Loop until Device("Device").App("BNI Agen46").MobileObject("Ubah").Exist(0)
+	If Device("Device").App("BNI Agen46").MobileObject("Ubah").Exist(0) Then 
+		wait 4
+		Call CaptureImageUFTV2(Device("Device").App("BNI Agen46") , "User Klik Ubah pada Halaman Menu", " ", compatibilityMode.Mobile, ReportStatus.Done)
+		wait 4
+		Device("Device").App("BNI Agen46").MobileObject("Ubah").Tap
+		wait 3
+		Device("Device").App("BNI Agen46").MobileObject("-TakeOutLeftSide").Tap
+		wait 3
+		Call Pilih_Menu()
+	Else
+		Reporter.ReportEvent micFail,  "Menu akun tidak di temukan", "Gagal masuk ke menu akun"
+	End If
+End Sub
+
+Sub Pilih_Menu()
+	Do
+'		MsgBox("Wait for Transfer")
+	Loop until Device("Device").App("BNI Agen46").MobileObject("Transfer").Exist(0)
+	If Device("Device").App("BNI Agen46").MobileObject("Transfer").Exist(0) Then
+		Device("Device").App("BNI Agen46").MobileObject("Transfer").Tap
+		wait 4
+		Call CaptureImageUFTV2(Device("Device").App("BNI Agen46") , "User Memilih menu yang akan dijadikan Favorit Menu", " ", compatibilityMode.Mobile, ReportStatus.Done)
+		wait 4
+		Device("Device").App("BNI Agen46").MobileObject("AddTransferBNI").Tap
+		wait 3
+		Device("Device").App("BNI Agen46").MobileObject("Simpan").Tap
+	Else
+		Reporter.ReportEvent micFail,  "Menu Transfer antar BNi tidak ditemukan", "Gagal masuk ke menu akun"
+	End If
+End Sub
+
+
+Sub Change_Menu()
+	Do
+'		MsgBox("Wait for Takeout Rightside")
+	Loop until Device("Device").App("BNI Agen46").MobileObject("-TakeOutRightSide").Exist(0)
+	If Device("Device").App("BNI Agen46").MobileObject("-TakeOutRightSide").Exist(0) Then
+		wait 4
+		Call CaptureImageUFTV2(Device("Device").App("BNI Agen46") , "User Memilih menu yang ingin diubah sebelumnya", " ", compatibilityMode.Mobile, ReportStatus.Done)
+		wait 4
+		Device("Device").App("BNI Agen46").MobileObject("-TakeOutRightSide").Tap
+		wait 3
+		Do
+'			MsgBox("Wait for Bayar Beli")
+		Loop until Device("Device").App("BNI Agen46").MobileObject("Bayar Beli").Exist(0)
+		If Device("Device").App("BNI Agen46").MobileObject("Bayar Beli").Exist(0) Then
+			Device("Device").App("BNI Agen46").MobileObject("Bayar Beli").Tap
+			wait 4
+			Call CaptureImageUFTV2(Device("Device").App("BNI Agen46") , "User Memilih menu yang akan dijadikan Favorit Menu", " ", compatibilityMode.Mobile, ReportStatus.Done)
+			wait 4
+			Device("Device").App("BNI Agen46").MobileObject("Listrik").Tap
+			wait 3
+			Device("Device").App("BNI Agen46").MobileObject("Simpan").Tap
+		Else
+			Reporter.ReportEvent micFail,  "Gagal memilih menu yang akan di ubah ", "Gagal masuk ke menu akun"
+		End If
+	End If
+End Sub
+
+
+Sub Update_List()
+	Do
+'		MsgBox("Wait for Ubah")
+	Loop until Device("Device").App("BNI Agen46").MobileObject("Ubah").Exist(0)
+	If Device("Device").App("BNI Agen46").MobileObject("Ubah").Exist(0) Then 
+		wait 4
+		Call CaptureImageUFTV2(Device("Device").App("BNI Agen46") , "Klik Ubah pada Halaman Menu", " ", compatibilityMode.Mobile, ReportStatus.Done)
+		wait 4
+		Device("Device").App("BNI Agen46").MobileObject("Ubah").Tap
+		Call Change_Menu()
+	Else
+		Reporter.ReportEvent micFail,  "Gagal update menu favorit", "Gagal masuk ke menu akun"
+	End If
+End Sub
+
+Sub Verify_Success()
+	Do
+'		MsgBox("Wait for Ok Confirm"
+	Loop until Device("Device").InsightObject("Ok_Confirm").Exist(0)
+	If Device("Device").InsightObject("Ok_Confirm").Exist(0) Then
+		wait 4
+		Call CaptureImageUFTV2(Device("Device").App("BNI Agen46") , "Update Menu favorit Berhasil", " ", compatibilityMode.Mobile, ReportStatus.Passed)
+		wait 4
+		Device("Device").InsightObject("Ok_Confirm").Click
+	Else
+		Reporter.ReportEvent micFail, "Gagal Verifikasi Error","Gagal"
+	End If
+	
+End Sub

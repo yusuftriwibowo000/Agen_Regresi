@@ -1,0 +1,44 @@
+﻿Rem -- Lib Lokasi Agen
+
+Sub Goto_Informasi()
+	Do
+	Loop until Device("Device").App("BNI Agen46").MobileObject("Informasi").Exist(1)
+	If Device("Device").App("BNI Agen46").MobileObject("Informasi").Exist(5) Then
+		wait 5
+		Call CaptureImageUFTV2(Device("Device").App("BNI Agen46") , "User Pilih Menu Informasi", " ", compatibilityMode.Mobile, ReportStatus.Done)
+		wait 5
+		Device("Device").App("BNI Agen46").MobileObject("Informasi").Tap
+	End If
+End Sub
+
+'Sub Goto_KeamananAkun()
+'	Do
+'	Loop until keamanan_akun.Exist(1)
+'	If keamanan_akun.Exist(5) Then
+'		wait 5
+'		Call CaptureImageUFTV2(Device("Device").App("BNI Agen 46") , "User Pilih Keamanan Akun", " ", compatibilityMode.Mobile, ReportStatus.Done)
+'		wait 5
+'		keamanan_akun.Tap
+'	End IfDevice("Device").App("BNI Agen46").MobileObject("Lokasi Agen")
+'End Sub
+
+Sub Goto_LokasiAgen()
+	Do
+	Loop until Device("Device").App("BNI Agen46").MobileObject("Lokasi Agen").Exist(1)
+	If Device("Device").App("BNI Agen46").MobileObject("Lokasi Agen").Exist(5) Then
+		wait 5
+		Call CaptureImageUFTV2(Device("Device").App("BNI Agen46") , "User Pilih Lokasi Agen", " ", compatibilityMode.Mobile, ReportStatus.Done)
+		wait 5
+		Device("Device").App("BNI Agen46").MobileObject("Lokasi Agen").Tap
+	End If
+End Sub
+
+Sub Verivy_LokasiAgen()
+	Do
+	Loop until Device("Device").App("BNI Agen46").MobileObject("Lokasi Agen_Appear").Exist(1)
+	If Device("Device").App("BNI Agen46").MobileObject("Lokasi Agen_Appear").Exist(5) Then
+		wait 5
+		Call CaptureImageUFTV2(Device("Device").App("BNI Agen46") , "User Berhasil Pilih Lokasi Agen", " ", compatibilityMode.Mobile, ReportStatus.Passed)
+		wait 5
+	End If
+End Sub

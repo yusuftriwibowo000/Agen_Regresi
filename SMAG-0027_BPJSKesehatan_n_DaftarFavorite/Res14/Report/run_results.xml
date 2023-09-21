@@ -1,0 +1,185 @@
+<?xml version="1.0"?>
+<Results version="1.0">
+<ReportNode type="testrun">
+<ReportNode type="Iteration">
+<ReportNode type="Action">
+<ReportNode type="Iteration">
+<ReportNode type="Step">
+<Data>
+    <Name>LoadFunctionLibrary</Name>
+    <Description>LoadFunctionLibrary function passed</Description>
+    <StartTime>2023-03-01 11:17:32</StartTime>
+    <Result>Passed</Result>
+    <Extension>
+      <IconKey>4cbde3938836435e9b56d885600c4f3f</IconKey>
+      <IsPlainTextNodeName>True</IsPlainTextNodeName>
+    </Extension>
+    <DeviceInfo />
+  </Data>
+</ReportNode>
+<ReportNode type="Step">
+<Data>
+    <Name>LoadFunctionLibrary</Name>
+    <Description>LoadFunctionLibrary function passed</Description>
+    <StartTime>2023-03-01 11:17:32</StartTime>
+    <Result>Passed</Result>
+    <Extension>
+      <IconKey>4cbde3938836435e9b56d885600c4f3f</IconKey>
+      <IsPlainTextNodeName>True</IsPlainTextNodeName>
+    </Extension>
+    <DeviceInfo />
+  </Data>
+</ReportNode>
+<ReportNode type="Step">
+<Data>
+    <Name>LoadFunctionLibrary</Name>
+    <Description>LoadFunctionLibrary function passed</Description>
+    <StartTime>2023-03-01 11:17:32</StartTime>
+    <Result>Passed</Result>
+    <Extension>
+      <IconKey>4cbde3938836435e9b56d885600c4f3f</IconKey>
+      <IsPlainTextNodeName>True</IsPlainTextNodeName>
+    </Extension>
+    <DeviceInfo />
+  </Data>
+</ReportNode>
+<ReportNode type="Step">
+<Data>
+    <Name>LoadFunctionLibrary</Name>
+    <Description>The following function libraries either could not be found in the specified paths or the paths were not valid: Lib_KeagenanMobile_Login.qfl</Description>
+    <StartTime>2023-03-01 11:17:32</StartTime>
+    <Result>Failed</Result>
+    <Extension>
+      <IconKey>4cbde3938836435e9b56d885600c4f3f</IconKey>
+      <IsPlainTextNodeName>True</IsPlainTextNodeName>
+    </Extension>
+    <Snapshot reference="Resources\Snapshots\3dc2f2e6-37eb-4f81-ba0a-7c8c79502191.jpeg" />
+    <DeviceInfo />
+  </Data>
+</ReportNode>
+<ReportNode type="Step">
+<Data>
+    <Name>The following function libraries either could not be found in the specified paths or the paths were not valid: Lib_KeagenanMobile_Login.qfl</Name>
+    <ErrorText>The following function libraries either could not be found in the specified paths or the paths were not valid: Lib_KeagenanMobile_Login.qfl</ErrorText>
+    <Description>&lt;BR/&gt;Line (62): &amp;quot;LoadFunctionLibrary (LibPathKeagenanMorbile &amp;amp; &amp;quot;Lib_KeagenanMobile_Login.qfl&amp;quot;)&amp;quot;.</Description>
+    <StartTime>2023-03-01 11:17:32</StartTime>
+    <Result>Failed</Result>
+    <Extension>
+      <StackTrace>
+        <StackFrame>
+          <ModuleName><![CDATA[SMAG0027 - BPJS Kesehatan]]></ModuleName>
+          <FileName><![CDATA[SMAG0027 - BPJS Kesehatan]]></FileName>
+          <Language><![CDATA[VBScript - script block]]></Language>
+          <FunctionName><![CDATA[spLoadLibrary]]></FunctionName>
+          <Scripts><![CDATA[LoadFunctionLibrary (LibPathKeagenanMorbile & "Lib_KeagenanMobile_Login.qfl")]]></Scripts>
+          <LineNo><![CDATA[62]]></LineNo>
+        </StackFrame>
+        <StackFrame>
+          <ModuleName><![CDATA[SMAG0027 - BPJS Kesehatan]]></ModuleName>
+          <FileName><![CDATA[SMAG0027 - BPJS Kesehatan]]></FileName>
+          <Language><![CDATA[SMAG0027 - BPJS Kesehatan]]></Language>
+          <FunctionName><![CDATA[VBScript global code]]></FunctionName>
+          <Scripts><![CDATA[Call spLoadLibrary()]]></Scripts>
+          <LineNo><![CDATA[6]]></LineNo>
+        </StackFrame>
+      </StackTrace>
+      <IconKey>2ca03bcd8e1a49b89f5abcdff9a2f174</IconKey>
+      <IsPlainTextNodeName>True</IsPlainTextNodeName>
+      <MergeIsErrorIcon>True</MergeIsErrorIcon>
+    </Extension>
+    <Snapshot reference="Resources\Snapshots\505653e5-d4f7-429c-8b9a-2119eb5a18eb.jpeg" />
+    <DeviceInfo />
+  </Data>
+</ReportNode>
+<ReportNode type="Step">
+<Data>
+    <Name>Stop Run</Name>
+    <Description>Run stopped by user.</Description>
+    <StartTime>2023-03-01 11:17:37</StartTime>
+    <Result>Information</Result>
+    <Extension>
+      <IconKey>434bee8c4d17427d9fe06586802fa796</IconKey>
+      <IsPlainTextNodeName>True</IsPlainTextNodeName>
+    </Extension>
+  </Data>
+</ReportNode>
+<Data>
+    <Name>SMAG0027 - BPJS Kesehatan</Name>
+    <Description />
+    <StartTime>2023-03-01 11:17:32</StartTime>
+    <Duration>5</Duration>
+    <Result>Failed</Result>
+    <Extension>
+      <IconKey>a84afc490b4e4c32bdfdbdf80e0aa49f</IconKey>
+      <IsPlainTextNodeName>True</IsPlainTextNodeName>
+    </Extension>
+    <Index>1</Index>
+    <TestedApplications />
+  </Data>
+</ReportNode>
+<Data>
+    <Name>SMAG0027 - BPJS Kesehatan</Name>
+    <Description />
+    <StartTime>2023-03-01 11:17:32</StartTime>
+    <Duration>5</Duration>
+    <Result>Failed</Result>
+    <InputParameters />
+    <Extension>
+      <IconKey>82ef404a546547d786e19cb30a11e111</IconKey>
+      <IsPlainTextNodeName>True</IsPlainTextNodeName>
+    </Extension>
+  </Data>
+</ReportNode>
+<Data>
+    <Name>Action0</Name>
+    <Description />
+    <StartTime>2023-03-01 11:17:32</StartTime>
+    <Duration>5</Duration>
+    <Result>Failed</Result>
+    <Extension>
+      <IconKey>a84afc490b4e4c32bdfdbdf80e0aa49f</IconKey>
+      <IsPlainTextNodeName>True</IsPlainTextNodeName>
+    </Extension>
+    <Index>1</Index>
+    <TestedApplications />
+  </Data>
+</ReportNode>
+<Data>
+    <Name>SMAG-0027_BPJSKesehatan_n_DaftarFavorite</Name>
+    <ToolName>Micro Focus UFT One</ToolName>
+    <ToolVersion>2021</ToolVersion>
+    <ToolVersionStringLiteral>2021</ToolVersionStringLiteral>
+    <Description />
+    <StartTime>2023-03-01 11:17:29</StartTime>
+    <Duration>8</Duration>
+    <Result>Failed</Result>
+    <InputParameters />
+    <Extension>
+      <IconKey>2dbeebee0df5453ba62765efc8dc51bf</IconKey>
+      <IsPlainTextNodeName>True</IsPlainTextNodeName>
+    </Extension>
+    <Environment>
+      <Timezone>+07:00:00</Timezone>
+      <Locale>English (Indonesia)</Locale>
+      <User>1420</User>
+      <CpuInfo>AMD Ryzen 5 5500U with Radeon Graphics         </CpuInfo>
+      <NumberOfCores>12</NumberOfCores>
+      <TotalMemory>6006</TotalMemory>
+      <HostName>OKIKUSMAHESA</HostName>
+      <OSInfo>Windows 11 22H2 (x64)</OSInfo>
+    </Environment>
+    <TestedApplications />
+    <Links>
+      <Link type="DataTable" reference="Default.xlsx" displayname="Default Data Table" />
+    </Links>
+  </Data>
+</ReportNode>
+<GeneralInfo>
+    <ResultName>Res14</ResultName>
+    <RunStartTime>2023-03-01 11:17:29</RunStartTime>
+    <Timezone>+07:00:00</Timezone>
+    <OrchestrationToolName>Micro Focus UFT One</OrchestrationToolName>
+    <OrchestrationToolVersion>2021</OrchestrationToolVersion>
+    <OrchestrationToolVersionStringLiteral>2021</OrchestrationToolVersionStringLiteral>
+  </GeneralInfo>
+</Results>

@@ -1,0 +1,291 @@
+﻿Sub Open_Jenis_TRX()
+	Do
+		Reporter.ReportEvent micDone, "Memilih Laporan","Done"
+	Loop until Device("Device").App("BNI Agen46").MobileObject("Laporan").Exist(0)
+	If Device("Device").App("BNI Agen46").MobileObject("Laporan").Exist(0) Then
+		wait 4
+		Call CaptureImageUFTV2( Device("Device").App("BNI Agen46"), "Klik Menu Laporan", " ", compatibilityMode.Mobile, ReportStatus.Done)
+		wait 4
+		Device("Device").App("BNI Agen46").MobileObject("Laporan").Tap
+		wait 4
+		Call CaptureImageUFTV2( Device("Device").App("BNI Agen46"), "Pilih Riwayat Transaksi", " ", compatibilityMode.Mobile, ReportStatus.Done)
+		wait 4
+		Device("Device").App("BNI Agen46").MobileObject("Riwayat Transaksi Tab 2").Tap
+		wait 4
+		Call CaptureImageUFTV2( Device("Device").App("BNI Agen46"), "Pilih Jenis Transaksi", " ", compatibilityMode.Mobile, ReportStatus.Done)
+		wait 3
+'		Device("Device").App("BNI Agen46").MobileObject("JenisTransaksi").Tap
+		AIUtil.SetContext Device("Device")
+		AIUtil("text_box", "Jenis Transa ksj").Click
+	Else
+		Reporter.ReportEvent micFail,  "Gagal Memilih jenis transaksi", "Gagal"
+	End If
+End Sub
+
+Sub Open_Jenis_ALL_TRX()
+	Do
+		Reporter.ReportEvent micDone, "Memilih Laporan","Done"
+	Loop until Device("Device").App("BNI Agen46").MobileObject("Laporan").Exist(0)
+	If Device("Device").App("BNI Agen46").MobileObject("Laporan").Exist(0) Then
+		wait 4
+		Call CaptureImageUFTV2( Device("Device").App("BNI Agen46"), "Klik Menu Laporan", " ", compatibilityMode.Mobile, ReportStatus.Done)
+		wait 4
+		Device("Device").App("BNI Agen46").MobileObject("Laporan").Tap
+		wait 4
+		Call CaptureImageUFTV2( Device("Device").App("BNI Agen46"), "Pilih Riwayat Transaksi", " ", compatibilityMode.Mobile, ReportStatus.Done)
+		wait 4
+		Device("Device").App("BNI Agen46").MobileObject("Riwayat Transaksi Tab 2").Tap
+		wait 4
+		Call CaptureImageUFTV2( Device("Device").App("BNI Agen46"), "Pilih Jenis Transaksi", " ", compatibilityMode.Mobile, ReportStatus.Done)
+		wait 4
+		Device("Device").App("BNI Agen46").MobileObject("JenisTransaksi").Tap
+		wait 3
+		Device("Device").App("BNI Agen46").MobileObject("Pilih Semua").Tap
+		Do 
+'			Device("Device").App("BNI Agen46").MobileObject("MobileObject").Pan 305,1432,339,663,0,0
+			wait 1
+			Device("Device").App("BNI Agen46").MobileObject("Pendidikan").Pan 244,5,248,-912,0,0
+		Loop until Device("Device").App("BNI Agen46").MobileButton("Simpan").Exist(0)
+		wait 4
+		Call CaptureImageUFTV2( Device("Device").App("BNI Agen46"), "Pilih Semua dan Simpan", " ", compatibilityMode.Mobile, ReportStatus.Done)
+		wait 4
+		Device("Device").App("BNI Agen46").MobileButton("Simpan").Tap
+	Else
+		Reporter.ReportEvent micFail,  "Gagal Memilih jenis transaksi", "Gagal"
+	End If
+End Sub
+
+Sub Cek_All_Trx()
+	Call Open_Jenis_TRX()
+	If Device("Device").App("BNI Agen46").MobileObject("Pilih Semua").Exist(0) Then
+		wait 3
+		Device("Device").App("BNI Agen46").MobileObject("Pilih Semua").Tap
+		Do 
+'			Device("Device").App("BNI Agen46").MobileObject("MobileObject").Pan 305,1432,339,663,0,0
+'			wait 1
+			Device("Device").App("BNI Agen46").MobileObject("Pendidikan").Pan 244,5,248,-912,0,0
+		Loop until Device("Device").App("BNI Agen46").MobileButton("Simpan").Exist(0)
+		wait 4
+		Call CaptureImageUFTV2( Device("Device").App("BNI Agen46"), "Pilih Semua dan Simpan", " ", compatibilityMode.Mobile, ReportStatus.Done)
+		wait 4
+		Device("Device").App("BNI Agen46").MobileButton("Simpan").Tap
+		wait 3
+		Device("Device").App("BNI Agen46").MobileButton("Berhasil").Tap
+		wait 3
+		Device("Device").App("BNI Agen46").MobileButton("Transaksi Terakhir").Tap
+		wait 4
+		Call CaptureImageUFTV2( Device("Device").App("BNI Agen46"), "Pilih Periode Transaksi Terakhir", " ", compatibilityMode.Mobile, ReportStatus.Done)
+		wait 4
+		Call CaptureImageUFTV2( Device("Device").App("BNI Agen46"), "Klik Cari", " ", compatibilityMode.Mobile, ReportStatus.Done)
+		wait 4
+		Do
+			Device("Device").App("BNI Agen46").MobileButton("Cari").Tap
+			wait 3
+		Loop until Device("Device").App("BNI Agen46").MobileObject("Riwayat Transaksi").Exist(0)
+		If Device("Device").App("BNI Agen46").MobileObject("Riwayat Transaksi").Exist(0) Then
+			wait 4
+			Call CaptureImageUFTV2( Device("Device").App("BNI Agen46"), "Cek laporan riwayat transaksi berhasil", " ", compatibilityMode.Mobile, ReportStatus.Passed)
+			wait 4
+		Else
+			Reporter.ReportEvent micFail,  "Gagal Cek semua laporan riwayat transaksi", "Gagal"
+		End If
+	Else
+		Reporter.ReportEvent micFail,  "Gagal Cek semua laporan riwayat transaksi", "Gagal"
+	End If
+End Sub
+
+Sub Cek_Trf_Pulsa_Trx()
+	Call Open_Jenis_TRX()
+	Do 
+		Reporter.ReportEvent micDone, "Memilih Transfer BNI & Pulsa","Done"
+	Loop until Device("Device").App("BNI Agen46").MobileObject("Transfer Antar Bank").Exist(0) and Device("Device").App("BNI Agen46").MobileObject("Pulsa & Paket Data").Exist(0)
+	If Device("Device").App("BNI Agen46").MobileObject("Transfer Antar Bank").Exist(0) and Device("Device").App("BNI Agen46").MobileObject("Pulsa & Paket Data").Exist(0) Then
+		Device("Device").App("BNI Agen46").MobileObject("Transfer Antar Bank").Tap
+		wait 4
+		Call CaptureImageUFTV2( Device("Device").App("BNI Agen46"), "Klik pilih Transfer", " ", compatibilityMode.Mobile, ReportStatus.Done)
+		wait 4
+		Device("Device").App("BNI Agen46").MobileObject("Pulsa & Paket Data").Tap
+		wait 4
+		Call CaptureImageUFTV2( Device("Device").App("BNI Agen46"), "Klik pilih Pembelian Pulsa dan Simpan", " ", compatibilityMode.Mobile, ReportStatus.Done)
+		wait 4
+		Do 
+'			Device("Device").App("BNI Agen46").MobileObject("MobileObject").Pan 305,1432,339,663,0,0
+			wait 1
+			Device("Device").App("BNI Agen46").MobileObject("Pendidikan").Pan 244,5,248,-912,0,0
+		Loop until Device("Device").App("BNI Agen46").MobileButton("Simpan").Exist(0)
+		Device("Device").App("BNI Agen46").MobileButton("Simpan").Tap
+		wait 3
+		Device("Device").App("BNI Agen46").MobileButton("Berhasil").Tap
+		wait 3
+		Device("Device").App("BNI Agen46").MobileButton("Transaksi Terakhir").Tap
+		wait 4
+		Call CaptureImageUFTV2( Device("Device").App("BNI Agen46"), "Pilih Periode Transaksi Terakhir", " ", compatibilityMode.Mobile, ReportStatus.Done)
+		wait 4
+		Call CaptureImageUFTV2( Device("Device").App("BNI Agen46"), "Klik Cari", " ", compatibilityMode.Mobile, ReportStatus.Done)
+		wait 4
+		Do
+			Device("Device").App("BNI Agen46").MobileButton("Cari").Tap
+			wait 4
+		Loop until Device("Device").App("BNI Agen46").MobileObject("Riwayat Transaksi").Exist(0)
+		If Device("Device").App("BNI Agen46").MobileObject("Riwayat Transaksi").Exist(0) Then
+			wait 4
+			Call CaptureImageUFTV2( Device("Device").App("BNI Agen46"), "Cek laporan riwayat transaksi berhasil", " ", compatibilityMode.Mobile, ReportStatus.Passed)
+			wait 4
+		Else
+			Reporter.ReportEvent micFail,  "Gagal Cek riwayat transaksi transfer & pembelian pulsa", "Gagal"
+		End If
+	Else
+		Reporter.ReportEvent micFail,  "Gagal Cek riwayat transaksi transfer & pembelian pulsa", "Gagal"
+	End If
+End Sub
+
+Sub Cek_Topup_Ewallet_Trx()
+	Call Open_Jenis_TRX()
+	Do
+		Device("Device").App("BNI Agen46").MobileObject("Pulsa & Paket Data").Pan 231,56,239,-827,0,0
+	Loop until Device("Device").App("BNI Agen46").MobileObject("Link Aja").Exist(0)
+	If Device("Device").App("BNI Agen46").MobileObject("Link Aja").Exist(0) Then
+		Device("Device").App("BNI Agen46").MobileObject("Link Aja").Tap
+		wait 4
+		Call CaptureImageUFTV2( Device("Device").App("BNI Agen46"), "Klik pilih Toup E-Wallet Link Aja", " ", compatibilityMode.Mobile, ReportStatus.Done)
+		wait 4
+		Do 
+			Device("Device").App("BNI Agen46").MobileObject("Pendidikan").Pan 244,5,248,-912,0,0
+		Loop until Device("Device").App("BNI Agen46").MobileButton("Simpan").Exist(0)
+		Device("Device").App("BNI Agen46").MobileButton("Simpan").Tap
+		wait 3
+		Device("Device").App("BNI Agen46").MobileButton("Berhasil").Tap
+		wait 3
+		Device("Device").App("BNI Agen46").MobileButton("Transaksi Terakhir").Tap
+		wait 4
+		Call CaptureImageUFTV2( Device("Device").App("BNI Agen46"), "Pilih Periode Transaksi Terakhir", " ", compatibilityMode.Mobile, ReportStatus.Done)
+		wait 4
+		Call CaptureImageUFTV2( Device("Device").App("BNI Agen46"), "Klik Cari", " ", compatibilityMode.Mobile, ReportStatus.Done)
+		wait 4
+		Do
+			Device("Device").App("BNI Agen46").MobileButton("Cari").Tap
+			wait 4
+		Loop until Device("Device").App("BNI Agen46").MobileObject("Riwayat Transaksi").Exist(0)
+		If Device("Device").App("BNI Agen46").MobileObject("Riwayat Transaksi").Exist(0) Then
+			wait 4
+			Call CaptureImageUFTV2( Device("Device").App("BNI Agen46"), "Cek laporan riwayat transaksi berhasil", " ", compatibilityMode.Mobile, ReportStatus.Passed)
+			wait 4
+		Else
+			Reporter.ReportEvent micFail,  "Gagal Cek riwayat transaksi transfer & pembelian pulsa", "Gagal"
+		End If
+	Else
+		Reporter.ReportEvent micFail,  "Gagal Cek riwayat transaksi transfer & pembelian pulsa", "Gagal"
+	End If
+End Sub
+
+Function Cek_Trx_Period_Minggu_Bulan(dt_TCID)
+	Call Open_Jenis_ALL_TRX()
+	If Device("Device").App("BNI Agen46").MobileButton("1 Minggu").Exist(0) or Device("Device").App("BNI Agen46").MobileButton("1 Bulan").Exist(0) Then
+		If dt_TCID = "MAG0014-004" Then
+			Device("Device").App("BNI Agen46").MobileButton("1 Minggu").Tap
+			wait 3
+			Call CaptureImageUFTV2( Device("Device").App("BNI Agen46"), "Pilih periode transaksi 1 minggu terakhir", " ", compatibilityMode.Mobile, ReportStatus.Done)
+			wait 3
+			Device("Device").App("BNI Agen46").MobileButton("Berhasil").Tap
+			wait 3
+			Call CaptureImageUFTV2( Device("Device").App("BNI Agen46"), "Klik Cari", " ", compatibilityMode.Mobile, ReportStatus.Done)
+			wait 3
+			Do
+				Device("Device").App("BNI Agen46").MobileButton("Cari").Tap
+				wait 4
+			Loop until Device("Device").App("BNI Agen46").MobileObject("Riwayat Transaksi").Exist(0)
+			If Device("Device").App("BNI Agen46").MobileObject("Riwayat Transaksi").Exist(0) Then
+				wait 4
+				Call CaptureImageUFTV2( Device("Device").App("BNI Agen46"), "Cek laporan riwayat transaksi berhasil", " ", compatibilityMode.Mobile, ReportStatus.Passed)
+				wait 4
+			Else
+				Reporter.ReportEvent micFail,  "Gagal Cek riwayat transaksi Mingguan", "Gagal"
+			End If
+		ElseIf dt_TCID = "MAG0014-005" Then
+			Device("Device").App("BNI Agen46").MobileButton("1 Bulan").Tap
+			wait 3
+			Call CaptureImageUFTV2( Device("Device").App("BNI Agen46"), "Pilih periode transaksi 1 bulan terakhir", " ", compatibilityMode.Mobile, ReportStatus.Done)
+			wait 3
+			Device("Device").App("BNI Agen46").MobileButton("Berhasil").Tap
+			wait 3
+			Call CaptureImageUFTV2( Device("Device").App("BNI Agen46"), "Klik Cari", " ", compatibilityMode.Mobile, ReportStatus.Done)
+			wait 3
+			Do
+				Device("Device").App("BNI Agen46").MobileButton("Cari").Tap
+				wait 4
+			Loop until Device("Device").App("BNI Agen46").MobileObject("Riwayat Transaksi").Exist(0)
+			If Device("Device").App("BNI Agen46").MobileObject("Riwayat Transaksi").Exist(0) Then
+				wait 4
+				Call CaptureImageUFTV2( Device("Device").App("BNI Agen46"), "Cek laporan riwayat transaksi berhasil", " ", compatibilityMode.Mobile, ReportStatus.Passed)
+				wait 4
+			Else
+				Reporter.ReportEvent micFail,  "Gagal Cek riwayat transaksi Bulanan", "Gagal"
+			End If
+		End If
+	Else
+		Reporter.ReportEvent micFail,  "Gagal Cek riwayat transaksi transfer & pembelian pulsa", "Gagal"
+	End If
+End Function
+
+Function Cek_Trx_Jangka_Waktu(dt_TCID, dt_TglAwal, dt_TglAkhir)
+	Call Open_Jenis_ALL_TRX()
+	Do
+		Reporter.ReportEvent micDone, "Memilih Date Range","Done"
+	Loop until Device("Device").InsightObject("Dari_Tgl").Exist(0) and Device("Device").InsightObject("Sampai_Tgl").Exist(0)
+	If Device("Device").InsightObject("Dari_Tgl").Exist(0) and Device("Device").InsightObject("Sampai_Tgl").Exist(0) Then
+		Device("Device").App("BNI Agen46").MobileButton("Berhasil").Tap
+		wait 1
+		If dt_TCID = "MAG0014-006" Then
+			Device("Device").InsightObject("Dari_Tgl").Click
+			wait 3
+			Device("Device").App("BNI Agen46").MobileButton("Switch to input").Tap
+			wait 3
+			Device("Device").App("BNI Agen46").MobileEdit("Edit_Date").Set dt_TglAwal
+			wait 3
+			Device("Device").App("BNI Agen46").MobileButton("OK").Tap
+			wait 5
+			Device("Device").InsightObject("Sampai_Tgl").Click
+			wait 3
+			Device("Device").App("BNI Agen46").MobileButton("Switch to input").Tap
+			wait 3
+			Device("Device").App("BNI Agen46").MobileEdit("Edit_Date").Set dt_TglAkhir
+			wait 4
+			Call CaptureImageUFTV2( Device("Device").App("BNI Agen46"), "Pilih Jangka Waktul", " ", compatibilityMode.Mobile, ReportStatus.Done)
+			wait 4
+			Device("Device").App("BNI Agen46").MobileButton("OK").Tap
+			Do
+				Device("Device").App("BNI Agen46").MobileButton("Cari").Tap
+				wait 4
+			Loop until Device("Device").App("BNI Agen46").MobileObject("Riwayat Transaksi").Exist(0)
+			If Device("Device").App("BNI Agen46").MobileObject("Riwayat Transaksi").Exist(0) Then
+				wait 4
+				Call CaptureImageUFTV2( Device("Device").App("BNI Agen46"), "Cek laporan riwayat transaksi berhasil", " ", compatibilityMode.Mobile, ReportStatus.Passed)
+				wait 4
+			Else
+				Reporter.ReportEvent micFail,  "Gagal Cek laporan riwayat transaksi", "Gagal"
+			End If
+		ElseIf dt_TCID = "MAG0014-007" Then
+			Device("Device").InsightObject("Dari_Tgl").Click
+			wait 3
+			Device("Device").App("BNI Agen46").MobileButton("Switch to input").Tap
+			wait 3
+			Device("Device").App("BNI Agen46").MobileEdit("Edit_Date").Set dt_TglAwal
+			wait 4
+			Call CaptureImageUFTV2( Device("Device").App("BNI Agen46"), "Pilih Jangka Waktu", " ", compatibilityMode.Mobile, ReportStatus.Done)
+			wait 4
+			Do
+				Device("Device").App("BNI Agen46").MobileButton("OK").Tap
+				wait 2	
+			Loop until Device("Device").InsightObject("Out_of_range").Exist(0)
+			If Device("Device").InsightObject("Out_of_range").Exist(0) Then
+				wait 4
+				Call CaptureImageUFTV2( Device("Device").App("BNI Agen46"), "Cek laporan gagal, select date disable karena melebihi waktu lebih dari 1 bulan", " ", compatibilityMode.Mobile, ReportStatus.Passed)
+				wait 4
+			Else
+				Reporter.ReportEvent micFail,  "Gagal Cek laporan riwayat transaksi", "Gagal"
+			End If
+		End If
+	Else
+		Reporter.ReportEvent micFail,  "Gagal Cek laporan riwayat transaksi", "Gagal"
+	End If
+End Function

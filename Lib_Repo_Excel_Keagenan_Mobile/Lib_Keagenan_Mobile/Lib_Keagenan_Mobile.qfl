@@ -1,0 +1,100 @@
+﻿Public GlobalRowIndex
+Dim testCaseName
+testCaseName = Environment("TestName")
+
+'REM ------ Untuk ambil file excel untuk membaca datatable
+Function fnGetDataTable(byval filename)
+
+	Dim fullpath, objSysInfo, fso
+	Dim tempKeagenanMobilePath, tempKeagenanMobilePath2, PathKeagenanMobile
+	
+	Set fullpath 	= Createobject("Wscript.Network")
+	Set objSysInfo 	= Createobject("Wscript.Network")	
+	
+	tempKeagenanMobilePath 	= Environment.Value("TestDir")
+	tempKeagenanMobilePath2 	= InStrRev(tempKeagenanMobilePath, "\")
+	PathKeagenanMobile		= Left(tempKeagenanMobilePath, tempKeagenanMobilePath2)
+	
+	fullpath = PathKeagenanMobile & "Lib_Repo_Excel_Keagenan_Mobile\FileExcel_Keagenan_Mobile\"& filename
+	
+	fnGetDataTable = fullpath
+	Set fso = CreateObject("Scripting.FileSystemObject")
+	
+	If Not fso.FileExists(fullpath) Then
+		Reporter.ReportEvent micWarning, "Source Data is not exist", fullpath
+		Call ExitTest()
+	End If
+End Function
+
+'REM ------ INITIATE EXCEL FILE
+Sub spInitiateData(byval globalData, byval localData, ByVal sheetName)
+	On Error Resume Next
+	Dim tempSheet
+	Set tempSheet = DataTable.GetSheet("TEMPORARY")
+	If tempSheet Is Nothing Then
+		DataTable.AddSheet("TEMPORARY")
+		DataTable.AddSheet("KeagenanDBConfig")
+		
+		Dim dtLogin, dtMerchant, dtDBConfig
+		
+		dtLogin 	= fnGetDataTable(globalData)
+		Call DataTable.ImportSheet(dtLogin, "Global","Global")
+	
+		dtMerchant = fnGetDataTable(localData)
+		Call DataTable.ImportSheet(dtMerchant, sheetName, dtLocalSheet)
+		
+		dtDBConfig	= fnGetDataTable("Keagenan_Mobile_DB_Config.xlsx")
+		Call DataTable.ImportSheet(dtDBConfig, "KeagenanMobileDBConfig", "KeagenanMobileDBConfig")
+	End If
+	On Error GoTo 0
+End Sub
+
+'REM -- Sub yang terintegrate dengan excel untuk menjalankan script
+Function fnRunningIterator()
+	If CInt(Environment("ActionIteration")) = CInt(DataTable.LocalSheet.GetRowCount()) Then
+		If Trim(DataTable.Value("RUN", dtLocalSheet)) = "" Then
+			spReportForceSave() 'Save
+			ExitActionIteration()
+			Exit Function	
+		End If
+	End If
+	
+	If Trim(DataTable.Value("RUN", dtLocalSheet)) = "" Then
+		ExitActionIteration()
+		Exit Function	
+	End If
+End Function
+
+'REM -- Reporting PDF
+Function spReportInitiate()
+	Dim author, tester, shortDescHeader, shortDescBody
+	Dim projectType, projectName, projectCode
+	Dim coverTitle, coverSubTitle
+	Dim Tester1, Tester2, TestManager, TestingGroupHead, DevelopmentManager, RequirementManager, ProjectManager
+	
+	author				= DataTable.Value ("AUTHOR", dtGlobalSheet)
+	shortDescHeader		= DataTable.Value ("HEADER_DESCRIPTION", dtGlobalSheet)
+	shortDescBody		= DataTable.Value ("HEADER_BODY", dtGlobalSheet)
+	
+	projectType			= DataTable.Value ("PROJECT_TYPE", dtGlobalSheet)
+	projectName			= DataTable.Value ("PROJECT_NAME", dtGlobalSheet)
+	projectCode			= DataTable.Value ("PROJECT_CODE", dtGlobalSheet)
+		
+	coverTitle			= DataTable.Value ("COVER_TITLE", dtGlobalSheet)
+	coverSubTitle		= DataTable.Value ("COVER_SUBTITLE", dtGlobalSheet)
+	
+	Tester1				= DataTable.Value ("TESTER1", dtGlobalSheet)
+	Tester2				= DataTable.Value ("TESTER2", dtGlobalSheet)
+	TestManager			= DataTable.Value ("TEST_MANAGER", dtGlobalSheet)
+	TestingGroupHead	= DataTable.Value ("TESTING_GROUPHEAD", dtGlobalSheet)
+	DevelopmentManager	= DataTable.Value ("DEVELOPMENT_MANAGER", dtGlobalSheet)
+	RequirementManager	= DataTable.Value ("REQUIREMENT_MANAGER", dtGlobalSheet)
+	ProjectManager		= DataTable.Value ("PROJECT_MANAGER", dtGlobalSheet)
+	
+	REM ------------ Initiated Report Library
+	Call spInitiateReport("Prepared By " & author, author, shortDescHeader, shortDescBody, "Reporting Keagenan Mobile")
+	Call spInitiateReportProject(projectType, projectName, projectCode)
+	Call spInitiateReportCover(coverTitle, coverSubTitle)
+	Call spInitiateReportSigner(Tester1, Tester2, TestManager, TestingGroupHead, DevelopmentManager, RequirementManager, ProjectManager)
+	Call spInitiateReportAttributes()
+End Function
